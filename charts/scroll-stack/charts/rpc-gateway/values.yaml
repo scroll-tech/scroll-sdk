@@ -30,6 +30,18 @@ env:
   - name: INFURA_METRICS_REPORT_ENABLED
     value: "false"
 
+initContainers:
+  wait-for-other-pod:
+    image: curlimages/curl
+    args:
+      - /bin/sh
+      - -c
+      - >
+        set -x;
+        while [ $(curl -sw '%{http_code}' "l2-rpc:8545" -o /dev/null) -ne 200 ]; do
+          sleep 5;
+        done
+
 resources:
   requests:
     memory: "50Mi"

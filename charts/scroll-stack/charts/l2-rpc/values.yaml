@@ -106,6 +106,18 @@ command: ["bash",
     $L2GETH_EXTRA_PARAMS"
 ]
 
+initContainers:
+  wait-for-other-pod:
+    image: curlimages/curl
+    args:
+      - /bin/sh
+      - -c
+      - >
+        set -x;
+        while [ $(curl -sw '%{http_code}' "l1-devnet:8545/api" -o /dev/null) -ne 404 ]; do
+          sleep 5;
+        done
+
 persistence:
   data:
     enabled: yes

@@ -23,6 +23,19 @@ env:
   - name: METRICS_PORT
     value: "8090"
 
+initContainers:
+  wait-for-other-pod:
+    image: curlimages/curl
+    args:
+      - /bin/sh
+      - -c
+      - >
+        set -x;
+        while [ $(curl -sw '%{http_code}' "l2-sequencer:8545" -o /dev/null) -ne 200 ] && 
+        [ $(curl -sw '%{http_code}' "l1-devnet:8545" -o /dev/null) -ne 404 ]; do
+          sleep 5;
+        done
+
 service:
   main:
     enabled: true

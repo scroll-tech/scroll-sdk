@@ -35,7 +35,6 @@ initContainers:
       - >
         CHAIN_ID=$(grep 'CHAIN_ID_L1' /config/config.toml | awk -F'=' '{print $2}' | tr -d ' "') && 
         echo "CHAIN_ID=\"${CHAIN_ID}\"" > /chain-id/chain-id.txt && cat /chain-id/chain-id.txt;
-
     volumeMounts:
       - name: config-toml
         mountPath: /config
