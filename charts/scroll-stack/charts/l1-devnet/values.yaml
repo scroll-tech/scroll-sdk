@@ -11,7 +11,7 @@ controller:
 image:
   repository: ghcr.io/foundry-rs/foundry
   pullPolicy: Always
-  tag: nightly-19d69f277de96f621d930cdb767a9693c55ae8e1
+  tag: nightly-08b2d3efe3ce1ebb1482e5b554f0335fe6cf89a5
 
 command:
   ["/bin/sh","-c","source /chain-id/chain-id.txt && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID}"]

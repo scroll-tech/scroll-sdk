@@ -10,7 +10,7 @@ controller:
 image:
   repository: scrolltech/frontends
   pullPolicy: Always
-  tag: 2.2.5
+  tag: 2.2.6
 
 command:
   [
