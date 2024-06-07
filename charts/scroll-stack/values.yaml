@@ -101,6 +101,9 @@ grafana:
 rollup-node:
   enabled: true
 
+l1-explorer:
+  enabled: true
+
 l2-sequencer:
   enabled: true
 

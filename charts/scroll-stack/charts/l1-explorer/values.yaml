@@ -1,0 +1,139 @@
+---
+global:
+  nameOverride: &app_name l1-explorer
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: Recreate
+  type: deployment
+
+image:
+  repository: blockscout/blockscout
+  pullPolicy: Always
+  tag: 6.6.0
+
+env:
+  - name: CHAIN_ID
+    value: 111111
+  - name: DATABASE_URL
+    value: "postgresql://postgres:qwerty12345@postgresql:5432/l1-explorer"
+  - name: ECTO_USE_SSL
+    value: false
+  - name: ETHEREUM_JSONRPC_HTTP_URL
+    value: http://l1-devnet:8545
+  - name: ETHEREUM_JSONRPC_TRACE_URL
+    value: http://l1-devnet:8545
+  - name: ETHEREUM_JSONRPC_VARIANT
+    value: geth
+  - name: ETHEREUM_JSONRPC_WS_URL
+    value: ws://l1-devnet:8546
+  - name: INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER
+    value: true
+  - name: PORT
+    value: 3000
+  - name: NETWORK
+    value: [""]
+  - name: COIN
+    value: ETH
+  - name: COIN_NAME
+    value: ETH
+  - name: LOGO
+    value: /images/logo.svg
+  - name: WEBAPP_URL
+    value: https://l1-explorer.scroll.tech
+  - name: BLOCKSCOUT_HOST
+    value: test-l1-explorer.scroll.io
+  - name: JSON_RPC
+    value: http://l1-devnet:8545
+  - name: SUBNETWORK
+    value: "Scroll Sepolia Testnet"
+  - name: SUPPORTED_CHAINS
+    value: '[{ "title": "Etherscan (Sepolia)", "url": "https://sepolia.etherscan.io", "test_net?": true }, { "title": "Scroll Sepolia Testnet", "url": "http://test-blockscout.scroll.io", "test_net?": true }]'
+  - name: DISABLE_EXCHANGE_RATES
+    value: true
+  - name: BLOCKSCOUT_VERSION
+    value: 5.2.1
+  - name: FOOTER_GITHUB_LINK
+    value: https://github.com/scroll-tech/blockscout
+  - name: RELEASE_LINK
+    value: https://github.com/scroll-tech
+  - name: RELEASE_NODE
+    value: l2_blockscout
+  - name: ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT
+    value: 10s
+  - name: INDEXER_MEMORY_LIMIT
+    value: 10gb
+  - name: BLOCK_TRANSFORMER
+    value: clique
+  - name: MICROSERVICE_SC_VERIFIER_ENABLED
+    value: true
+  - name: MICROSERVICE_SC_VERIFIER_URL
+    value: http://blockscout-sc-verifier:8080
+  - name: CHAIN_SPEC_PATH
+    value: /app/genesis/genesis.json
+
+command: [
+  "/bin/sh",
+  "-c",
+  "/app/bin/blockscout start"
+]
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 3000
+
+defaultProbes: &default_probes
+  enabled: true
+  custom: true
+  spec:
+    httpGet:
+      path: "/"
+      port: 3000
+
+probes:
+  liveness:
+    << : *default_probes
+  readiness:
+    << : *default_probes
+  startup:
+    << : *default_probes
+
+
+persistence:
+  genesis:
+    enabled: yes
+    type: configMap
+    mountPath: /app/genesis/
+    name: genesis-config
+  init-db:
+    enabled: yes
+    type: configMap
+    mountPath: /init-db.sh
+    name: init-db
+    defaultMode: "0777"
+
+initContainers:
+  migrate-db:
+    image: blockscout/blockscout:6.6.0
+    env:
+    - name: DATABASE_URL
+      value: "postgresql://postgres:qwerty12345@postgresql:5432/l1-explorer"
+    command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
+
+ingress:
+  main:
+    enabled: true
+    primary: true
+    annotations: {}
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - host: l1-explorer.devnet.scroll.tech
+        paths:
+          - path: /
+            pathType: Prefix

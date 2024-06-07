@@ -55,6 +55,9 @@ dependencies:
   - name: gas-oracle
     version: 0.0.1
     condition: gas-oracle.enabled
+  - name: l1-explorer
+    version: 0.0.1
+    condition: l1-devnet.enabled
   - name: l2-bootnode
     version: 0.0.1
     condition: l2-bootnode.enabled
