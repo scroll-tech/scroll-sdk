@@ -49,17 +49,13 @@ env:
   - name: SUBNETWORK
     value: "Scroll Sepolia Testnet"
   - name: SUPPORTED_CHAINS
-    value: '[{ "title": "Etherscan (Sepolia)", "url": "https://sepolia.etherscan.io", "test_net?": true }, { "title": "Scroll Sepolia Testnet", "url": "http://test-blockscout.scroll.io", "test_net?": true }]'
+    value: '[{ "title": "Scroll SDK (L1)", "url": "https://localhost:3000", "test_net?": true }, { "title": "Scroll SDK (L2) Testnet", "url": "http://blockscout:3000", "test_net?": true }]'
   - name: DISABLE_EXCHANGE_RATES
     value: true
   - name: BLOCKSCOUT_VERSION
     value: 5.2.1
   - name: FOOTER_GITHUB_LINK
     value: https://github.com/blockscout/blockscout
-  - name: RELEASE_LINK
-    value: https://github.com/scroll-tech
-  - name: RELEASE_NODE
-    value: l2_blockscout
   - name: ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT
     value: 10s
   - name: INDEXER_MEMORY_LIMIT
@@ -68,10 +64,6 @@ env:
     value: clique
   - name: MICROSERVICE_SC_VERIFIER_ENABLED
     value: true
-  - name: MICROSERVICE_SC_VERIFIER_URL
-    value: http://blockscout-sc-verifier:8080
-  - name: CHAIN_SPEC_PATH
-    value: /app/genesis/genesis.json
 
 command: [
   "/bin/sh",
@@ -105,11 +97,6 @@ probes:
 
 
 persistence:
-  genesis:
-    enabled: yes
-    type: configMap
-    mountPath: /app/genesis/
-    name: genesis-config
   init-db:
     enabled: yes
     type: configMap
