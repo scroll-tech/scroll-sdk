@@ -55,7 +55,7 @@ env:
   - name: BLOCKSCOUT_VERSION
     value: 5.2.1
   - name: FOOTER_GITHUB_LINK
-    value: https://github.com/scroll-tech/blockscout
+    value: https://github.com/blockscout/blockscout
   - name: RELEASE_LINK
     value: https://github.com/scroll-tech
   - name: RELEASE_NODE
