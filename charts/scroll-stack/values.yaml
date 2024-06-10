@@ -107,6 +107,21 @@ grafana:
     enabled: true
     hosts: ["grafana.scrollsdk"]
 
+rollup-explorer-backend:
+  enabled: true
+  ingress:
+    main:
+      enabled: true
+      primary: true
+      annotations: { }
+      labels: { }
+      ingressClassName: "nginx"
+      hosts:
+        - host: rollup-explorer-backend.scrollsdk
+          paths:
+            - path: /
+              pathType: Prefix
+
 rollup-node:
   enabled: true
 
