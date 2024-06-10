@@ -10,7 +10,7 @@ controller:
 image:
   repository: scrolltech/event-watcher
   pullPolicy: Always
-  tag: v4.3.92-env1-sampling
+  tag: v4.4.14
 
 command:
   [

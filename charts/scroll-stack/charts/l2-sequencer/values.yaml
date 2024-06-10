@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.3.0
+  tag: v5.2.1-arm64
 
 env:
   - name: CHAIN_ID
@@ -110,6 +110,14 @@ service:
         enabled: true
         port: 6060
         targetPort: 6060
+
+resources:
+  requests:
+    memory: "150Mi"
+    cpu: "50m"
+  limits:
+    memory: "3Gi"
+    cpu: "100m"
 
 defaultProbes: &default_probes
   enabled: true

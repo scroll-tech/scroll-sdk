@@ -6,13 +6,13 @@ global:
 image:
   repository: scrolltech/gas-oracle
   pullPolicy: Always
-  tag: v4.3.92-test-platform-amd64-3
+  tag: v4.4.14
 
 command:
   [
     "/bin/sh",
     "-c",
-    "gas_oracle --config /app/conf/rollup-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"
+    "gas_oracle --config /app/conf/rollup-config.json --genesis /app/genesis/genesis.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"
   ]
 
 podLabels:
@@ -38,7 +38,6 @@ persistence:
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
-    subPath: genesis.json
   init-db:
     enabled: yes
     type: configMap

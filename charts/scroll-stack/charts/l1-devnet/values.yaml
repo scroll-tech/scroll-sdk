@@ -9,12 +9,12 @@ controller:
   type: deployment
 
 image:
-  repository: ghcr.io/foundry-rs/foundry
+  repository: scrolltech/l1-devnet
   pullPolicy: Always
-  tag: nightly-08b2d3efe3ce1ebb1482e5b554f0335fe6cf89a5
+  tag: v0.0.1
 
 command:
-  ["/bin/sh","-c","source /chain-id/chain-id.txt && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID}"]
+  ["/bin/bash","-c","source /chain-id/chain-id.txt && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID}"]
 
 resources:
   requests:

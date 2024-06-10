@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.2.0
+  tag: v5.2.1-arm64
 
 service:
   main:
