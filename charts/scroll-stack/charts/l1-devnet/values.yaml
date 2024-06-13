@@ -5,8 +5,8 @@ global:
 
 controller:
   replicas: 1
-  strategy: Recreate
-  type: deployment
+  strategy: RollingUpdate
+  type: statefulset
 
 image:
   repository: scrolltech/l1-devnet
@@ -14,7 +14,8 @@ image:
   tag: v0.0.1
 
 command:
-  ["/bin/bash","-c","source /chain-id/chain-id.txt && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID}"]
+  ["/bin/sh","-c","source /chain-id/chain-id.txt && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"]
+
 
 resources:
   requests:
@@ -53,6 +54,12 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Mi
     mounthPath: /chain-id
+  data:
+    enabled: yes
+    type: pvc
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mounthPath: /data
 
 service:
   main:
