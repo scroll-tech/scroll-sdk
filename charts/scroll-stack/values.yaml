@@ -10,7 +10,7 @@ l1-devnet:
           paths:
             - path: /
               pathType: Prefix
-              
+
 blockscout:
   enabled: true
 
@@ -31,15 +31,6 @@ bridge-history-api:
 
 bridge-history-fetcher:
   enabled: true
-  ingress:
-    main:
-      enabled: true
-      ingressClassName: "nginx"
-      hosts:
-        - host: bridge-history-fetcher.scrollsdk
-          paths:
-            - path: /
-              pathType: Prefix
 
 balance-checker:
   enabled: false
