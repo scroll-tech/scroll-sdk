@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/rollup-explorer-backend
   pullPolicy: Always
-  tag: v0.0.8
+  tag: v0.0.12
 
 env:
   BIND_PORT: 5001
@@ -20,11 +20,11 @@ env:
   OPEN_API_ADDR: "/rollupscan"
   MAX_PER_PAGE: 500
 
-#command: [
-#  "/bin/sh",
-#  "-c",
-#  "sleep 3600",
-#]
+command: [
+  "/bin/sh",
+  "-c",
+  "sleep 3600",
+]
 #
 #command: [
 #  "/bin/sh",
