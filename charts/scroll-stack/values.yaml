@@ -1,6 +1,15 @@
 ---
 l1-devnet:
   enabled: true
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - host: l1-devnet.scrollsdk
+          paths:
+            - path: /
+              pathType: Prefix
 
 blockscout:
   enabled: true
@@ -103,12 +112,30 @@ rollup-node:
 
 l1-explorer:
   enabled: true
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - host: l1-devnet-explorer.scrollsdk
+          paths:
+            - path: /
+              pathType: Prefix
 
 l2-sequencer:
   enabled: true
 
 l2-rpc:
   enabled: true
+  ingress:
+    main:
+      enabled: true
+      ingressClassName: "nginx"
+      hosts:
+        - host: l2-rpc.scrollsdk
+          paths:
+            - path: /
+              pathType: Prefix
 
 l2-bootnode:
   enabled: true
