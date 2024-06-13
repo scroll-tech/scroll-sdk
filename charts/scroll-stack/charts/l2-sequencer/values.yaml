@@ -29,13 +29,13 @@ env:
   - name: L2GETH_PEER_LIST
     value: [""]
   - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK
-    value: "19675003"
+    value: "0"
   - name: L2GETH_L1_ENDPOINT
     value: "http://l1-devnet:8545"
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
     value: "0x6"
   - name: L2GETH_LOCALS
-    value: "0x440db3AB842910D2a39F4e1be9E017C6823Fb658,0x6f4c950442e1Af093BcfF730381E63Ae9171b87a"
+    value: ""
   - name: L2GETH_ENABLE_CCC
     value: "true"
   - name: L2GETH_MINER_GASLIMIT

@@ -42,6 +42,7 @@ Run this command to generate a `config.toml` file and genesis file:
 ```bash
 cd charts/scroll-stack
 time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-53d0389b
+```
 
 
 ## Launch Scroll SDK

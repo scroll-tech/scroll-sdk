@@ -27,7 +27,7 @@ env:
   - name: L2GETH_L1_ENDPOINT
     value: "http://l1-devnet:8545"
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
-    value: "finalized"
+    value: "0x6"
   - name: L2GETH_P2P_PORT
     value: 30303
   - name: L2GETH_ENABLE_CCC
