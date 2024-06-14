@@ -136,12 +136,12 @@ probes:
     << : *default_probes
 
 persistence:
-  l2geth-data:
+  data:
     enabled: yes
     type: pvc
-    mountPath: /data/
+    mountPath: /l2geth/data/
     name: l2geth-data
-    size: 50Mi
+    size: 10Gi
     accessMode: ReadWriteOnce
   l2-sequencer:
     enabled: yes
