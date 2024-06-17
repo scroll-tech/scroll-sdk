@@ -20,6 +20,10 @@ It also provides a database and a monitoring stack based on Prometheus, Loki and
 The current configuration supports running a devnet but is not yet optimized for production.
 
 ## Prerequisites
+
+> [!Note]
+> Looking to run a local testnet on an amd64 mac? Please follow [this guide](https://scrollzkp.notion.site/Guide-Running-Scroll-SDK-on-an-ARM64-Mac-36bdf4f3ee2345bf9d1ea6e62f9fcf08#e40ae30777ec4dd083e71d37ead1a185)!
+
 Before getting started, be sure to install the following:
 - [Docker Engine](https://docs.docker.com/engine/install/) (or Docker Desktop)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
@@ -53,71 +57,100 @@ helm install scroll-stack .
 
 Run `kubectl get pods` to confirm the status of running services.
 
-## Web UIs & Monitoring
+## Web UIs, Monitoring and Exposed Services
 
-Accessing browser UIs from your machine will depend on your configuration. The examples below show how to temporarily forward ports or configure `/etc/hosts` for access.
+Accessing services and UIs from your machine will depend on your configuration.
 
-### Bridge Frontend & Rollup Explorer
+If using the default DNS names, the following services will be available locally after configuring and launching your Scroll SDK chain:
 
-#### Using port-forward
+- Block Explorers (Blockscout)
+    - [L2 Explorer](http://blockscout.scrollsdk/)
+    - [L1 Explorer](http://l1-devnet-explorer.scrollsdk/) *(this is scanning Anvil and can be a bit buggy)*
+- [Bridge](http://frontends.scrollsdk/bridge)
+- [Rollup Explorer](http://frontends.scrollsdk/rollupscan?page=1&per_page=10)
+    - Shows committed batches and finalized batches
+    - ***API NOT CURRENTLY WORKING AS OF June 17, 2024***
+- [Granfana Dashboards](http://grafana.scrollsdk/)
+    - Login
+        - User: `admin`
+        - Pass: `scroll-stack`
+    - See “Scroll” dashboards on [this page](http://grafana.scrollsdk/dashboards).
 
-```bash
-kubectl port-forward svc/frontends 8082:80
-```
+### Access on macOS using minikube and `ingress-dns`
 
-  After starting the project, then go to your browser and check `http://localhost:8082/`
+Our [guide for mac](https://scrollzkp.notion.site/Guide-Running-Scroll-SDK-on-an-ARM64-Mac-36bdf4f3ee2345bf9d1ea6e62f9fcf08#e40ae30777ec4dd083e71d37ead1a185) includes how to use minikube with `ingress-dns`. We have not tested this configuration for Linux desktops.
 
-#### Using /etc/hosts
-If you enabled ingress on your cluster, you can add the following entries:
-
-```txt
-1.2.3.4    frontends.scrollsdk
-```
-
-where `1.2.3.4` is the IP of your cluster.
-
-Then go to your browser and check `http://frontends.scrollsdk/`
-
-### Blockscout
-Accessing Blockscout depends on your configuration.
-
-#### Using port-forward
+The key steps include installing [docker-mac-net-connect](https://github.com/chipmk/docker-mac-net-connect) and running the following:
 
 ```bash
-kubectl port-forward svc/blockscout 8080:3000
+minikube ssh "sudo apt-get update && sudo apt-get -y install qemu-user-static"
+minikube enable ingress
+minikube enable ingress-dns
+sudo brew services start chipmk/tap/docker-mac-net-connect
 ```
 
-  After starting the project, then go to your browser and check `http://localhost:8080/`
+Then, configure `/etc/resolver/minikube-scrollsdk`
 
-#### Using /etc/hosts
-If you enabled ingress on your cluster, you can add the following entries:
+```text
+domain scrollsdk
+nameserver <minikube_ip>
+search_order 1
+timeout 5
+```
+
+Lastly, flush your DNS and test:
+
+```bash
+sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+nslookup frontends.scrollsdk $(minikube ip)
+```
+
+### Access using /etc/hosts
+
+If you have enabled ingress on your cluster, add the following entries, replacing `1.2.3.4` with the IP of your cluster.
 
 ```txt
-1.2.3.4    blockscout.scrollsdk
+1.2.3.4 l1-devnet.scrollsdk
+1.2.3.4 bridge-history.scrollsdk
+1.2.3.4 frontends.scrollsdk
+1.2.3.4 grafana.scrollsdk
+1.2.3.4 l1-devnet-explorer.scrollsdk
+1.2.3.4 l2-rpc.scrollsdk
+1.2.3.4 blockscout.scrollsdk
+1.2.3.4 bridge-history-api.scrollsdk
 ```
 
-where `1.2.3.4` is the IP of your cluster.
+### Access using port-forward
 
-Then go to your browser and check `http://blockscout.scrollsdk/`
+If you want to quickly expose a single source, you can use `port-forward` to expose a service in your cluster.
 
-### Grafana
-#### Using port-forward
+For example, to access the Grafana dashboards, open a new terminal session and run
 
 ```bash
 kubectl port-forward svc/grafana 8081:80
 ```
-Then go to your browser and check `http://localhost:8081/`
 
-#### Using /etc/hosts
+Then go to your browser and check `http://localhost:8081/`. You'll need to leave your terminal session running to maintain access.
 
-If you enabled ingress on your cluster, you can add the following entries:
+For other services, replace `svc/grafana` with the appropriate service name and `8081:80` to the correct ports. The first port should be the port number you want to request on your local machine. The second can be found in the `charts/[service]/values.yaml` file in the `service -> main -> ports -> http -> port` field.
 
-```txt
-1.2.3.4    grafana.scrollsdk
+```yaml
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 3000
 ```
 
-where `1.2.3.4` is the IP of your cluster.
-Then go to your browser and check `http://grafana.scrollsdk/`
+Other examples:
+- `kubectl port-forward svc/frontends 8082:80`
+- `kubectl port-forward svc/blockscout 8080:3000`
+- `kubectl port-forward svc/l2-rpc 8083:8545`
+
+> [!WARNING]
+> This method will not work for the `frontends` service and bridge UIs out-of-the box. You'll need to re-configure the values so that RPC and API calls from the browser are sent to accessible URIs (ie other localhost ports).
 
 ## Changing the database endpoint
 
