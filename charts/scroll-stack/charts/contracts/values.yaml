@@ -1,7 +1,7 @@
 ---
 image:
   repository: scrolltech/scroll-stack-contracts
-  tag: deploy-53d0389b
+  tag: deploy-977f5701
 
 env:
   - name: L1_RPC_ENDPOINT
