@@ -28,10 +28,6 @@ Before getting started, be sure to install the following:
 
 ## Bootstrap
 ### Get Helm dependencies
-Add the [bjw-s repo](https://github.com/bjw-s/helm-charts) to your Helm repo:
-```bash
-helm repo add bjw-s https://bjw-s.github.io/helm-charts
-```
 Run the following script to get the dependencies of each Helm chart:
 ```bash
 ./helm-bootstrap.sh
@@ -43,7 +39,6 @@ Run this command to generate a `config.toml` file and genesis file:
 cd charts/scroll-stack
 time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-53d0389b
 ```
-
 
 ## Launch Scroll SDK
 Run this from the `charts/scroll-stack` folder:

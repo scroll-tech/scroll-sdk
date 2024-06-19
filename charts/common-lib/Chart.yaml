@@ -1,0 +1,12 @@
+apiVersion: v2
+description: Function library for Helm charts
+keywords:
+- common
+- library
+kubeVersion: '>=1.22.0-0'
+maintainers:
+- email: sebastien@scroll.io
+  name: sebastien
+name: common
+type: library
+version: 1.5.1

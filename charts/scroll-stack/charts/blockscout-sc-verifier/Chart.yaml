@@ -10,5 +10,5 @@ maintainers:
     email: sebastien@scroll.io
 dependencies:
   - name: common
-    repository: https://bjw-s.github.io/helm-charts
+    repository: "file://../../../common-lib/"
     version: 1.5.1
