@@ -79,8 +79,8 @@ The key steps include installing [docker-mac-net-connect](https://github.com/chi
 
 ```bash
 minikube ssh "sudo apt-get update && sudo apt-get -y install qemu-user-static"
-minikube enable ingress
-minikube enable ingress-dns
+minikube addons enable ingress
+minikube addons enable ingress-dns
 sudo brew services start chipmk/tap/docker-mac-net-connect
 ```
 
