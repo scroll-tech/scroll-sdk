@@ -81,7 +81,7 @@ serviceMonitor:
     enabled: true
     labels:
       release: scroll-stack
-    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}'
+    serviceName: '{{ include "scroll.common.lib.chart.names.fullname" $ }}'
     endpoints:
       - port: metrics
         interval: 1m
