@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: l2geth-boot
+data:
+{{ (.Files.Glob "l2geth-boot.sh").AsConfig | indent 2 }}
