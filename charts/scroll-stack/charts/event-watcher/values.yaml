@@ -24,7 +24,14 @@ podLabels:
   dbaccess: "true"
 
 initContainers:
-  init-db:
+  1-wait-for-postgres:
+    image: atkrad/wait4x:latest
+    args:
+      - tcp
+      - postgresql:5432
+      - --timeout
+      - "0"
+  2-init-db:
     image: postgres:latest
     env:
       - name: POSTGRES_DB
@@ -61,24 +68,36 @@ initContainers:
       - name: init-db
         mountPath: /init-db.sh
         subPath: init-db.sh
-  migrate-db:
+  3-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable
+      - --timeout
+      - "0"
+  4-migrate-db:
     image: scrolltech/rollup-db-cli
     command: ["/bin/sh","-c","db_cli migrate --config /config/migrate-db.json"]
     volumeMounts:
       - name: migrate-db
         mountPath: /config/migrate-db.json
         subPath: migrate-db.json
-  wait-for-other-pod:
-    image: curlimages/curl
+  5-wait-for-l1-devnet:
+    image: atkrad/wait4x:latest
     args:
-      - /bin/sh
-      - -c
-      - >
-        set -x;
-        while [ $(curl -sw '%{http_code}' "l2-sequencer:8545" -o /dev/null) -ne 200 ] && 
-        [ $(curl -sw '%{http_code}' "l1-devnet:8545" -o /dev/null) -ne 404 ]; do
-          sleep 5;
-        done
+      - tcp
+      - l1-devnet:8545
+      - --timeout
+      - "0"
+  6-wait-for-l2-sequencer:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - http://l2-sequencer:8545
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
 
 resources:
   requests:

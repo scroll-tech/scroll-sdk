@@ -31,16 +31,15 @@ env:
     value: "false"
 
 initContainers:
-  wait-for-other-pod:
-    image: curlimages/curl
+  wait-for-l2-rpc:
+    image: atkrad/wait4x:latest
     args:
-      - /bin/sh
-      - -c
-      - >
-        set -x;
-        while [ $(curl -sw '%{http_code}' "l2-rpc:8545" -o /dev/null) -ne 200 ]; do
-          sleep 5;
-        done
+      - http
+      - http://l2-rpc:8545
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
 
 resources:
   requests:

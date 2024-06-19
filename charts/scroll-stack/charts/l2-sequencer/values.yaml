@@ -79,16 +79,13 @@ command: ["bash",
           $L2GETH_EXTRA_PARAMS"]
 
 initContainers:
-  wait-for-other-pod:
-    image: curlimages/curl
+  wait-for-l1-devnet:
+    image: atkrad/wait4x:latest
     args:
-      - /bin/sh
-      - -c
-      - >
-        set -x;
-        while [ $(curl -sw '%{http_code}' "l1-devnet:8545/api" -o /dev/null) -ne 404 ]; do
-          sleep 5;
-        done
+      - tcp
+      - l1-devnet:8545
+      - --timeout
+      - "0"
 
 service:
   main:

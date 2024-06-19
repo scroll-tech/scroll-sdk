@@ -24,17 +24,22 @@ env:
     value: "8090"
 
 initContainers:
-  wait-for-other-pod:
-    image: curlimages/curl
+  1-wait-for-l1-devnet:
+    image: atkrad/wait4x:latest
     args:
-      - /bin/sh
-      - -c
-      - >
-        set -x;
-        while [ $(curl -sw '%{http_code}' "l2-sequencer:8545" -o /dev/null) -ne 200 ] && 
-        [ $(curl -sw '%{http_code}' "l1-devnet:8545" -o /dev/null) -ne 404 ]; do
-          sleep 5;
-        done
+      - tcp
+      - l1-devnet:8545
+      - --timeout
+      - "0"
+  2-wait-for-l2-sequencer:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - http://l2-sequencer:8545
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
 
 service:
   main:
