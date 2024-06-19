@@ -59,7 +59,7 @@ Run `kubectl get pods` to confirm the status of running services.
 
 ## Web UIs, Monitoring and Exposed Services
 
-Accessing services and UIs from your machine will depend on your configuration.
+Accessing services and UIs from your machine will depend on your configuration. 3 possible configurations are described below.
 
 If using the default DNS names, the following services will be available locally after configuring and launching your Scroll SDK chain:
 
@@ -107,7 +107,7 @@ nslookup frontends.scrollsdk $(minikube ip)
 
 ### Access using /etc/hosts
 
-If you have enabled ingress on your cluster, add the following entries, replacing `1.2.3.4` with the IP of your cluster.
+If you have enabled ingress on your cluster and are not using `ingress-dns`, add the following entries, replacing `1.2.3.4` with the IP of your cluster.
 
 ```txt
 1.2.3.4 l1-devnet.scrollsdk
