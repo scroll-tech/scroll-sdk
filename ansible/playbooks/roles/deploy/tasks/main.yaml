@@ -70,8 +70,8 @@
     dest: "{{ pj_path }}/volume/assets_bernoulli/"
     mode: 0644
   with_items: "{{assets_bernoulli}}"
-# - name: 2.7 update docker compose
-#   shell: docker compose up -d
-#   args:
-#     chdir: "{{pj_path}}"
 
+- name: 2.7 update docker compose
+  shell: docker compose up -d
+  args:
+    chdir: "{{pj_path}}"
