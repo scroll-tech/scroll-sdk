@@ -1,0 +1,22 @@
+version: '3'
+services:
+  prover:
+    image: scrolltech/cuda-prover:{{docker_tag}}
+    runtime: nvidia
+    container_name: prover
+    restart: unless-stopped
+    environment:
+      - LD_LIBRARY_PATH=/prover:/usr/local/cuda/lib64
+      - SCROLL_PROVER_ASSETS_DIR=/prover/volume/assets_bernoulli,/prover/volume/assets_curie
+      - RUST_MIN_STACK=100000000
+      - CHAIN_ID={{chain_id}}
+      - RUST_LOG=info
+    volumes:
+      - ./volume:/prover/volume
+      - ./config.json:/prover/config.json:ro
+      - ./config.json:/prover/conf/config.json:ro
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"

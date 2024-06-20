@@ -1,0 +1,77 @@
+- name: set env
+  set_fact:
+    base_url: "{{vars[env]['base_url']}}"
+    chain_id: "{{vars[env]['chain_id']}}"
+    rpc_endpoint: "{{vars[env]['rpc']}}"
+
+- name: Set fact for params
+  set_fact:
+    params: "{{ params | default([]) + [bucket_aws + '/setup/' + item] }}"
+  loop: "{{ vars[type]['params'] }}"
+
+- name: Set fact for assets_curie
+  set_fact:
+    assets_curie: "{{ assets_curie | default([]) + [bucket_aws + '/' + release_version + '/' + item] }}"
+  loop: "{{ vars[type]['assets'] }}"
+
+- name: Set fact for assets_bernoulli
+  set_fact:
+    assets_bernoulli: "{{ assets_bernoulli | default([]) + [bucket_aws + '/' + release_version + '/' + item] }}"
+  loop: "{{ vars[type]['assets'] }}"
+
+- name: debug facts
+  debug:
+    msg:
+      "Value of base_url is {{base_url}} \n Value of chain_id is {{chain_id}} \n Value of proof_type is {{proof_type}} \n Value of the rpc_endpoint is {{rpc_endpoint}}, \n   Value of docker_tag is {{docker_tag}} \n
+      Value of params is {{params}} \n Value of assets_curie is {{assets_curie}} \n Value of assets_bernoulli is {{assets_bernoulli}} \n"
+
+- name: stop go-prover for docker
+  shell: docker compose down
+  args:
+    chdir: "{{pj_path}}"
+  ignore_errors: true
+
+- name: delete old file
+  shell: \rm -rf {{pj_path}}/volume/bbolt_db {{pj_path}}/volume/proofs {{pj_path}}/volume/keystore.json
+  become: true
+
+- name: check dir pj_path
+  shell: "[[ -d {{pj_path}} ]] || mkdir -p {{pj_path}} && :"
+
+- name: mkdir volume
+  shell: "[[ -d {{item}} ]] || mkdir -p {{item}} && :"
+  args:
+    chdir: "{{pj_path}}"
+  loop: "{{volume_dir}}"
+
+- name: copy prover compose
+  template: src=./templates/docker-compose.yml.j2 dest={{pj_path}}/docker-compose.yml
+
+- name: copy prover config
+  template: src=config.json.j2 dest={{pj_path}}/config.json
+
+- name: download params
+  get_url:
+    url: "{{ item }}"
+    dest: "{{ pj_path }}/volume/params/"
+    mode: 0644
+  with_items: "{{params}}"
+
+- name: download assets curie
+  get_url:
+    url: "{{item}}"
+    dest: "{{ pj_path }}/volume/assets_curie/"
+    mode: 0644
+  with_items: "{{assets_curie}}"
+
+- name: download assets bernoulli
+  get_url:
+    url: "{{item}}"
+    dest: "{{ pj_path }}/volume/assets_bernoulli/"
+    mode: 0644
+  with_items: "{{assets_bernoulli}}"
+# - name: 2.7 update docker compose
+#   shell: docker compose up -d
+#   args:
+#     chdir: "{{pj_path}}"
+

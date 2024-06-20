@@ -1,0 +1,33 @@
+- name: check gfw
+  uri:
+    url: https://www.google.com
+    timeout: 3
+  ignore_errors: true
+  register: gfw
+
+- name: check docker installed
+  shell: command -v docker
+  register: docker_installed
+  ignore_errors: true
+
+- name: get docker script
+  get_url:
+    url: https://get.docker.com
+    dest: /tmp/get-docker.sh
+    mode: 0755
+  when: docker_installed is failed
+
+- name: excute docker script in gfw
+  shell: /tmp/get-docker.sh --mirror Aliyun
+  become: true
+  when: docker_installed is failed and gfw is failed
+
+- name: excute docker script
+  shell: /tmp/get-docker.sh
+  become: true
+  when: docker_installed is failed and gfw is succeeded
+
+- name: install docker nvidia runtime
+  script: files/nvidia-docker.sh
+  become: true
+  # when: docker_installed is failed

@@ -1,0 +1,12 @@
+- name: check env
+  shell: |
+    bash -c 'if [[ "{{env}}" == "mainnet" || "{{env}}" == "sepolia" ]] && [[ "{{type}}" == "chunk" || "{{type}}" == "batch" ]]; then
+      echo "correct";
+    else
+      echo "env mainnet/sepolia, type chunk/batch";
+      exit 1
+    fi'
+
+- name: debug facts
+  debug:
+    msg: "Value of env is {{env}} \n Value of type is {{type}} \n Value of pj_path is {{pj_path}} \n Value of the proof_type is {{proof_type}}"

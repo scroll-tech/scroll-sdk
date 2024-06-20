@@ -1,0 +1,55 @@
+---
+release_version: "release-v0.11.3"
+release_version_low: "release-v0.10.3"
+docker_tag: "v4.4.19-27d627e3-19c8131-2818da7"
+#ansible_become_password: "xxx"
+bucket_aws: "https://circuit-release.s3.us-west-2.amazonaws.com"
+
+mainnet:
+  base_url: "https://coordinator.scroll.io"
+  chain_id: 534352
+  pj_path: "/prover/go-prover-docker"
+  rpc: "http://xxx:8545"
+
+sepolia:
+  base_url: "https://sepolia-coordinator.scroll.io"
+  chain_id: 534351
+  pj_path: "/prover/go-prover-docker"
+  rpc: "http://xxx:8545"
+
+chunk:
+  proof_type: 1
+  params:
+    - sha256sum
+    - params20
+    - params24
+    - params25
+  assets:
+    - layer1.config
+    - layer2.config
+    - layer3.config
+    - layer4.config
+    - chunk_vk.vkey
+    - sha256sum
+
+batch:
+  proof_type: 2
+  params:
+    - sha256sum
+    - params20
+    - params21
+    - params26
+  assets:
+    - layer1.config
+    - layer2.config
+    - layer3.config
+    - layer4.config
+    - chunk.protocol
+    - agg_vk.vkey
+    - sha256sum
+
+volume_dir:
+  - volume
+  - volume/assets_curie
+  - volume/assets_bernoulli
+  - volume/params

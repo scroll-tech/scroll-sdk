@@ -1,0 +1,19 @@
+- name: init go-prover
+  hosts: "{{env}}_{{type}}"
+  gather_facts: true
+  max_fail_percentage: 0
+  serial: 10
+  vars_files:
+    - vars/shared-vars.yaml
+  vars:
+    env: "{{env}}"
+    type: "{{type}}"
+    pj_path: "{{vars[env]['pj_path']}}"
+    proof_type: "{{vars[type]['proof_type']}}"
+  roles:
+    - role: bootstrap
+      tags: bootstrap
+    - role: docker
+      tags: docker
+    # - role: deploy
+    #   tags: deploy
