@@ -25,17 +25,57 @@
     mode: 0755
   when: docker_installed is failed
 
-- name: excute docker script in gfw
+- name: execute docker script in gfw
   shell: /tmp/get-docker.sh --mirror Aliyun
   become: true
   when: docker_installed is failed and gfw is failed
 
-- name: excute docker script
+- name: execute docker script
   shell: /tmp/get-docker.sh
   become: true
   when: docker_installed is failed and gfw is succeeded
 
-- name: install docker nvidia runtime
-  script: files/nvidia-docker.sh
+- name: Add NVIDIA Docker GPG key
+  apt_key:
+    url: https://nvidia.github.io/nvidia-docker/gpgkey
+    state: present
+
+- name: Determine distribution
+  command:  "bash -c 'source /etc/os-release && echo $ID$VERSION_ID'"
+  register: distribution
   become: true
-  # when: docker_installed is failed
+  changed_when: false
+
+- name: Add NVIDIA Docker repository
+  get_url:
+    url: "https://nvidia.github.io/nvidia-docker/{{ distribution.stdout }}/nvidia-docker.list"
+    dest: /etc/apt/sources.list.d/nvidia-docker.list
+
+- name: Install NVIDIA container runtime
+  apt:
+    name: nvidia-container-runtime
+    state: present
+    update_cache: true
+  become: true
+
+- name: Backup existing Docker daemon.json if exists
+  copy:
+      src: /etc/docker/daemon.json
+      dest: /etc/docker/daemon.json.bak
+  ignore_errors: yes
+  when: ansible.builtin.stat(path="/etc/docker/daemon.json").exists
+
+- name: Configure Docker daemon for NVIDIA runtime
+  copy:
+    dest: /etc/docker/daemon.json
+    content: |
+      {
+        "runtimes": {
+           "nvidia": {
+               "path": "/usr/bin/nvidia-container-runtime",
+               "runtimeArgs": []
+           }
+         }
+      }
+  become: true
+  notify: restart docker
