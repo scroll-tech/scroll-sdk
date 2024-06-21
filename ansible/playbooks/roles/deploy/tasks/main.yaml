@@ -71,7 +71,8 @@
     mode: 0644
   with_items: "{{assets_bernoulli}}"
 
-- name: 2.7 update docker compose
-  shell: docker compose up -d
-  args:
-    chdir: "{{pj_path}}"
+- name: Run `docker-compose up` again
+  community.docker.docker_compose_v2:
+    project_src: "{{pj_path}}"
+    state: present
+

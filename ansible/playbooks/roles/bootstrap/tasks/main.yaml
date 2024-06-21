@@ -10,3 +10,18 @@
 - name: debug facts
   debug:
     msg: "Value of env is {{env}} \n Value of type is {{type}} \n Value of pj_path is {{pj_path}} \n Value of the proof_type is {{proof_type}}"
+
+- name: install pip
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: true
+  become: true
+
+- name: pip install docker and docker compose module
+  pip:
+    name:
+      - "docker==6.1.3"
+      - "docker-compose"
+      - "requests==2.31.0"
+  become: true
