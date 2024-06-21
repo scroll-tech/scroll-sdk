@@ -10,6 +10,13 @@
   register: docker_installed
   ignore_errors: true
 
+- name: Add ssh user to docker group
+  user:
+    name: "{{ ansible_ssh_user }}"
+    groups: docker
+    append: yes
+  become: true
+
 - name: get docker script
   get_url:
     url: https://get.docker.com
