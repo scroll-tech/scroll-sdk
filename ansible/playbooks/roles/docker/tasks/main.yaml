@@ -9,6 +9,7 @@
   shell: command -v docker
   register: docker_installed
   ignore_errors: true
+  changed_when: false
 
 - name: Add ssh user to docker group
   user:
