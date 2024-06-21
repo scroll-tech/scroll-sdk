@@ -32,23 +32,32 @@
   ignore_errors: true
 
 - name: delete old file
-  shell: \rm -rf {{pj_path}}/volume/bbolt_db {{pj_path}}/volume/proofs {{pj_path}}/volume/keystore.json
+  file:
+    path: "{{pj_path}}/{{ item }}"
+    state: absent
+  loop:
+    - "volume/bbolt_db"
+    - "volume/proofs"
+    - "volume/keystore.json"
   become: true
 
-- name: check dir pj_path
-  shell: "[[ -d {{pj_path}} ]] || mkdir -p {{pj_path}} && :"
-
 - name: mkdir volume
-  shell: "[[ -d {{item}} ]] || mkdir -p {{item}} && :"
-  args:
-    chdir: "{{pj_path}}"
+  file:
+    path: "{{pj_path}}/{{ item }}"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
   loop: "{{volume_dir}}"
+  become: true
 
 - name: copy prover compose
   template: src=./templates/docker-compose.yml.j2 dest={{pj_path}}/docker-compose.yml
+  become: true
 
 - name: copy prover config
   template: src=config.json.j2 dest={{pj_path}}/config.json
+  become: true
 
 - name: download params
   get_url:
