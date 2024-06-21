@@ -1,11 +1,8 @@
-- name: check env
-  shell: |
-    bash -c 'if [[ "{{env}}" == "mainnet" || "{{env}}" == "sepolia" ]] && [[ "{{type}}" == "chunk" || "{{type}}" == "batch" ]]; then
-      echo "correct";
-    else
-      echo "env mainnet/sepolia, type chunk/batch";
-      exit 1
-    fi'
+- name: Assert env var are sets
+  ansible.builtin.assert:
+    that:
+      - "'{{ env }}' in ['mainnet', 'sepolia']"
+      - "'{{ type }}' in ['chunk', 'batch']"
 
 - name: debug facts
   debug:
