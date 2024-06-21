@@ -4,18 +4,7 @@ release_version_low: "release-v0.10.3"
 docker_tag: "v4.4.19-27d627e3-19c8131-2818da7"
 #ansible_become_password: "xxx"
 bucket_aws: "https://circuit-release.s3.us-west-2.amazonaws.com"
-
-mainnet:
-  base_url: "https://coordinator.scroll.io"
-  chain_id: 534352
-  pj_path: "/prover/go-prover-docker"
-  rpc: "http://xxx:8545"
-
-sepolia:
-  base_url: "https://sepolia-coordinator.scroll.io"
-  chain_id: 534351
-  pj_path: "/prover/go-prover-docker"
-  rpc: "http://xxx:8545"
+pj_path: "/prover/go-prover-docker"
 
 chunk:
   proof_type: 1
