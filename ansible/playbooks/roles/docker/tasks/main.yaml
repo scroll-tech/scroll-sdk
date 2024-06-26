@@ -11,12 +11,9 @@
   ignore_errors: true
   changed_when: false
 
-- name: Add ssh user to docker group
-  user:
-    name: "{{ ansible_ssh_user }}"
-    groups: docker
-    append: yes
-  become: true
+- name: install docker
+  include_tasks: install.yaml
+  when: docker_installed is failed
 
 - name: get docker script
   get_url:
@@ -39,6 +36,7 @@
   apt_key:
     url: https://nvidia.github.io/nvidia-docker/gpgkey
     state: present
+  become: true
 
 - name: Determine distribution
   command:  "bash -c 'source /etc/os-release && echo $ID$VERSION_ID'"
@@ -50,6 +48,7 @@
   get_url:
     url: "https://nvidia.github.io/nvidia-docker/{{ distribution.stdout }}/nvidia-docker.list"
     dest: /etc/apt/sources.list.d/nvidia-docker.list
+  become: true
 
 - name: Install NVIDIA container runtime
   apt:

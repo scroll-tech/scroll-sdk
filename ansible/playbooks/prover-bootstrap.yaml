@@ -16,5 +16,3 @@
       tags: gpu-drivers
     - role: docker
       tags: docker
-    - role: deploy
-      tags: deploy

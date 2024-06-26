@@ -10,9 +10,5 @@
     type: "{{type}}"
     proof_type: "{{vars[type]['proof_type']}}"
   roles:
-    - role: bootstrap
-      tags: bootstrap
-    - role: docker
-      tags: docker
     - role: deploy
       tags: deploy

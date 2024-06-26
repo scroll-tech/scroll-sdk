@@ -16,6 +16,7 @@
 export env=mainnet|sepolia
 export type=chunk|batch
 export user=your_ssh_user
-
+ansible-playbook  --ssh-extra-args='-o StrictHostKeyChecking=no' --private-key $your_key  prover-bootstrap.yaml  -u $user -e env=$env -e type=$type -i inventory/provers
+# Reboot your prover manually, and finally launch this playbook
 ansible-playbook  --ssh-extra-args='-o StrictHostKeyChecking=no' --private-key $your_key  prover-deploy.yaml  -u $user -e env=$env -e type=$type -i inventory/provers
 ```

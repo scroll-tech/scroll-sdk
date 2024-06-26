@@ -1,0 +1,8 @@
+- name: System details
+  debug:
+    msg: "{{ ansible_facts['lsb']['id'] }}"
+
+- name: Install ubuntu drivers
+  include_tasks:
+    file: ubuntu.yaml
+  when: ansible_facts['lsb']['id'] == "Ubuntu"

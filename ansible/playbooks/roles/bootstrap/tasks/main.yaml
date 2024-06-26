@@ -6,7 +6,11 @@
 
 - name: debug facts
   debug:
-    msg: "Value of env is {{env}} \n Value of type is {{type}} \n Value of pj_path is {{pj_path}} \n Value of the proof_type is {{proof_type}}"
+    msg:
+      - "Value of env is {{env}}"
+      - "Value of type is {{type}}"
+      - "Value of pj_path is {{pj_path}}"
+      - "Value of the proof_type is {{proof_type}}"
 
 - name: install pip
   apt:
