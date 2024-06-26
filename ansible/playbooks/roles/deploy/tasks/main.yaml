@@ -1,8 +1,8 @@
 - name: set env
   set_fact:
-    base_url: "{{base_url}}"
-    chain_id: "{{chain_id}}"
-    rpc_endpoint: "{{rpc}}"
+    base_url: "{{vars[env]['base_url']}}"
+    chain_id: "{{vars[env]['chain_id']}}"
+    rpc_endpoint: "{{vars[env]['rpc']}}"
 
 - name: Set fact for params
   set_fact:
