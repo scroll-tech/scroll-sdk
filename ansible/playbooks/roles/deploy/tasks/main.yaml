@@ -45,19 +45,14 @@
   file:
     path: "{{pj_path}}/{{ item }}"
     state: directory
-    owner: ubuntu
-    group: ubuntu
     mode: '0755'
   loop: "{{volume_dir}}"
-  become: true
 
 - name: copy prover compose
   template: src=./templates/docker-compose.yml.j2 dest={{pj_path}}/docker-compose.yml
-  become: true
 
 - name: copy prover config
   template: src=config.json.j2 dest={{pj_path}}/config.json
-  become: true
 
 - name: download params
   get_url:
