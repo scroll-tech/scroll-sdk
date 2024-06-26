@@ -32,16 +32,20 @@
   ignore_errors: true
 
 - name: delete old file
-  shell: \rm -rf {{pj_path}}/volume/bbolt_db {{pj_path}}/volume/proofs {{pj_path}}/volume/keystore.json
+  file:
+    path: "{{pj_path}}/{{ item }}"
+    state: absent
+  loop:
+    - "volume/bbolt_db"
+    - "volume/proofs"
+    - "volume/keystore.json"
   become: true
 
-- name: check dir pj_path
-  shell: "[[ -d {{pj_path}} ]] || mkdir -p {{pj_path}} && :"
-
 - name: mkdir volume
-  shell: "[[ -d {{item}} ]] || mkdir -p {{item}} && :"
-  args:
-    chdir: "{{pj_path}}"
+  file:
+    path: "{{pj_path}}/{{ item }}"
+    state: directory
+    mode: '0755'
   loop: "{{volume_dir}}"
 
 - name: copy prover compose
@@ -71,7 +75,8 @@
     mode: 0644
   with_items: "{{assets_bernoulli}}"
 
-- name: 2.7 update docker compose
-  shell: docker compose up -d
-  args:
-    chdir: "{{pj_path}}"
+- name: Run `docker-compose up` again
+  community.docker.docker_compose_v2:
+    project_src: "{{pj_path}}"
+    state: present
+

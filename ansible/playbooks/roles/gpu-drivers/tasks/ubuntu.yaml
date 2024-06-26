@@ -1,0 +1,24 @@
+- name: install ubuntu-drivers-common
+  apt:
+    name: ubuntu-drivers-common
+    state: present
+    update_cache: true
+  become: true
+
+- name: Check if NVIDIA drivers are already installed
+  shell: "dpkg -l | grep nvidia"
+  become: true
+  register: nvidia_installed
+  ignore_errors: true
+  changed_when: false
+
+- name: Install NVIDIA drivers
+  command: ubuntu-drivers autoinstall
+  become: true
+  when: nvidia_installed.rc != 0
+
+- name: Test NVIDIA driver
+  command: ubuntu-drivers devices
+  changed_when: false
+  register: ubuntu_drivers_output
+  failed_when: ubuntu_drivers_output.rc != 0

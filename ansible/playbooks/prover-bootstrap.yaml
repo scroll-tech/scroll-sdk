@@ -10,5 +10,9 @@
     type: "{{type}}"
     proof_type: "{{vars[type]['proof_type']}}"
   roles:
-    - role: deploy
-      tags: deploy
+    - role: bootstrap
+      tags: bootstrap
+    - role: gpu-drivers
+      tags: gpu-drivers
+    - role: docker
+      tags: docker
