@@ -2,7 +2,6 @@
 
 ## Prequisities
 - one ubuntu server with at least 350GB memory, 32cores, and GPU with at least 20GB memory.
-- one ubuntu vm with nvidia-driver installed.
 - one user with `sudo` no password all permissions or you can add change the [shared-vars.yaml](vars/shared-vars.yaml) to add the `ansible_become_password` variable in your file.
 
 ## Configs need to change
