@@ -8,6 +8,26 @@ metadata:
 data:
 {{ (.Files.Glob "balance-checker-config.json").AsConfig | indent 2 }}
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: balance-checker-env
+data:
+{{ (.Files.Glob "configs/balance-checker.env").AsConfig | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "blockscout" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: blockscout-env
+data:
+{{ (.Files.Glob "configs/blockscout.env").AsConfig | indent 2 }}
+---
 {{- end }}
 {{- if index .Values "bridge-history-api" "enabled" }}
 apiVersion: v1
@@ -62,5 +82,60 @@ metadata:
   name: frontends-config
 data:
 {{ (.Files.Glob ".env.frontend").AsConfig | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "l1-devnet" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: l1-devnet-env
+data:
+{{ (.Files.Glob "configs/l1-devnet.env").AsConfig | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "l1-explorer" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: l1-explorer-env
+data:
+{{ (.Files.Glob "configs/l1-explorer.env").AsConfig | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "l2-bootnode" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: l2-bootnode-env
+data:
+{{ (.Files.Glob "configs/l2-bootnode.env").AsConfig | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "l2-rpc" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: l2-rpc-env
+data:
+{{ (.Files.Glob "configs/l2-rpc.env").AsConfig | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "l2-sequencer" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: l2-sequencer-env
+data:
+{{ (.Files.Glob "configs/l2-sequencer.env").AsConfig | indent 2 }}
 ---
 {{- end }}

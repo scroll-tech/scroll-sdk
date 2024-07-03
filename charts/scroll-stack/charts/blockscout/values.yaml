@@ -14,10 +14,6 @@ image:
   tag: 6.6.0
 
 env:
-  - name: CHAIN_ID
-    value: 222222
-  - name: DATABASE_URL
-    value: "postgresql://postgres:qwerty12345@postgresql:5432/blockscout"
   - name: ECTO_USE_SSL
     value: false
   - name: ETHEREUM_JSONRPC_HTTP_URL
@@ -76,7 +72,7 @@ env:
 command: [
   "/bin/sh",
   "-c",
-  "/app/bin/blockscout start"
+  "source /config/blockscout.env && /app/bin/blockscout start"
 ]
 
 service:
@@ -116,6 +112,11 @@ persistence:
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
+  env:
+    enabled: yes
+    type: configMap
+    mountPath: /config/
+    name: blockscout-env
 
 initContainers:
   1-wait-for-postgres:

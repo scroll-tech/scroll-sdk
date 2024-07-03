@@ -14,10 +14,6 @@ image:
   tag: 6.6.0
 
 env:
-  - name: CHAIN_ID
-    value: 111111
-  - name: DATABASE_URL
-    value: "postgresql://postgres:qwerty12345@postgresql:5432/l1-explorer"
   - name: ECTO_USE_SSL
     value: false
   - name: ETHEREUM_JSONRPC_HTTP_URL
@@ -68,7 +64,7 @@ env:
 command: [
   "/bin/sh",
   "-c",
-  "/app/bin/blockscout start"
+  "source /config/l1-explorer.env && /app/bin/blockscout start"
 ]
 
 service:
@@ -97,6 +93,11 @@ probes:
 
 
 persistence:
+  env:
+    enabled: yes
+    type: configMap
+    mountPath: /config/
+    name: l1-explorer-env
   init-db:
     enabled: yes
     type: configMap

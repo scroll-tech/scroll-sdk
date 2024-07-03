@@ -45,8 +45,6 @@ probes:
     << : *default_probes
 
 env:
-  - name: CHAIN_ID
-    value: "222222"
   - name: L2GETH_ROLE
     value: rpc
   - name: L2GETH_NODEKEY
@@ -82,7 +80,8 @@ env:
 
 command: ["bash",
   "-c",
-  "geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
+  "source /config/l2-rpc.env && \ 
+  geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
   echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && \
   geth \
     --datadir \"/l2geth/data\" \
@@ -122,6 +121,11 @@ persistence:
     mountPath: /l2geth/data
     accessMode: ReadWriteOnce
     size: 10Gi
+  env:
+    enabled: yes
+    type: configMap
+    mountPath: /config/
+    name: l2-rpc-env
   genesis:
     enabled: yes
     type: configMap

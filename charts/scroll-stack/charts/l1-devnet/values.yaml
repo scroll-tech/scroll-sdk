@@ -14,7 +14,7 @@ image:
   tag: v0.0.2
 
 command:
-  ["/bin/bash","-c","source /chain-id/chain-id.txt && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"]
+  ["/bin/bash","-c","source /config/l1-devnet.env && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"]
 
 
 resources:
@@ -25,29 +25,7 @@ resources:
     memory: "500Mi"
     cpu: "100m"
 
-initContainers:
-  get-chain-id:
-    image: busybox
-    env:
-      - name: DATABASE_URL
-        value: "postgresql://postgres:qwerty12345@postgresql:5432/blockscout"
-    command: ["/bin/sh", "-c"]
-    args:
-      - >
-        CHAIN_ID=$(grep 'CHAIN_ID_L1' /config/config.toml | awk -F'=' '{print $2}' | tr -d ' "') && 
-        echo "CHAIN_ID=\"${CHAIN_ID}\"" > /chain-id/chain-id.txt && cat /chain-id/chain-id.txt;
-    volumeMounts:
-      - name: config-toml
-        mountPath: /config
-      - name: chain-id
-        mountPath: /chain-id
-
 persistence:
-  config-toml:
-    enabled: yes
-    type: configMap
-    mountPath: /config
-    name: scroll-smart-contracts-config
   chain-id:
     enabled: yes
     type: pvc
@@ -60,6 +38,11 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
     mounthPath: /data
+  env:
+    enabled: yes
+    type: configMap
+    mountPath: /config/
+    name: l1-devnet-env
 
 service:
   main:

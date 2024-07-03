@@ -51,6 +51,11 @@ persistence:
     type: configMap
     mountPath: /app/config/
     name: balance-checker-config
+  env:
+    enabled: yes
+    type: configMap
+    mountPath: /config/
+    name: balance-checker-env
 
 service:
   main:

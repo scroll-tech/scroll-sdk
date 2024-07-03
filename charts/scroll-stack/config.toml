@@ -39,8 +39,10 @@ L2GETH_SIGNER_0_ADDRESS = "0x756EA06BDEe36de11F22DCca45a31d8a178eF3c6"
 [db]
 
 SCROLL_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
+BLOCKSCOUT_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/blockscout"
 BRIDGE_HISTORY_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
 CHAIN_MONITOR_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
+L1_EXPLORER_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/l1-explorer"
 
 [genesis]
 
