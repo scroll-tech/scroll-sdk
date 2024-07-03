@@ -1,7 +1,7 @@
 #!/bin/bash
-
 # This script creates a dedicated env file for each service needing it from the config.toml file
 # We hence centralize the configuration of the services on the config.toml file.
+
 
 CONFIG_TOML="charts/scroll-stack/config.toml"
 
