@@ -55,7 +55,6 @@ command: ["bash",
           echo ${L2GETH_PASSWORD} > /l2geth/password && \
           echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && \
           echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && \
-          env && \
           geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
           geth --datadir \"/l2geth/data\" \
           --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" \
