@@ -9,3 +9,5 @@ install:
 reload-env-files:
 		bash create-env-files.sh
 
+uninstall:
+		helm uninstall scroll-stack

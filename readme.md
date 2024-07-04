@@ -29,6 +29,7 @@ Before getting started, be sure to install the following:
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/) (for local dev cluster)
 - [Helm](https://helm.sh/docs/intro/install/)
+- `make` command
 
 ## Bootstrap
 Run the following command to bootstrap helm and the config files:
