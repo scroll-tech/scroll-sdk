@@ -109,7 +109,13 @@ initContainers:
       - postgresql:5432
       - --timeout
       - "0"
-  2-check-postgres-connection:
+  2-migrate-db:
+    image: blockscout/blockscout:6.6.0
+    command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
+    envFrom:
+      - configMapRef:
+          name: l1-explorer-env
+  3-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
@@ -119,12 +125,7 @@ initContainers:
     envFrom:
       - configMapRef:
           name: l1-explorer-env
-  3-migrate-db:
-    image: blockscout/blockscout:6.6.0
-    command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
-    envFrom:
-      - configMapRef:
-          name: l1-explorer-env
+
 ingress:
   main:
     enabled: true
