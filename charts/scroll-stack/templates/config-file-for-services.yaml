@@ -143,7 +143,7 @@ metadata:
     {{- include "scroll-stack.labels" $ | nindent 4 }}
   name: l1-devnet-env
 data:
-{{ (.Files.Glob "configs/l1-devnet.env").AsConfig | indent 2 }}
+{{ .Files.Get "configs/l1-devnet.env" | indent 2 }}
 ---
 {{- end }}
 {{- if index .Values "l1-explorer" "enabled" }}
