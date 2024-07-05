@@ -69,10 +69,14 @@ env:
   - name: CHAIN_SPEC_PATH
     value: /app/genesis/genesis.json
 
+envFrom:
+  - configMapRef:
+      name: blockscout-env
+
 command: [
   "/bin/sh",
   "-c",
-  "source /config/blockscout.env && /app/bin/blockscout start"
+  "/app/bin/blockscout start"
 ]
 
 service:
@@ -128,15 +132,18 @@ initContainers:
       - "0"
   2-migrate-db:
     image: blockscout/blockscout:6.6.0
-    env:
-    - name: DATABASE_URL
-      value: "postgresql://postgres:qwerty12345@postgresql:5432/blockscout"
     command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
+    envFrom:
+      - configMapRef:
+          name: blockscout-env
   3-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - postgres://postgres:qwerty12345@postgresql:5432/blockscout?sslmode=disable
+      - $(DATABASE_URL)
+    envFrom:
+      - configMapRef:
+          name: blockscout-env
 
 ingress:
   main:

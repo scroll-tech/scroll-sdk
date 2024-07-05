@@ -19,10 +19,6 @@ env:
     value: 0.0.0.0
   - name: SLACK_NOTIFY_URL
     value: ""
-  - name: SCROLL_L1_RPC
-    value: "http://l1-devnet:8545/l1"
-  - name: SCROLL_L2_RPC
-    value: "http://l2-rpc:8545"
 
 initContainers:
   wait-for-other-pod:

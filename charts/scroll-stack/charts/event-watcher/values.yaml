@@ -72,9 +72,12 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable
+      - $(DATABASE_URL)
       - --timeout
       - "0"
+    envFrom:
+      - configMapRef:
+          name: event-watcher-env
   4-migrate-db:
     image: scrolltech/rollup-db-cli
     command: ["/bin/sh","-c","db_cli migrate --config /config/migrate-db.json"]
@@ -85,10 +88,13 @@ initContainers:
   5-wait-for-l1-devnet:
     image: atkrad/wait4x:latest
     args:
-      - tcp
-      - l1-devnet:8545
-      - --timeout
-      - "0"
+      - http
+      - $(SCROLL_L1_RPC)
+      - --expect-status-code
+      - "400"
+    envFrom:
+      - configMapRef:
+          name: event-watcher-env
   6-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:

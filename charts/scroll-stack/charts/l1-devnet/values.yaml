@@ -14,8 +14,11 @@ image:
   tag: v0.0.2
 
 command:
-  ["/bin/bash","-c","source /config/l1-devnet.env && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"]
+  ["/bin/bash","-c","anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"]
 
+envFrom:
+  - configMapRef:
+      name: l1-devnet-env
 
 resources:
   requests:
@@ -38,11 +41,6 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
     mounthPath: /data
-  env:
-    enabled: yes
-    type: configMap
-    mountPath: /config/
-    name: l1-devnet-env
 
 service:
   main:

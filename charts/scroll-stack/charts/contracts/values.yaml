@@ -3,8 +3,6 @@ image:
   repository: scrolltech/scroll-stack-contracts
   tag: deploy-977f5701
 
-env:
-  - name: L1_RPC_ENDPOINT
-    value: "http://l1-devnet:8545"
-  - name: L2_RPC_ENDPOINT
-    value: "http://l2-sequencer:8545"
+envFrom:
+  - configMapRef:
+      name: contracts-env

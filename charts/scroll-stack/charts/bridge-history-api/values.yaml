@@ -27,19 +27,26 @@ initContainers:
   1-wait-for-l1-devnet:
     image: atkrad/wait4x:latest
     args:
-      - tcp
-      - l1-devnet:8545
-      - --timeout
-      - "0"
+      - http
+      - $(SCROLL_L1_RPC)
+      - --expect-status-code
+      - "400"
+    envFrom:
+      - configMapRef:
+          name: bridge-history-api-env
+
   2-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:
       - http
-      - http://l2-sequencer:8545
+      - $(SCROLL_L2_RPC)
       - --expect-status-code
       - "200"
       - --timeout
       - "0"
+    envFrom:
+      - configMapRef:
+          name: bridge-history-api-env
 
 service:
   main:

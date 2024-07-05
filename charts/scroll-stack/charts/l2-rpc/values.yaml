@@ -53,8 +53,6 @@ env:
     value: '["enode://848a7d59dd8f60dd1a51160e6bc15c194937855443de9be4b2abd83e11a5c4ac21d61d065448c5c520826fe83f1f29eb5a452daccca27b8113aa897074132507@l2-sequencer:30303"]'
   - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK
     value: "0"
-  - name: L2GETH_L1_ENDPOINT
-    value: "http://l1-devnet:8545"
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
     value: "0x6"
   - name: L2GETH_RPC_HTTP_PORT
@@ -78,10 +76,13 @@ env:
   - name: L2GETH_EXTRA_PARAMS
     value: ""
 
+envFrom:
+  - configMapRef:
+      name: l2-rpc-env
+
 command: ["bash",
   "-c",
-  "source /config/l2-rpc.env && \ 
-  geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
+  "geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
   echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && \
   geth \
     --datadir \"/l2geth/data\" \
@@ -109,10 +110,13 @@ initContainers:
   wait-for-l1-devnet:
     image: atkrad/wait4x:latest
     args:
-      - tcp
-      - l1-devnet:8545
-      - --timeout
-      - "0"
+      - http
+      - $(L2GETH_L1_ENDPOINT)
+      - --expect-status-code
+      - "400"
+    envFrom:
+      - configMapRef:
+          name: l2-rpc-env
 
 persistence:
   data:

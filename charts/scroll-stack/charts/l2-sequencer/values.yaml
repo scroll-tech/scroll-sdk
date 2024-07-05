@@ -26,8 +26,6 @@ env:
     value: [""]
   - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK
     value: "0"
-  - name: L2GETH_L1_ENDPOINT
-    value: "http://l1-devnet:8545"
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
     value: "0x6"
   - name: L2GETH_LOCALS
@@ -47,10 +45,13 @@ env:
   - name: VERBOSITY
     value: "3"
 
+envFrom:
+  - configMapRef:
+      name: l2-sequencer-env
+
 command: ["bash",
           "-c",
-          "source /config/l2-sequencer.env && \ 
-          mkdir -p /l2geth/data/keystore && \
+          "mkdir -p /l2geth/data/keystore && \
           mkdir -p /l2geth/data/geth && \ 
           echo ${L2GETH_PASSWORD} > /l2geth/password && \
           echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && \
@@ -79,10 +80,13 @@ initContainers:
   wait-for-l1-devnet:
     image: atkrad/wait4x:latest
     args:
-      - tcp
-      - l1-devnet:8545
-      - --timeout
-      - "0"
+      - http
+      - $(L2GETH_L1_ENDPOINT)
+      - --expect-status-code
+      - "400"
+    envFrom:
+      - configMapRef:
+          name: l2-sequencer-env
 
 service:
   main:
