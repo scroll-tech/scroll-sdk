@@ -1,7 +1,7 @@
 bootstrap:
 		bash helm-bootstrap.sh
 		bash create-env-files.sh
-		cd charts/scroll-stack && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-977f5701
+		cd charts/scroll-stack && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-f69fc7b5
 
 install:
 		helm install scroll-stack charts/scroll-stack
