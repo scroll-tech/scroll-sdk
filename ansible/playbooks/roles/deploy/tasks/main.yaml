@@ -16,7 +16,7 @@
 
 - name: Set fact for assets_bernoulli
   set_fact:
-    assets_bernoulli: "{{ assets_bernoulli | default([]) + [bucket_aws + '/' + release_version + '/' + item] }}"
+    assets_bernoulli: "{{ assets_bernoulli | default([]) + [bucket_aws + '/' + release_version_low + '/' + item] }}"
   loop: "{{ vars[type]['assets'] }}"
 
 - name: debug facts
