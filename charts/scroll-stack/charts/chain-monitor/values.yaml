@@ -43,6 +43,11 @@ persistence:
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
+  wait-for-l1-script:
+    enabled: yes
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
 
 service:
   main:
@@ -127,16 +132,20 @@ initContainers:
     envFrom:
       - configMapRef:
           name: chain-monitor-env
-  4-wait-for-l1-devnet:
-    image: atkrad/wait4x:latest
-    args:
-      - http
-      - $(SCROLL_L1_RPC)
-      - --expect-status-code
-      - "400"
+  4-wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $SCROLL_L1_RPC
     envFrom:
       - configMapRef:
           name: chain-monitor-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
+
   5-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:

@@ -24,16 +24,19 @@ env:
     value: "8090"
 
 initContainers:
-  1-wait-for-l1-devnet:
-    image: atkrad/wait4x:latest
-    args:
-      - http
-      - $(SCROLL_L1_RPC)
-      - --expect-status-code
-      - "400"
+  1-wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $SCROLL_L1_RPC
     envFrom:
       - configMapRef:
           name: bridge-history-api-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
 
   2-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
@@ -66,6 +69,11 @@ persistence:
     type: configMap
     mountPath: /app/conf/
     name: bridge-history-config
+  wait-for-l1-script:
+    enabled: yes
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
 
 resources:
   requests:

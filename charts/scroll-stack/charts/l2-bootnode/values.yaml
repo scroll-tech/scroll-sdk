@@ -67,16 +67,19 @@ command: ["bash",
   ]
 
 initContainers:
-  wait-for-l1-devnet:
-    image: atkrad/wait4x:latest
-    args:
-      - http
-      - $(L2GETH_L1_ENDPOINT)
-      - --expect-status-code
-      - "400"
+  wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $L2GETH_L1_ENDPOINT
     envFrom:
       - configMapRef:
           name: l2-bootnode-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
 
 defaultProbes: &default_probes
   enabled: false
@@ -111,6 +114,11 @@ persistence:
     type: configMap
     mountPath: /l2geth/genesis/
     name: genesis-config
+  wait-for-l1-script:
+    enabled: yes
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
 
 service:
   main:
