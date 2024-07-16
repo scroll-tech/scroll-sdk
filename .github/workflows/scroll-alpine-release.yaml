@@ -1,9 +1,9 @@
-name: Build and publish l1-devnet image
+name: Build and publish scroll-alpine image
 
 on:
   push:
     tags:
-      - 'l1-devnet-*'
+      - 'scroll-alpine-*'
 jobs:
   build:
     name: Clone, Build, Publish
@@ -29,20 +29,20 @@ jobs:
         id: extract_tag
         run: |
           # Extract the tag version part from the ref name
-          VERSION=$(echo "${GITHUB_REF##*/}" | sed 's/^l1-devnet-//')
+          VERSION=$(echo "${GITHUB_REF##*/}" | sed 's/^scroll-alpine-//')
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Build image
         id: build
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: l1-devnet
+          REPOSITORY: scroll-alpine
         uses: docker/build-push-action@v3
         with:
           platforms: linux/amd64,linux/arm64
           push: true
           context: .
-          file: custom-images/l1-devnet/Dockerfile
+          file: custom-images/scroll-alpine/Dockerfile
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:${{ env.VERSION }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPOSITORY }}:latest
