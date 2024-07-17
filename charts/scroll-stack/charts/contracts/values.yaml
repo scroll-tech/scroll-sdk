@@ -1,7 +1,7 @@
 ---
 image:
   repository: scrolltech/scroll-stack-contracts
-  tag: deploy-f69fc7b5
+  tag: deploy-0277a66
 
 envFrom:
   - configMapRef:
