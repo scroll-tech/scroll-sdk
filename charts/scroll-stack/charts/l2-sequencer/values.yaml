@@ -24,8 +24,6 @@ env:
     value: "2f59ff2fdee1c42a3d8c8980c313bc8d6c2557463f7bb92b0f0bc89a6d3cbf01"
   - name: L2GETH_PEER_LIST
     value: [""]
-  - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK
-    value: "0"
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
     value: "0x6"
   - name: L2GETH_LOCALS
