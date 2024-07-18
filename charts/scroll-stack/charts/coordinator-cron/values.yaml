@@ -6,7 +6,7 @@ global:
 image:
   repository: scrolltech/coordinator-cron
   pullPolicy: Always
-  tag: v4.4.20
+  tag: v4.4.26
 
 env:
   - name: HTTP_PORT

@@ -1,7 +1,7 @@
 ---
 release_version: "release-v0.11.4"
 release_version_low: "release-v0.10.3"
-docker_tag: "v4.4.20-d454941c-38a68e2-2818da7"
+docker_tag: "v4.4.26"
 #ansible_become_password: "xxx"
 bucket_aws: "https://circuit-release.s3.us-west-2.amazonaws.com"
 pj_path: "/prover/go-prover-docker"
