@@ -107,8 +107,9 @@ grafana:
     enabled: true
     hosts: ["grafana.scrollsdk"]
 
+# Service under testing, do not use
 rollup-explorer-backend:
-  enabled: true
+  enabled: false
   ingress:
     main:
       enabled: true

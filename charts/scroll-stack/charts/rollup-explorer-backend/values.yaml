@@ -16,31 +16,24 @@ image:
 ports:
   - containerPort: &container_port 8080
 
-#env:
-#  - name: BIND_PORT
-#    value: *container_port
-#    #TODO change this to read only user
-#  - name: DB_URL
-#    value: "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
-#  - name: OPEN_API_ADDR
-#    value: "/rollupscan"
-#  - name: MAX_PER_PAGE
-#    value: 500
-#  - name: RUST_LOG
-#    value: debug
+env:
+  - name: BIND_PORT
+    value: *container_port
+    #TODO change this to read only user and make the variable dynamic
+  - name: DB_URL
+    value: "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
+  - name: OPEN_API_ADDR
+    value: "/rollupscan"
+  - name: MAX_PER_PAGE
+    value: 500
+  - name: RUST_LOG
+    value: debug
 
-
-#command: [
-#  "/bin/sh",
-#  "-c",
-#  "sleep 3600",
-#]
-#
-#command: [
-#  "/bin/sh",
-#  "-c",
-#  "mkdir /app/config/ && cp /config/rollup-config.json /app/config/config.json && rollup_explorer"
-#]
+command: [
+  "/bin/sh",
+  "-c",
+  "mkdir /app/config/ && cp /config/rollup-config.json /app/config/config.json && rollup_explorer"
+]
 
 resources:
   requests:
