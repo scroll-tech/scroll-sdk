@@ -90,8 +90,14 @@ extract_from_config_toml() {
     # Add quotes around the value if it doesn't have already
     value=$(echo $value | sed -E 's/^([0-9]+)$/\"\1\"/')
 
+    # Ensure the directory exists
+    mkdir -p charts/scroll-stack/configs
+
+    # Ensure the file exists
+    touch charts/scroll-stack/configs/$service.env
+
     # Export the value as the target variable
-    echo "$target_var: $value" >> charts/scroll-stack/configs/$service.env
+    echo "$target_var=$value" >> charts/scroll-stack/configs/$service.env
   }
 
   # Loop through the source:target pairs
@@ -115,6 +121,11 @@ services=("balance-checker" "bridge-history-api" "bridge-history-fetcher" "block
 # Loop over the list of services and execute the function
 for service in "${services[@]}"; do
     get_service_variables $service
-    rm charts/scroll-stack/configs/$service.env
+    
+    # Check if the file exists before attempting to remove it
+    if [ -f "charts/scroll-stack/configs/$service.env" ]; then
+        rm "charts/scroll-stack/configs/$service.env"
+    fi
+
     extract_from_config_toml $CONFIG_TOML $service $(get_service_variables $service)
 done
