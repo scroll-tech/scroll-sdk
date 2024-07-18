@@ -97,7 +97,7 @@ extract_from_config_toml() {
     touch charts/scroll-stack/configs/$service.env
 
     # Export the value as the target variable
-    echo "$target_var=$value" >> charts/scroll-stack/configs/$service.env
+    echo "$target_var: $value" >> charts/scroll-stack/configs/$service.env
   }
 
   # Loop through the source:target pairs
