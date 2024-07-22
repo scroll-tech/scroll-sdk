@@ -90,6 +90,15 @@ metadata:
 data:
 {{ (.Files.Glob "coordinator-config.json").AsConfig | indent 2 }}
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-stack.labels" $ | nindent 4 }}
+  name: coordinator-env
+data:
+{{ .Files.Get "configs/coordinator.env" | indent 2 }}
+---
 {{- end }}
 {{- if index .Values "contracts" "enabled" }}
 apiVersion: v1

@@ -38,7 +38,8 @@ L2_GAS_ORACLE_SENDER_ADDR = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
 L2GETH_SIGNER_0_ADDRESS = "0x756EA06BDEe36de11F22DCca45a31d8a178eF3c6"
 
 [db]
-
+DATABASE_HOST = "postgresql"
+DATABASE_PORT = 5432
 SCROLL_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
 BLOCKSCOUT_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/blockscout"
 BRIDGE_HISTORY_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
