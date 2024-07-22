@@ -11,10 +11,7 @@ spec:
         - name: contracts-deployment
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           env:
-          {{- range $env := .Values.env }}
-            - name: {{ $env.name }}
-              value: {{ $env.value }}
-          {{- end }}
+          {{- toYaml .Values.env | nindent 12 }}
           envFrom:
             {{- toYaml .Values.envFrom | nindent 10 }}
           volumeMounts:
