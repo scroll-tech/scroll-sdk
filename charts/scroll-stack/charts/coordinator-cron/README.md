@@ -1,0 +1,97 @@
+# coordinator-cron
+
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+
+coordinator-cron helm charts
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| scroll-sre | <sebastien@scroll.io> |  |
+
+## Requirements
+
+Kubernetes: `>=1.22.0-0`
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../../../common-lib/ | common | 1.5.1 |
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| command[0] | string | `"/bin/sh"` |  |
+| command[1] | string | `"-c"` |  |
+| command[2] | string | `"coordinator_cron --config /app/conf/coordinator-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"` |  |
+| defaultProbes.custom | bool | `true` |  |
+| defaultProbes.enabled | bool | `true` |  |
+| defaultProbes.spec.httpGet.path | string | `"/health"` |  |
+| defaultProbes.spec.httpGet.port | int | `8090` |  |
+| env[0].name | string | `"HTTP_PORT"` |  |
+| env[0].value | string | `"8555"` |  |
+| env[1].name | string | `"WS_PORT"` |  |
+| env[1].value | string | `"8556"` |  |
+| env[2].name | string | `"RUST_LOG"` |  |
+| env[2].value | string | `"info"` |  |
+| env[3].name | string | `"METRICS_PORT"` |  |
+| env[3].value | string | `"8090"` |  |
+| env[4].name | string | `"GIN_MODE"` |  |
+| env[4].value | string | `"release"` |  |
+| global.fullnameOverride | string | `"coordinator-cron"` |  |
+| global.nameOverride | string | `"coordinator-cron"` |  |
+| image.pullPolicy | string | `"Always"` |  |
+| image.repository | string | `"scrolltech/coordinator-cron"` |  |
+| image.tag | string | `"v4.4.26"` |  |
+| initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
+| initContainers.1-wait-for-postgres.args[1] | string | `"$(DATABASE_HOST):$(DATABASE_PORT)"` |  |
+| initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
+| initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
+| initContainers.1-wait-for-postgres.envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |
+| initContainers.1-wait-for-postgres.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.2-check-postgres-connection.args[0] | string | `"postgresql"` |  |
+| initContainers.2-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.2-check-postgres-connection.args[2] | string | `"--timeout"` |  |
+| initContainers.2-check-postgres-connection.args[3] | string | `"0"` |  |
+| initContainers.2-check-postgres-connection.envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |
+| initContainers.2-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
+| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.mountPath | string | `"/app/conf/"` |  |
+| persistence.app_name.name | string | `"coordinator-config"` |  |
+| persistence.app_name.type | string | `"configMap"` |  |
+| persistence.genesis.enabled | string | `"yes"` |  |
+| persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
+| persistence.genesis.name | string | `"genesis-config"` |  |
+| persistence.genesis.type | string | `"configMap"` |  |
+| probes.liveness.<<.custom | bool | `true` |  |
+| probes.liveness.<<.enabled | bool | `true` |  |
+| probes.liveness.<<.spec.httpGet.path | string | `"/health"` |  |
+| probes.liveness.<<.spec.httpGet.port | int | `8090` |  |
+| probes.readiness.<<.custom | bool | `true` |  |
+| probes.readiness.<<.enabled | bool | `true` |  |
+| probes.readiness.<<.spec.httpGet.path | string | `"/health"` |  |
+| probes.readiness.<<.spec.httpGet.port | int | `8090` |  |
+| probes.startup.<<.custom | bool | `true` |  |
+| probes.startup.<<.enabled | bool | `true` |  |
+| probes.startup.<<.spec.httpGet.path | string | `"/health"` |  |
+| probes.startup.<<.spec.httpGet.port | int | `8090` |  |
+| resources.limits.cpu | string | `"100m"` |  |
+| resources.limits.memory | string | `"200Mi"` |  |
+| resources.requests.cpu | string | `"50m"` |  |
+| resources.requests.memory | string | `"50Mi"` |  |
+| service.main.enabled | bool | `true` |  |
+| service.main.ports.http.enabled | bool | `true` |  |
+| service.main.ports.http.port | int | `80` |  |
+| service.main.ports.metrics.enabled | bool | `true` |  |
+| service.main.ports.metrics.port | int | `8090` |  |
+| service.main.ports.metrics.targetPort | int | `8090` |  |
+| serviceMonitor.main.enabled | bool | `true` |  |
+| serviceMonitor.main.endpoints[0].interval | string | `"1m"` |  |
+| serviceMonitor.main.endpoints[0].port | string | `"metrics"` |  |
+| serviceMonitor.main.endpoints[0].scrapeTimeout | string | `"10s"` |  |
+| serviceMonitor.main.labels.release | string | `"scroll-stack"` |  |
+| serviceMonitor.main.serviceName | string | `"{{ include \"scroll.common.lib.chart.names.fullname\" $ }}"` |  |
+
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
