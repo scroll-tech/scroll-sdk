@@ -115,7 +115,7 @@ Kubernetes: `>=1.22.0-0`
 | resources.requests.memory | string | `"100Mi"` |  |
 | service.main.enabled | bool | `true` |  |
 | service.main.ports.http.enabled | bool | `true` |  |
-| service.main.ports.http.port | int | `80` |  |
+| service.main.ports.http.port | int | `8080` |  |
 | service.main.ports.metrics.enabled | bool | `true` |  |
 | service.main.ports.metrics.port | int | `8090` |  |
 | service.main.ports.metrics.targetPort | int | `8090` |  |
