@@ -37,7 +37,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"chain-monitor"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/chain-monitorv2"` |  |
-| image.tag | string | `"v1.1.20"` |  |
+| image.tag | string | `"v1.1.26"` |  |
 | initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
 | initContainers.1-wait-for-postgres.args[1] | string | `"postgresql:5432"` |  |
 | initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
@@ -75,6 +75,12 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.3-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
 | initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.4-migrate-db.command[0] | string | `"/bin/sh"` |  |
+| initContainers.4-migrate-db.command[1] | string | `"-c"` |  |
+| initContainers.4-migrate-db.command[2] | string | `"chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate"` |  |
+| initContainers.4-migrate-db.image | string | `"scrolltech/chain-monitorv2:v1.1.26"` |  |
+| initContainers.4-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
+| initContainers.4-migrate-db.volumeMounts[0].name | string | `"chain-monitor"` |  |
 | initContainers.4-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.4-wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.4-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $SCROLL_L1_RPC"` |  |

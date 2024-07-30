@@ -6,7 +6,7 @@ global:
 image:
   repository: scrolltech/chain-monitorv2
   pullPolicy: Always
-  tag: v1.1.25
+  tag: v1.1.26
 
 env:
   - name: CHAIN_MONITOR_SERVER_PORT
@@ -132,6 +132,15 @@ initContainers:
     envFrom:
       - configMapRef:
           name: chain-monitor-env
+  4-migrate-db:
+    image: scrolltech/chain-monitorv2:v1.1.26
+    command:
+      - /bin/sh
+      - -c
+      - chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate
+    volumeMounts:
+      - name: *app_name
+        mountPath: /app/config/
   4-wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1
     command:

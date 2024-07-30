@@ -65,7 +65,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"l2-rpc"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"v5.2.1-arm64"` |  |
+| image.tag | string | `"v5.5.17-arm64"` |  |
 | initContainers.1-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.1-wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.1-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |
