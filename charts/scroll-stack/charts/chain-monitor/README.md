@@ -25,10 +25,7 @@ Kubernetes: `>=1.22.0-0`
 | command[0] | string | `"/bin/sh"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"chain-monitor --config /app/config/chain-monitor-config.json --http --http.port ${CHAIN_MONITOR_SERVER_PORT} --metrics --metrics.addr 0.0.0.0 --metrics.port ${CHAIN_MONITOR_METRICS_PORT} --verbosity 3"` |  |
-| defaultProbes.custom | bool | `true` |  |
-| defaultProbes.enabled | bool | `true` |  |
-| defaultProbes.spec.httpGet.path | string | `"/"` |  |
-| defaultProbes.spec.httpGet.port | int | `8090` |  |
+| defaultProbes.enabled | bool | `false` |  |
 | env[0].name | string | `"CHAIN_MONITOR_SERVER_PORT"` |  |
 | env[0].value | int | `8080` |  |
 | env[1].name | string | `"CHAIN_MONITOR_METRICS_PORT"` |  |
@@ -109,18 +106,9 @@ Kubernetes: `>=1.22.0-0`
 | persistence.wait-for-l1-script.enabled | string | `"yes"` |  |
 | persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |
 | persistence.wait-for-l1-script.type | string | `"configMap"` |  |
-| probes.liveness.<<.custom | bool | `true` |  |
-| probes.liveness.<<.enabled | bool | `true` |  |
-| probes.liveness.<<.spec.httpGet.path | string | `"/"` |  |
-| probes.liveness.<<.spec.httpGet.port | int | `8090` |  |
-| probes.readiness.<<.custom | bool | `true` |  |
-| probes.readiness.<<.enabled | bool | `true` |  |
-| probes.readiness.<<.spec.httpGet.path | string | `"/"` |  |
-| probes.readiness.<<.spec.httpGet.port | int | `8090` |  |
-| probes.startup.<<.custom | bool | `true` |  |
-| probes.startup.<<.enabled | bool | `true` |  |
-| probes.startup.<<.spec.httpGet.path | string | `"/"` |  |
-| probes.startup.<<.spec.httpGet.port | int | `8090` |  |
+| probes.liveness.<<.enabled | bool | `false` |  |
+| probes.readiness.<<.enabled | bool | `false` |  |
+| probes.startup.<<.enabled | bool | `false` |  |
 | resources.limits.cpu | string | `"100m"` |  |
 | resources.limits.memory | string | `"500Mi"` |  |
 | resources.requests.cpu | string | `"50m"` |  |

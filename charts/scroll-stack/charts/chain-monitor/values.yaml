@@ -62,12 +62,7 @@ service:
         targetPort: 8090
 
 defaultProbes: &default_probes
-  enabled: true
-  custom: true
-  spec:
-    httpGet:
-      path: "/"
-      port: 8090
+  enabled: false
 
 probes:
   liveness:
