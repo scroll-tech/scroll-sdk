@@ -106,28 +106,11 @@ extract_from_config_toml() {
       return
     fi
 
+    # Add quotes around the value if it doesn't have already
+    value=$(echo $value | sed -E 's/^([0-9]+)$/\"\1\"/')
+
     # Export the value as the target variable
-    if [ $service == "contracts" ]; then
-        # Remove quotes around the value if it have
-        value=$(echo "$value" | sed -E 's/^"(.*)"$/\1/')
-
-        # Change internal rpc urls to external
-        if [ "$value" == "http://l1-devnet:8545" ]; then
-            value="http://l1-devnet.scrollsdk"
-        fi
-
-        if [ "$value" == "http://l2-sequencer:8545" ]; then
-            value="http://l2-rpc.scrollsdk"
-        fi
-
-
-        echo "$target_var=$value" >> charts/scroll-stack/configs/$service.env
-    else
-        # Add quotes around the value if it doesn't have already
-        value=$(echo $value | sed -E 's/^([0-9]+)$/\"\1\"/')
-
-        echo "$target_var: $value" >> charts/scroll-stack/configs/$service.env
-    fi
+    echo "$target_var: $value" >> charts/scroll-stack/configs/$service.env
   }
 
   # Loop through the source:target pairs

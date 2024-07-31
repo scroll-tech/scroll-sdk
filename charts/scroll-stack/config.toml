@@ -48,6 +48,7 @@ EVENT_WATCHER_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql
 GAS_ORACLE_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
 L1_EXPLORER_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/l1-explorer"
 ROLLUP_NODE_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
+ROLLUP_EXPLORER_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
 
 [frontend]
 
