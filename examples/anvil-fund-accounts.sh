@@ -1,13 +1,23 @@
 #!/bin/bash
 # This script funds the default L1 accounts when using an Anvil devnet.
 
+read_config() {
+    yq eval "$1" charts/scroll-stack/config.toml
+}
+
+L1_RPC_URL=$(read_config '.frontend.EXTERNAL_RPC_URI_L1')
+
 # Array of addresses
-addresses=("0x70997970C51812dc3A010C7d01b50e0d17dc79C8" "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC" "0x90F79bf6EB2c4f870365E785982E1f101E93b906")  # Replace with your actual addresses
+addresses=(
+  "$(read_config '.accounts.L1_COMMIT_SENDER_ADDR')"
+  "$(read_config '.accounts.L1_FINALIZE_SENDER_ADDR')"
+  "$(read_config '.accounts.L1_GAS_ORACLE_SENDER_ADDR')"
+)
 
 # Loop through each address and call the curl command
 for address in "${addresses[@]}"
 do
-  curl --location 'http://l1-devnet.scrollsdk/' \
+  curl --location "$L1_RPC_URL" \
   --header 'Content-Type: application/json' \
   --data '{
     "jsonrpc":"2.0",
