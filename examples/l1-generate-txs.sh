@@ -26,5 +26,5 @@ do
   cast send --rpc-url "$L1_RPC_URL" --private-key "$PRIVATE_KEY" "$RECIPIENT_ADDR" --value "0.1gwei"
   
   # Wait for 1 second
-  sleep 1
+  sleep 5
 done
