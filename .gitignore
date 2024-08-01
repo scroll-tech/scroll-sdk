@@ -6,8 +6,10 @@ config-contracts.toml
 charts/scroll-stack/*.json
 .env.frontend
 charts/scroll-values.yaml
+
 .DS_Store
 
 charts/scroll-stack/configs/*.env
 charts/scroll-stack/broadcast/
 .vscode/
+
