@@ -121,23 +121,23 @@ initContainers:
 
 persistence:
   data:
-    enabled: yes
+    enabled: true
     type: pvc
     mountPath: /l2geth/data
     accessMode: ReadWriteOnce
     size: 10Gi
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: l2-rpc-env
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /l2geth/genesis/
     name: genesis-config
   wait-for-l1-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"

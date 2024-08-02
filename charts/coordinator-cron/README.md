@@ -56,11 +56,11 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.2-check-postgres-connection.envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |
 | initContainers.2-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
-| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/conf/"` |  |
 | persistence.app_name.name | string | `"coordinator-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
-| persistence.genesis.enabled | string | `"yes"` |  |
+| persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |

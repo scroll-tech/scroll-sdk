@@ -65,12 +65,12 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-wait-for-l2-sequencer.args[5] | string | `"0"` |  |
 | initContainers.2-wait-for-l2-sequencer.envFrom[0].configMapRef.name | string | `"bridge-history-api-env"` |  |
 | initContainers.2-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
-| persistence.bridge-history-api.enabled | string | `"yes"` |  |
+| persistence.bridge-history-api.enabled | bool | `true` |  |
 | persistence.bridge-history-api.mountPath | string | `"/app/conf/"` |  |
 | persistence.bridge-history-api.name | string | `"bridge-history-config"` |  |
 | persistence.bridge-history-api.type | string | `"configMap"` |  |
 | persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |
-| persistence.wait-for-l1-script.enabled | string | `"yes"` |  |
+| persistence.wait-for-l1-script.enabled | bool | `true` |  |
 | persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |
 | persistence.wait-for-l1-script.type | string | `"configMap"` |  |
 | probes.liveness.<<.custom | bool | `true` |  |

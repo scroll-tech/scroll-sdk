@@ -5,3 +5,9 @@ repos:
       - id: helm-docs
         args:
           - --chart-search-root=charts/
+  -   repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v2.3.0
+      hooks:
+        -   id: check-yaml
+        -   id: end-of-file-fixer
+        -   id: trailing-whitespace

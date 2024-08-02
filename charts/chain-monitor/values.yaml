@@ -33,18 +33,18 @@ resources:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/config/
     name: chain-monitor-config
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
   wait-for-l1-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"

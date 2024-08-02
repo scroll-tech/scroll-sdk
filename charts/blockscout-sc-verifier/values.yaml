@@ -32,7 +32,7 @@ env:
     value: "0 0 * * * * *"
   - name: SMART_CONTRACT_VERIFIER__SOLIDITY__FETCHER__LIST__LIST_URL
     value: "https://solc-bin.ethereum.org/linux-amd64/list.json"
-    #value: "https://solc-bin.ethereum.org/macosx-arm64/list.json"
+    # value: "https://solc-bin.ethereum.org/macosx-arm64/list.json"
   - name: SMART_CONTRACT_VERIFIER__VYPER__ENABLED
     value: true
   - name: SMART_CONTRACT_VERIFIER__VYPER__COMPILERS_DIR

@@ -90,12 +90,12 @@ probes:
 
 persistence:
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: l1-explorer-env
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db

@@ -220,7 +220,7 @@ kube-prometheus-stack:
   nameOverride: prometheus
   fullnameOverride: prometheus
   prometheus:
-    enabled: yes
+    enabled: true
   alertmanager:
     enabled: false
   grafana:

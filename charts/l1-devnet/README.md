@@ -37,12 +37,12 @@ Kubernetes: `>=1.22.0-0`
 | image.repository | string | `"scrolltech/l1-devnet"` |  |
 | image.tag | string | `"v0.0.2"` |  |
 | persistence.chain-id.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.chain-id.enabled | string | `"yes"` |  |
+| persistence.chain-id.enabled | bool | `true` |  |
 | persistence.chain-id.mounthPath | string | `"/chain-id"` |  |
 | persistence.chain-id.size | string | `"10Mi"` |  |
 | persistence.chain-id.type | string | `"pvc"` |  |
 | persistence.data.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.data.enabled | string | `"yes"` |  |
+| persistence.data.enabled | bool | `true` |  |
 | persistence.data.mounthPath | string | `"/data"` |  |
 | persistence.data.size | string | `"10Gi"` |  |
 | persistence.data.type | string | `"pvc"` |  |

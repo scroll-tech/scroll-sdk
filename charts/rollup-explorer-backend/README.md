@@ -52,7 +52,7 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.ingressClassName | string | `"nginx"` |  |
 | ingress.main.labels | object | `{}` |  |
 | ingress.main.primary | bool | `true` |  |
-| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"rollup-explorer-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |

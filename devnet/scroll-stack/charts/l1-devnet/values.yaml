@@ -30,13 +30,13 @@ resources:
 
 persistence:
   chain-id:
-    enabled: yes
+    enabled: true
     type: pvc
     accessMode: ReadWriteOnce
     size: 10Mi
     mounthPath: /chain-id
   data:
-    enabled: yes
+    enabled: true
     type: pvc
     accessMode: ReadWriteOnce
     size: 10Gi

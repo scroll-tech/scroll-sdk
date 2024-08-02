@@ -39,7 +39,7 @@ resources:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/conf/
     name: frontends-config

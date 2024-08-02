@@ -68,7 +68,7 @@ probes:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/config/
     name: rollup-explorer-config

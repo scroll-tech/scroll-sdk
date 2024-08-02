@@ -106,18 +106,18 @@ probes:
 
 persistence:
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: blockscout-env

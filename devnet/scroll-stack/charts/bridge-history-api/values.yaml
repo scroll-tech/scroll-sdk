@@ -62,15 +62,15 @@ service:
         enabled: true
         port: 8090
         targetPort: 8090
-    
+
 persistence:
   bridge-history-api:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/conf/
     name: bridge-history-config
   wait-for-l1-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"

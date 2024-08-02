@@ -24,7 +24,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth &&   echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain '*' --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine $CCC_FLAG --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
+| command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth && echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain '*' --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine $CCC_FLAG --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
 | configMaps.config.data."config.toml" | string | `"[Node.P2P] StaticNodes = \"[]\"\n"` |  |
 | configMaps.config.enabled | bool | `true` |  |
 | controller.replicas | int | `1` |  |
@@ -77,26 +77,26 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.wait-for-l1.volumeMounts[0].name | string | `"wait-for-l1-script"` |  |
 | initContainers.wait-for-l1.volumeMounts[0].subPath | string | `"wait-for-l1.sh"` |  |
 | persistence.data.accessMode | string | `"ReadWriteOnce"` |  |
-| persistence.data.enabled | string | `"yes"` |  |
+| persistence.data.enabled | bool | `true` |  |
 | persistence.data.mountPath | string | `"/l2geth/data/"` |  |
 | persistence.data.name | string | `"l2geth-data"` |  |
 | persistence.data.size | string | `"10Gi"` |  |
 | persistence.data.type | string | `"pvc"` |  |
-| persistence.env.enabled | string | `"yes"` |  |
+| persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"l2-sequencer-env"` |  |
 | persistence.env.type | string | `"configMap"` |  |
-| persistence.genesis.enabled | string | `"yes"` |  |
+| persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/l2geth/genesis/genesis.json"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.subPath | string | `"genesis.json"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |
-| persistence.l2-sequencer.enabled | string | `"yes"` |  |
+| persistence.l2-sequencer.enabled | bool | `true` |  |
 | persistence.l2-sequencer.mountPath | string | `"/l2geth/conf/"` |  |
 | persistence.l2-sequencer.name | string | `"l2-sequencer-config"` |  |
 | persistence.l2-sequencer.type | string | `"configMap"` |  |
 | persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |
-| persistence.wait-for-l1-script.enabled | string | `"yes"` |  |
+| persistence.wait-for-l1-script.enabled | bool | `true` |  |
 | persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |
 | persistence.wait-for-l1-script.type | string | `"configMap"` |  |
 | probes.liveness.<<.custom | bool | `true` |  |

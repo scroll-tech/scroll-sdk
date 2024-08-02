@@ -50,7 +50,7 @@ envFrom:
 command: ["bash",
           "-c",
           "mkdir -p /l2geth/data/keystore && \
-          mkdir -p /l2geth/data/geth && \ 
+          mkdir -p /l2geth/data/geth && \
           echo ${L2GETH_PASSWORD} > /l2geth/password && \
           echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && \
           echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && \
@@ -136,30 +136,30 @@ probes:
 
 persistence:
   data:
-    enabled: yes
+    enabled: true
     type: pvc
     mountPath: /l2geth/data/
     name: l2geth-data
     size: 10Gi
     accessMode: ReadWriteOnce
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: l2-sequencer-env
   l2-sequencer:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /l2geth/conf/
     name: l2-sequencer-config
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /l2geth/genesis/genesis.json
     subPath: genesis.json
     name: genesis-config
   wait-for-l1-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"

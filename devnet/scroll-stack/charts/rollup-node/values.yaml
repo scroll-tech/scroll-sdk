@@ -54,29 +54,29 @@ probes:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/conf/
     name: rollup-node-config
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
   migrate-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/migrate-db.json
     name: rollup-node-migrate-db
     defaultMode: "0777"
   wait-for-l1-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"

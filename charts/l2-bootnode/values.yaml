@@ -61,7 +61,7 @@ command: ["bash",
     $METRICS_FLAGS \
     --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG \
     --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" \
-    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \ 
+    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
     --metrics --metrics.expensive \
     $L2GETH_EXTRA_PARAMS"
   ]
@@ -99,23 +99,23 @@ probes:
 
 persistence:
   data:
-    enabled: yes
+    enabled: true
     type: pvc
     mountPath: /l2geth/data
     accessMode: ReadWriteOnce
     size: 10Gi
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: l2-bootnode-env
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /l2geth/genesis/
     name: genesis-config
   wait-for-l1-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"

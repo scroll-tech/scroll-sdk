@@ -101,12 +101,12 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.3-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"l1-explorer-env"` |  |
 | initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
-| persistence.env.enabled | string | `"yes"` |  |
+| persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"l1-explorer-env"` |  |
 | persistence.env.type | string | `"configMap"` |  |
 | persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | string | `"yes"` |  |
+| persistence.init-db.enabled | bool | `true` |  |
 | persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
 | persistence.init-db.name | string | `"init-db"` |  |
 | persistence.init-db.type | string | `"configMap"` |  |
