@@ -8,7 +8,7 @@ blockscout helm charts
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| scroll-sre | <sebastien@scroll.io> |  |
+| scroll-tech | <sebastien@scroll.io> |  |
 
 ## Requirements
 
@@ -16,7 +16,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../../../common-lib/ | common | 1.5.1 |
+| file://../common-lib/ | common | 1.5.1 |
 
 ## Values
 
@@ -115,16 +115,16 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.3-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
 | initContainers.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
 | initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
-| persistence.env.enabled | string | `"yes"` |  |
+| persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"blockscout-env"` |  |
 | persistence.env.type | string | `"configMap"` |  |
-| persistence.genesis.enabled | string | `"yes"` |  |
+| persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |
 | persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | string | `"yes"` |  |
+| persistence.init-db.enabled | bool | `true` |  |
 | persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
 | persistence.init-db.name | string | `"init-db"` |  |
 | persistence.init-db.type | string | `"configMap"` |  |
