@@ -8,7 +8,7 @@ l2-bootnode helm chart
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| scroll-sre | <sebastien@scroll.io> |  |
+| scroll-tech | <sebastien@scroll.io> |  |
 
 ## Requirements
 

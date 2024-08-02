@@ -10,7 +10,7 @@ scroll helm charts to deploy scroll's stack
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| scroll-sre | <sebastien@scroll.io> |  |
+| scroll-tech | <sebastien@scroll.io> |  |
 
 ## Source Code
 

@@ -8,7 +8,7 @@ coordinator-cron helm charts
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| scroll-sre | <sebastien@scroll.io> |  |
+| scroll-tech | <sebastien@scroll.io> |  |
 
 ## Requirements
 
