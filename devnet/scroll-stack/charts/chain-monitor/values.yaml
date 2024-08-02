@@ -1,0 +1,172 @@
+---
+global:
+  nameOverride: &app_name chain-monitor
+  fullnameOverride: *app_name
+
+image:
+  repository: scrolltech/chain-monitorv2
+  pullPolicy: Always
+  tag: v1.1.26
+
+env:
+  - name: CHAIN_MONITOR_SERVER_PORT
+    value: 8080
+  - name: CHAIN_MONITOR_METRICS_PORT
+    value: 8090
+
+command:
+  [
+    "/bin/sh",
+    "-c",
+    "chain-monitor --config /app/config/chain-monitor-config.json --http --http.port ${CHAIN_MONITOR_SERVER_PORT} \
+    --metrics --metrics.addr 0.0.0.0 --metrics.port ${CHAIN_MONITOR_METRICS_PORT} \
+     --verbosity 3"
+  ]
+
+resources:
+  requests:
+    memory: "100Mi"
+    cpu: "50m"
+  limits:
+    memory: "500Mi"
+    cpu: "100m"
+
+persistence:
+  *app_name:
+    enabled: yes
+    type: configMap
+    mountPath: /app/config/
+    name: chain-monitor-config
+  init-db:
+    enabled: yes
+    type: configMap
+    mountPath: /init-db.sh
+    name: init-db
+    defaultMode: "0777"
+  wait-for-l1-script:
+    enabled: yes
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 8080
+      metrics:
+        enabled: true
+        port: 8090
+        targetPort: 8090
+
+defaultProbes: &default_probes
+  enabled: false
+
+probes:
+  liveness:
+    << : *default_probes
+  readiness:
+    << : *default_probes
+  startup:
+    << : *default_probes
+
+initContainers:
+  1-wait-for-postgres:
+    image: atkrad/wait4x:latest
+    args:
+      - tcp
+      - postgresql:5432
+      - --timeout
+      - "0"
+  2-init-db:
+    image: postgres:latest
+    env:
+      - name: POSTGRES_DB
+        value: scroll
+      - name: PG_USER
+        valueFrom:
+          secretKeyRef:
+            name: db-secrets
+            key: PG_USER
+      - name: PGPASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: db-secrets
+            key: PGPASSWORD
+      - name: PG_HOST
+        valueFrom:
+          secretKeyRef:
+            name: db-secrets
+            key: PG_HOST
+      - name: PG_PORT
+        valueFrom:
+          secretKeyRef:
+            name: db-secrets
+            key: PG_PORT
+      - name: DB_USER
+        value: chain_monitor
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: db-secrets
+            key: CHAIN_MONITOR_PASSWORD
+    command: ["bash","-c","./init-db.sh"]
+    volumeMounts:
+      - name: init-db
+        mountPath: /init-db.sh
+        subPath: init-db.sh
+  3-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - configMapRef:
+          name: chain-monitor-env
+  4-migrate-db:
+    image: scrolltech/chain-monitorv2:v1.1.26
+    command:
+      - /bin/sh
+      - -c
+      - chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate
+    volumeMounts:
+      - name: *app_name
+        mountPath: /app/config/
+  4-wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $SCROLL_L1_RPC
+    envFrom:
+      - configMapRef:
+          name: chain-monitor-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
+
+  5-wait-for-l2-sequencer:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - http://l2-sequencer:8545
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
+
+serviceMonitor:
+  main:
+    enabled: true
+    labels:
+      release: scroll-stack
+    serviceName: '{{ include "scroll.common.lib.chart.names.fullname" $ }}'
+    endpoints:
+      - port: metrics
+        interval: 1m
+        scrapeTimeout: 10s

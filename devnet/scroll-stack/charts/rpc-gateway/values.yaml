@@ -1,0 +1,71 @@
+---
+global:
+  nameOverride: &app_name rpc-gateway
+  fullnameOverride: *app_name
+
+image:
+  repository: scrolltech/rpc-gateway
+  pullPolicy: Always
+  tag: v0.0.2
+
+env:
+  - name: INFURA_LOG_LEVEL
+    value: info
+  - name: INFURA_NODE_ETHURLS
+    value: http://l2-rpc:8545
+  - name: INFURA_NODE_ETHWSURLS
+    value: ws://l2-rpc:8546
+  - name: INFURA_NODE_ETHLOGNODES
+    value: http://l2-rpc:8545
+  - name: INFURA_ETHRPC_EXPOSEDMODULES
+    value: eth web3 net
+  - name: INFURA_ETHRPC_ENDPOINT
+    value: 0.0.0.0:8545
+  - name: INFURA_ETHRPC_WSENDPOINT
+    value: 0.0.0.0:8546
+  - name: INFURA_DEBUGRPC_ENDPOINT
+    value: 0.0.0.0:8645
+  - name: INFURA_METRICS_ENABLED
+    value: "false"
+  - name: INFURA_METRICS_REPORT_ENABLED
+    value: "false"
+
+initContainers:
+  wait-for-l2-rpc:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - http://l2-rpc:8545
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
+
+resources:
+  requests:
+    memory: "50Mi"
+    cpu: "10m"
+  limits:
+    memory: "100Mi"
+    cpu: "100m"
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 8545
+      ws:
+        enabled: true
+        port: 8546
+
+args: ["rpc", "--eth", "debug"]
+
+probes:
+  liveness:
+    enabled: false
+  readiness:
+    enabled: false
+  startup:
+    enabled: false

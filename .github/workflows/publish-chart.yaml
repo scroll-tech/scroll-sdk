@@ -1,0 +1,125 @@
+name: Lint, test and publish charts
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'charts/**'
+
+jobs:
+  changed:
+    runs-on: ubuntu-latest
+    outputs:
+      charts: ${{ steps.list-changed.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.7.2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.2.0
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        env:
+          CT_DEBUG: "false"
+        run: |
+          # changed=$(ct list-changed --config .github/ct.yaml)
+          # [[ -n "$changed" ]] &&
+          # ( echo -e "Charts changed :\n$changed\n" && echo "::set-output name=changed::$(echo $changed | sed "s/\n/ /g")" ) ||
+          # ( echo "No changes - failing" && exit 1 )
+          echo "::set-output name=changed::$(echo 'charts')"
+          echo "charts"
+
+  helm-chart-testing:
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.1
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.6.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run chart-testing (lint)
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct lint --target-branch ${{ github.event.repository.default_branch }} --config .github/ct.yaml
+
+#  publish-ghcr:
+#    name: publish-to-github
+#    environment: test
+#    runs-on: ubuntu-latest
+#    needs:
+#      - changed
+#      - helm-chart-testing
+#    outputs:
+#      charts: ${{ steps.list-changed.outputs.changed }}
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          fetch-depth: 0
+#      - uses: dorny/paths-filter@v2
+#        id: filter
+#        with:
+#          base: ${{ github.ref }}
+#          list-files: shell
+#          filters: |
+#            addedOrModified:
+#              - added|modified: 'charts/**'
+#
+#      - name: Add Helm registry login
+#        run: |
+#          helm registry login ghcr.io/scroll-tech/sre-helm-charts --username scroll-argocd --password $HELM_GITHUB_PASSWORD
+#        env:
+#          HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
+#
+#      - name: Push chart to ghcr
+#        if: steps.filter.outputs.addedOrModified == 'true'
+#        env:
+#          HELM_EXPERIMENTAL_OCI: 1
+#        run: |
+#          set -x
+#          CHARTS=()
+#          PATHS=(${{ steps.filter.outputs.addedOrModified_files }})
+#          echo ${PATHS}
+#          # Get only the chart paths
+#          for i in "${PATHS[@]}"
+#          do
+#            CHARTS+=($(echo $i | awk -F "/" '{print $2}'))
+#          done
+#          # Remove duplicates
+#          CHARTS=( `for i in ${CHARTS[@]}; do echo $i; done | sort -u` )
+#          echo "CHARTS: ${CHARTS[@]}"
+#          for chart in ${CHARTS[@]}; do
+#            helm dependencies build charts/$chart
+#            helm package charts/$chart
+#            export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
+#            helm push $chart-${CHART_VERSION}.tgz oci://ghcr.io/scroll-tech/sre-helm-charts
+#          done
