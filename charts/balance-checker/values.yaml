@@ -28,7 +28,7 @@ initContainers:
       - -c
       - >
         set -x;
-        while [ $(curl -sw '%{http_code}' "l2-rpc:8545" -o /dev/null) -ne 200 ] && 
+        while [ $(curl -sw '%{http_code}' "l2-rpc:8545" -o /dev/null) -ne 200 ] &&
         [ $(curl -sw '%{http_code}' "l1-devnet:8545" -o /dev/null) -ne 404 ]; do
           sleep 5;
         done
@@ -43,12 +43,12 @@ resources:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/config/
     name: balance-checker-config
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: balance-checker-env
@@ -75,11 +75,11 @@ defaultProbes: &default_probes
 
 probes:
   liveness:
-    << : *default_probes
+    <<: *default_probes
   readiness:
-    << : *default_probes
+    <<: *default_probes
   startup:
-    << : *default_probes
+    <<: *default_probes
 
 serviceMonitor:
   main:
