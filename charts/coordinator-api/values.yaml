@@ -329,8 +329,8 @@ ingress:
   main:
     enabled: true
     primary: true
-    annotations: { }
-    labels: { }
+    annotations: {}
+    labels: {}
     ingressClassName: "nginx"
     hosts:
       - host: coordinator-api.scrollsdk
