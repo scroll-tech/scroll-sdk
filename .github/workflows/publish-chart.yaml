@@ -2,9 +2,9 @@ name: Lint, test and publish charts
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - 'charts/**'
+#    branches: [ main ]
+#    paths:
+#      - 'charts/**'
 
 jobs:
   changed:
