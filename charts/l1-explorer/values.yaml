@@ -81,11 +81,11 @@ defaultProbes: &default_probes
 
 probes:
   liveness:
-    << : *default_probes
+    <<: *default_probes
   readiness:
-    << : *default_probes
+    <<: *default_probes
   startup:
-    << : *default_probes
+    <<: *default_probes
 
 
 persistence:
@@ -114,7 +114,7 @@ initContainers:
           name: l1-explorer-env
   2-migrate-db:
     image: blockscout/blockscout:6.6.0
-    command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
+    command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:
       - configMapRef:
           name: l1-explorer-env

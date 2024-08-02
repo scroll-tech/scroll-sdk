@@ -78,11 +78,11 @@ defaultProbes: &default_probes
 
 probes:
   liveness:
-    << : *default_probes
+    <<: *default_probes
   readiness:
-    << : *default_probes
+    <<: *default_probes
   startup:
-    << : *default_probes
+    <<: *default_probes
 
 env:
   - name: METRICS_PORT
@@ -128,7 +128,7 @@ initContainers:
           secretKeyRef:
             name: db-secrets
             key: GAS_ORACLE_PASSWORD
-    command: ["bash","-c","./init-db.sh"]
+    command: ["bash", "-c", "./init-db.sh"]
     volumeMounts:
       - name: init-db
         mountPath: /init-db.sh
@@ -145,7 +145,7 @@ initContainers:
           name: event-watcher-env
   4-migrate-db:
     image: scrolltech/rollup-db-cli
-    command: ["/bin/sh","-c","db_cli migrate --config /config/migrate-db.json"]
+    command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
     volumeMounts:
       - name: migrate-db
         mountPath: /config/migrate-db.json

@@ -60,11 +60,11 @@ defaultProbes: &default_probes
 
 probes:
   liveness:
-    << : *default_probes
+    <<: *default_probes
   readiness:
-    << : *default_probes
+    <<: *default_probes
   startup:
-    << : *default_probes
+    <<: *default_probes
 
 persistence:
   *app_name:

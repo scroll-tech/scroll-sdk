@@ -129,7 +129,7 @@ initContainers:
           secretKeyRef:
             name: db-secrets
             key: ROLLUP_NODE_PASSWORD
-    command: ["bash","-c","./init-db.sh"]
+    command: ["bash", "-c", "./init-db.sh"]
     volumeMounts:
       - name: init-db
         mountPath: /init-db.sh
@@ -146,7 +146,7 @@ initContainers:
           name: rollup-node-env
   4-migrate-db:
     image: scrolltech/rollup-db-cli
-    command: ["/bin/sh","-c","db_cli migrate --config /config/migrate-db.json"]
+    command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
     volumeMounts:
       - name: migrate-db
         mountPath: /config/migrate-db.json

@@ -66,11 +66,11 @@ defaultProbes: &default_probes
 
 probes:
   liveness:
-    << : *default_probes
+    <<: *default_probes
   readiness:
-    << : *default_probes
+    <<: *default_probes
   startup:
-    << : *default_probes
+    <<: *default_probes
 
 initContainers:
   1-wait-for-postgres:
@@ -112,7 +112,7 @@ initContainers:
           secretKeyRef:
             name: db-secrets
             key: CHAIN_MONITOR_PASSWORD
-    command: ["bash","-c","./init-db.sh"]
+    command: ["bash", "-c", "./init-db.sh"]
     volumeMounts:
       - name: init-db
         mountPath: /init-db.sh
