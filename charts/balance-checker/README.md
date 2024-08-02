@@ -16,7 +16,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../../../common-lib/ | common | 1.5.1 |
+| file://../common-lib/ | common | 1.5.1 |
 
 ## Values
 
@@ -43,13 +43,13 @@ Kubernetes: `>=1.22.0-0`
 | image.tag | string | `"0.0.2"` |  |
 | initContainers.wait-for-other-pod.args[0] | string | `"/bin/sh"` |  |
 | initContainers.wait-for-other-pod.args[1] | string | `"-c"` |  |
-| initContainers.wait-for-other-pod.args[2] | string | `"set -x; while [ $(curl -sw '%{http_code}' \"l2-rpc:8545\" -o /dev/null) -ne 200 ] &&  [ $(curl -sw '%{http_code}' \"l1-devnet:8545\" -o /dev/null) -ne 404 ]; do\n  sleep 5;\ndone\n"` |  |
+| initContainers.wait-for-other-pod.args[2] | string | `"set -x; while [ $(curl -sw '%{http_code}' \"l2-rpc:8545\" -o /dev/null) -ne 200 ] && [ $(curl -sw '%{http_code}' \"l1-devnet:8545\" -o /dev/null) -ne 404 ]; do\n  sleep 5;\ndone\n"` |  |
 | initContainers.wait-for-other-pod.image | string | `"curlimages/curl"` |  |
-| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"balance-checker-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
-| persistence.env.enabled | string | `"yes"` |  |
+| persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"balance-checker-env"` |  |
 | persistence.env.type | string | `"configMap"` |  |

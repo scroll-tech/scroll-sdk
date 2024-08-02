@@ -1,7 +1,7 @@
 remote: origin
 target-branch: develop
 chart-dirs:
-  - ./
-validate-maintainers: false
+  - charts
+validate-maintainers: true
 check-version-increment: false #TODO set to true
 debug: true
