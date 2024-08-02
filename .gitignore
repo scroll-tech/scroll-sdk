@@ -10,6 +10,6 @@ charts/scroll-values.yaml
 .DS_Store
 
 charts/scroll-stack/configs/*.env
-charts/scroll-stack/broadcast/
+devnet/scroll-stack/broadcast/
 .vscode/
 
