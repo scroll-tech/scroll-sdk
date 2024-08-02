@@ -97,27 +97,27 @@ defaultProbes: &default_probes
 
 probes:
   liveness:
-    << : *default_probes
+    <<: *default_probes
   readiness:
-    << : *default_probes
+    <<: *default_probes
   startup:
-    << : *default_probes
+    <<: *default_probes
 
 
 persistence:
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
   env:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /config/
     name: blockscout-env
@@ -135,7 +135,7 @@ initContainers:
           name: blockscout-env
   2-migrate-db:
     image: blockscout/blockscout:6.6.0
-    command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
+    command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:
       - configMapRef:
           name: blockscout-env
