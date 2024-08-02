@@ -2,8 +2,8 @@ name: Lint,test charts
 
 on:
   push:
-    paths:
-      - "charts/**"
+#    paths:
+#      - "charts/**"
 
 jobs:
   changed:
