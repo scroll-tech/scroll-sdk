@@ -58,7 +58,7 @@ jobs:
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.0
-        
+
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
@@ -71,88 +71,54 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         run: ct lint --target-branch ${{ github.event.repository.default_branch }}
 
-#      - name: Run chart-testing (list-changed)
-#        id: list-changed
-#        run: |
-#          changed=$(ct list-changed --config .github/ct.yaml --target-branch ${{ github.event.repository.default_branch }})
-#          if [[ -n "$changed" ]]; then
-#            echo "changed=true" >> "$GITHUB_OUTPUT"
-#          fi
+  publish-ghcr:
+    name: publish-to-github
+    environment: test
+    runs-on: ubuntu-latest
+    needs:
+      - helm-chart-testing
+    outputs:
+      charts: ${{ steps.list-changed.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: ${{ github.ref }}
+          list-files: shell
+          filters: |
+            addedOrModified:
+              - added|modified: 'charts/**'
 
-#      - name: Run chart-testing (lint)
-#        if: steps.list-changed.outputs.changed == 'true'
-#        run: ct lint --charts ./charts/balance-checker \
-#            ./charts/blockscout \
-#            ./charts/blockscout-sc-verifier \
-#            ./charts/bridge-history-api \
-#            ./charts/bridge-history-fetcher \
-#            ./charts/chain-monitor \
-#            ./charts/contracts \
-#            ./charts/coordinator-api \
-#            ./charts/coordinator-cron \
-#            ./charts/event-watcher \
-#            ./charts/frontends \
-#            ./charts/gas-oracle \
-#            ./charts/l1-devnet \
-#            ./charts/l1-explorer \
-#            ./charts/l2-bootnode \
-#            ./charts/l2-rpc \
-#            ./charts/l2-sequencer \
-#            ./charts/load-testing \
-#            ./charts/rollup-explorer-backend \
-#            ./charts/rollup-node \
-#            ./charts/rpc-gateway
-        #run: ct lint --target-branch ${{ github.event.repository.default_branch }} --config .github/ct.yaml
+      - name: Add Helm registry login
+        run: |
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username scroll-argocd --password $HELM_GITHUB_PASSWORD
+        env:
+          HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
-#  publish-ghcr:
-#    name: publish-to-github
-#    environment: test
-#    runs-on: ubuntu-latest
-#    needs:
-#      - changed
-#      - helm-chart-testing
-#    outputs:
-#      charts: ${{ steps.list-changed.outputs.changed }}
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#      - uses: dorny/paths-filter@v2
-#        id: filter
-#        with:
-#          base: ${{ github.ref }}
-#          list-files: shell
-#          filters: |
-#            addedOrModified:
-#              - added|modified: 'charts/**'
-#
-#      - name: Add Helm registry login
-#        run: |
-#          helm registry login ghcr.io/scroll-tech/sre-helm-charts --username scroll-argocd --password $HELM_GITHUB_PASSWORD
-#        env:
-#          HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
-#
-#      - name: Push chart to ghcr
-#        if: steps.filter.outputs.addedOrModified == 'true'
-#        env:
-#          HELM_EXPERIMENTAL_OCI: 1
-#        run: |
-#          set -x
-#          CHARTS=()
-#          PATHS=(${{ steps.filter.outputs.addedOrModified_files }})
-#          echo ${PATHS}
-#          # Get only the chart paths
-#          for i in "${PATHS[@]}"
-#          do
-#            CHARTS+=($(echo $i | awk -F "/" '{print $2}'))
-#          done
-#          # Remove duplicates
-#          CHARTS=( `for i in ${CHARTS[@]}; do echo $i; done | sort -u` )
-#          echo "CHARTS: ${CHARTS[@]}"
-#          for chart in ${CHARTS[@]}; do
-#            helm dependencies build charts/$chart
-#            helm package charts/$chart
-#            export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
-#            helm push $chart-${CHART_VERSION}.tgz oci://ghcr.io/scroll-tech/sre-helm-charts
-#          done
+      - name: Push chart to ghcr
+        if: steps.filter.outputs.addedOrModified == 'true'
+        env:
+          HELM_EXPERIMENTAL_OCI: 1
+        run: |
+          set -x
+          CHARTS=()
+          PATHS=(${{ steps.filter.outputs.addedOrModified_files }})
+          echo ${PATHS}
+          # Get only the chart paths
+          for i in "${PATHS[@]}"
+          do
+            CHARTS+=($(echo $i | awk -F "/" '{print $2}'))
+          done
+          # Remove duplicates
+          CHARTS=( `for i in ${CHARTS[@]}; do echo $i; done | sort -u` )
+          echo "CHARTS: ${CHARTS[@]}"
+          for chart in ${CHARTS[@]}; do
+            helm dependencies build charts/$chart
+            helm package charts/$chart
+            export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
+            helm push $chart-${CHART_VERSION}.tgz oci://ghcr.io/scroll-tech/helm/scroll-sdk
+          done
