@@ -7,7 +7,6 @@ on:
 #      - 'charts/**'
 
 jobs:
-# TODO enable this later and fix all typo
   helm-chart-testing:
     runs-on: ubuntu-latest
     environment: test
@@ -40,7 +39,7 @@ jobs:
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+        run: ct lint --config ct.yaml --target-branch ${{ github.event.repository.default_branch }}
 
   publish-ghcr:
     name: publish-to-github
