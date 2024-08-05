@@ -80,6 +80,11 @@ persistence:
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"
+  wait-for-contracts-script:
+    enabled: yes
+    type: configMap
+    name: wait-for-contracts-script
+    defaultMode: "0777"
 
 initContainers:
   1-wait-for-postgres:
@@ -170,6 +175,19 @@ initContainers:
     envFrom:
       - configMapRef:
           name: rollup-node-env
+  7-wait-for-contracts:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - sh /wait-for-contracts.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR
+    envFrom:
+      - configMapRef:
+          name: rollup-node-env
+    volumeMounts:
+      - name: wait-for-contracts-script
+        mountPath: /wait-for-contracts.sh
+        subPath: wait-for-contracts.sh
 
 
 # Need genesis file and config.json

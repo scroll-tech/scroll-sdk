@@ -3,6 +3,7 @@
 # We hence centralize the configuration of the services on the config.toml file.
 
 CONFIG_TOML="charts/scroll-stack/config.toml"
+CONTRACT_CONFIG_TOML="charts/scroll-stack/config-contracts.toml"
 
 # Function to check if a file exists and delete it if it does
 delete_file_if_exists() {
@@ -64,7 +65,7 @@ get_service_variables() {
             echo "CHAIN_ID_L2:CHAIN_ID L1_RPC_ENDPOINT:L2GETH_L1_ENDPOINT L2GETH_SIGNER_0_ADDRESS:L2GETH_SIGNER_ADDRESS L1_CONTRACT_DEPLOYMENT_BLOCK:L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"
             ;;
         rollup-node)
-            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL DATABASE_HOST:DATABASE_HOST DATABASE_PORT:DATABASE_PORT"
+            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL DATABASE_HOST:DATABASE_HOST DATABASE_PORT:DATABASE_PORT L1_SCROLL_CHAIN_PROXY_ADDR:L1_SCROLL_CHAIN_PROXY_ADDR"
             ;;
         *)
             echo "Service $service_name not found."
@@ -80,12 +81,13 @@ extract_from_config_toml() {
     exit 1
   fi
 
-  # The first argument is the toml file
-  toml_file=$1
+  # The first 2 argument is the toml files
+  config_toml_file=$1
+  config_contracts_toml_file=$2
 
   # The first argument is the service name
-  service=$2
-  shift 2
+  service=$3
+  shift 3
 
   # Function to extract and export variables
   extract_and_export() {
@@ -94,8 +96,10 @@ extract_from_config_toml() {
     local target_var=$3
     local value
 
-    # Extract the value of the source variable from the toml file
-    value=$(grep -E "^${source_var} =" "$toml_file" | sed 's/ *= */=/' | cut -d'=' -f2-)
+    # Extract the value of the source variable from the toml files
+    combined_toml=$(cat "$config_toml_file" "$config_contracts_toml_file")
+    value=$(echo "$combined_toml" | grep -E "^${source_var} =" | sed 's/ *= */=/' | cut -d'=' -f2-)
+
 
     # Check if the value is found
     if [ -z "$value" ]; then
@@ -133,5 +137,5 @@ for service in "${services[@]}"; do
     get_service_variables $service
     env_file="charts/scroll-stack/configs/$service.env"
     delete_file_if_exists $env_file
-    extract_from_config_toml $CONFIG_TOML $service $(get_service_variables $service)
+    extract_from_config_toml $CONFIG_TOML $CONTRACT_CONFIG_TOML $service $(get_service_variables $service)
 done
