@@ -16,7 +16,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../../../common-lib/ | common | 1.5.1 |
+| file://../../../common/ | common | 1.5.1 |
 
 ## Values
 
