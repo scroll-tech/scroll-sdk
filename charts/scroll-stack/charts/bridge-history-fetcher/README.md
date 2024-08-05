@@ -44,9 +44,10 @@ Kubernetes: `>=1.22.0-0`
 | image.repository | string | `"scrolltech/bridgehistoryapi-fetcher"` |  |
 | image.tag | string | `"v4.4.14"` |  |
 | initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
-| initContainers.1-wait-for-postgres.args[1] | string | `"postgresql:5432"` |  |
+| initContainers.1-wait-for-postgres.args[1] | string | `"$(DATABASE_HOST):$(DATABASE_PORT)"` |  |
 | initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
 | initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
+| initContainers.1-wait-for-postgres.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
 | initContainers.1-wait-for-postgres.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.2-init-db.command[0] | string | `"bash"` |  |
 | initContainers.2-init-db.command[1] | string | `"-c"` |  |

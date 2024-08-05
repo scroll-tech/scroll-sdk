@@ -106,9 +106,12 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - tcp
-      - postgresql:5432
+      - $(DATABASE_HOST):$(DATABASE_PORT)
       - --timeout
       - "0"
+    envFrom:
+      - configMapRef:
+          name: l1-explorer-env
   2-migrate-db:
     image: blockscout/blockscout:6.6.0
     command: ["/bin/sh","-c","/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]

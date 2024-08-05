@@ -101,9 +101,10 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.labels | object | `{}` |  |
 | ingress.main.primary | bool | `true` |  |
 | initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
-| initContainers.1-wait-for-postgres.args[1] | string | `"postgresql:5432"` |  |
+| initContainers.1-wait-for-postgres.args[1] | string | `"$(DATABASE_HOST):$(DATABASE_PORT)"` |  |
 | initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
 | initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
+| initContainers.1-wait-for-postgres.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
 | initContainers.1-wait-for-postgres.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |

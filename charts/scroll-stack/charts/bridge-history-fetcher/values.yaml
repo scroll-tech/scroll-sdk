@@ -88,9 +88,12 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - tcp
-      - postgresql:5432
+      - $(DATABASE_HOST):$(DATABASE_PORT)
       - --timeout
       - "0"
+    envFrom:
+      - configMapRef:
+          name: bridge-history-fetcher-env
   2-init-db:
     image: postgres:latest
     env:
