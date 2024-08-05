@@ -1,5 +1,8 @@
 name: Lint, test and publish charts
 
+permissions:
+  packages: write
+
 on:
   push:
 #    branches: [ main ]
@@ -65,7 +68,8 @@ jobs:
 
       - name: Add Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username scroll-argocd --password $HELM_GITHUB_PASSWORD
+          # helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username scroll-argocd --password $HELM_GITHUB_PASSWORD
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
