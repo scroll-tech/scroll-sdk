@@ -16,7 +16,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../common/ | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
 
 ## Values
 

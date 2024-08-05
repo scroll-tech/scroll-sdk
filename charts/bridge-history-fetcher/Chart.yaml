@@ -10,5 +10,5 @@ maintainers:
     email: sebastien@scroll.io
 dependencies:
   - name: common
-    repository: "file://../common/"
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     version: 1.5.1
