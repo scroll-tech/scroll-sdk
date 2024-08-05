@@ -8,45 +8,45 @@ on:
 
 jobs:
 # TODO enable this later and fix all typo
-#  helm-chart-testing:
-#    runs-on: ubuntu-latest
-#    environment: test
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-#        with:
-#          fetch-depth: 0
-#
-#      - name: Set up Helm
-#        uses: azure/setup-helm@v3
-#        with:
-#          version: v3.12.1
-#
-#      - uses: actions/setup-python@v5
-#        with:
-#          python-version: '3.x'
-#          check-latest: true
-#
-#      - name: Set up chart-testing
-#        uses: helm/chart-testing-action@v2.6.0
-#
-#      - name: Run chart-testing (list-changed)
-#        id: list-changed
-#        run: |
-#          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
-#          if [[ -n "$changed" ]]; then
-#            echo "changed=true" >> "$GITHUB_OUTPUT"
-#          fi
-#
-#      - name: Run chart-testing (lint)
-#        if: steps.list-changed.outputs.changed == 'true'
-#        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+  helm-chart-testing:
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.6.0
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run chart-testing (lint)
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
 
   publish-ghcr:
     name: publish-to-github
     runs-on: ubuntu-latest
-#    needs:
-#      - helm-chart-testing
+    needs:
+      - helm-chart-testing
     outputs:
       charts: ${{ steps.list-changed.outputs.changed }}
     steps:
@@ -65,13 +65,12 @@ jobs:
 
       - name: Add Helm registry login
         run: |
-          # helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username scroll-argocd --password $HELM_GITHUB_PASSWORD
           helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
       - name: Push chart to ghcr
-#        if: steps.filter.outputs.addedOrModified == 'true'
+        if: steps.filter.outputs.addedOrModified == 'true'
         env:
           HELM_EXPERIMENTAL_OCI: 1
         run: |

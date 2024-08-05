@@ -166,7 +166,7 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - http
-      -  $(SCROLL_L2_RPC)
+      - $(SCROLL_L2_RPC)
       - --expect-status-code
       - "200"
       - --timeout

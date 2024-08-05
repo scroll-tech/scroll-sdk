@@ -57,10 +57,11 @@ envFrom:
   - configMapRef:
       name: l1-explorer-env
 
-command: [
-  "/bin/sh",
-  "-c",
-  "/app/bin/blockscout start"
+command:
+  [
+    "/bin/sh",
+    "-c",
+    "/app/bin/blockscout start"
   ]
 
 service:
