@@ -8,7 +8,7 @@ Function library for Helm charts
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| sebastien | <sebastien@scroll.io> |  |
+| scroll-tech | <sebastien@scroll.io> |  |
 
 ## Requirements
 

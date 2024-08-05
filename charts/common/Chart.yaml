@@ -5,8 +5,8 @@ keywords:
 - library
 kubeVersion: '>=1.22.0-0'
 maintainers:
-- email: sebastien@scroll.io
-  name: sebastien
+  - name: scroll-tech
+    email: sebastien@scroll.io
 name: common
 type: library
 version: 1.5.1
