@@ -90,5 +90,5 @@ jobs:
             helm dependencies build charts/$chart
             helm package charts/$chart
             export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
-            helm push $chart-${CHART_VERSION}.tgz oci://ghcr.io/scroll-tech/helm/scroll-sdk
+            helm push $chart-${CHART_VERSION}.tgz oci://ghcr.io/scroll-tech/helm
           done
