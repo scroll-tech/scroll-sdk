@@ -1,0 +1,38 @@
+apiVersion: v1
+entries:
+  balance-checker:
+  - apiVersion: v2
+    appVersion: v0.1.0
+    created: "2024-08-05T11:24:54.423456+02:00"
+    dependencies:
+    - name: common
+      repository: file://../common/
+      version: 1.5.1
+    description: balance-checker helm charts
+    digest: 9526c0d0df978e8a99385ece1f78aa9bcb7b199b4bd891e3f069166d51135c9c
+    kubeVersion: '>=1.22.0-0'
+    maintainers:
+    - email: sebastien@scroll.io
+      name: scroll-tech
+    name: balance-checker
+    urls:
+    - balance-checker-0.0.1.tgz
+    version: 0.0.1
+  common:
+  - apiVersion: v2
+    created: "2024-08-05T11:24:54.424762+02:00"
+    description: Function library for Helm charts
+    digest: 86090b147b2f95dc34376e942af068b7953f8f944e50e83e75a96d55b3b19468
+    keywords:
+    - common
+    - library
+    kubeVersion: '>=1.22.0-0'
+    maintainers:
+    - email: sebastien@scroll.io
+      name: sebastien
+    name: common
+    type: library
+    urls:
+    - charts/common-1.5.1.tgz
+    version: 1.5.1
+generated: "2024-08-05T11:24:54.42164+02:00"
