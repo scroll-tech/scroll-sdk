@@ -516,7 +516,7 @@ persistence:
     # If set to `-`, dynamic provisioning is disabled.
     # If set to something else, the given storageClass is used.
     # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
-    storageClass:  #"-"
+    storageClass:  # "-"
 
     # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
     existingClaim:  # your-claim
