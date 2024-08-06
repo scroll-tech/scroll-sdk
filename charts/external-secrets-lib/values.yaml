@@ -1,0 +1,9 @@
+---
+externalSecrets:
+  test-secret:
+    data:
+      - remoteRef:
+          key: devnet/prover-stats-api
+          property: config-json
+        secretKey: config-json
+    serviceAccount: external-secrets
