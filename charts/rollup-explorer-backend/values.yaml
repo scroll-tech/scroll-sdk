@@ -90,7 +90,7 @@ serviceMonitor:
   main:
     enabled: true
     labels:
-      release: scroll-stack
+      release: scroll-sdk
     serviceName: '{{ include "scroll.common.lib.chart.names.fullname" $ }}'
     endpoints:
       - port: metrics

@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+  name: init-db
+data:
+  #TODO the password '$DB_PASSWORD' is taken litteraly (not replaced by its value). if using \'$DB_PASSWORD\',got this error
+  #LINE 1: CREATE USER "rollup_node" WITH PASSWORD \'test1234\';
+  # 30/04/2024 Changed, to check if it works...
+  init-db.sh: |
+    #!/bin/bash
+    # Define database name
+    DB_NAME="$POSTGRES_DB"
+    DB_USER=$DB_USER
+    DB_PASSWORD=$DB_PASSWORD
+
+    # Check if the database exists
+    DB_EXISTS=$(psql -h $PG_HOST -p $PG_PORT -U $PG_USER -lqt | cut -d \| -f 1 | grep -wq $DB_NAME && echo "true" || echo "false")
+
+    # If the database does not exist, create it
+    if [ "$DB_EXISTS" == "false" ]; then
+      echo "Creating database $DB_NAME..."
+      createdb -h $PG_HOST -p $PG_PORT -U $PG_USER $DB_NAME
+      echo "Database $DB_NAME created successfully."
+    else
+      echo "Database $DB_NAME already exists."
+    fi
+
+    # Check if the user exists
+    USER_EXISTS=$(psql -h $PG_HOST -p $PG_PORT -U $PG_USER -tAc "SELECT 1 FROM pg_roles WHERE rolname='$DB_USER'" | grep -q 1 && echo "true" || echo "false")
+
+    # If the user does not exist, create it
+    if [ "$USER_EXISTS" == "false" ]; then
+    echo "Creating user $DB_USER..."
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "CREATE USER \"$DB_USER\" WITH PASSWORD '${DB_PASSWORD}';"
+    echo "User $DB_USER created successfully."
+    else
+    echo "User $DB_USER already exists."
+    fi
+
+    # Add permission
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "grant connect, create on database $POSTGRES_DB to $DB_USER;"
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "grant all privileges on schema public to $DB_USER;"
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "grant usage, select, update, insert on all tables in schema public to $DB_USER;"
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "alter default privileges in schema public grant select, update, insert on tables to $DB_USER;"
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "grant usage, select on all sequences in schema public to $DB_USER;"
+    psql -h $PG_HOST -p $PG_PORT -U $PG_USER -c "alter default privileges in schema public grant usage, select on sequences to $DB_USER;"

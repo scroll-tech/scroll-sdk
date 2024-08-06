@@ -39,7 +39,7 @@ Note: These scripts must be run from the root directory of the repository to ens
 
 ## Configuration
 
-These scripts read configuration values from the `charts/scroll-stack/config.toml` file. Ensure this file is present and properly configured before running the scripts.
+These scripts read configuration values from the `charts/scroll-sdk/config.toml` file. Ensure this file is present and properly configured before running the scripts.
 
 ## Notes
 

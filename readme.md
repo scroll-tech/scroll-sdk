@@ -14,7 +14,7 @@ In the medium term, it will allow for robust customization of an L2, including c
 For more information, please see this [Early Access](https://scrollzkp.notion.site/Scroll-SDK-Early-Access-Feedback-Request-74272ce6a0ae4c1d8f5c1d836df1f410?pvs=4) document. To provide feedback, reach out or use [this form](https://tally.so/r/3xQdNr).
 
 ## Repo
-This repo hosts a Helm chart for deploying a Scroll SDK chain. 
+This repo hosts a Helm chart for deploying a Scroll SDK chain.
 It also provides a database and a monitoring stack based on Prometheus, Loki and Grafana.
 
 The current configuration supports running a devnet but is not yet optimized for production.
@@ -38,9 +38,9 @@ make bootstrap
 ```
 
 ## Launch Scroll SDK
-Run this from the `charts/scroll-stack` folder:
+Run this from the `charts/scroll-sdk` folder:
 ```bash
-helm install scroll-stack . 
+helm install scroll-sdk .
 ```
 
 Run `kubectl get pods` to confirm the status of running services.
@@ -61,7 +61,7 @@ If using the default DNS names, the following services will be available locally
 - [Granfana Dashboards](http://grafana.scrollsdk/)
     - Login
         - User: `admin`
-        - Pass: `scroll-stack`
+        - Pass: `scroll-sdk`
     - See “Scroll” dashboards on [this page](http://grafana.scrollsdk/dashboards).
 
 ### Access on macOS using minikube and `ingress-dns`

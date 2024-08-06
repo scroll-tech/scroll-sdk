@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: {{ .Release.Name }}-contracts-deployment
   labels:
-    {{- include "scroll-stack.labels" $ | nindent 4 }}
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
 spec:
   template:
     spec:

@@ -19,7 +19,7 @@ Kubernetes: `>=1.22.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | envFrom[0].configMapRef.name | string | `"contracts-env"` |  |
-| image.repository | string | `"scrolltech/scroll-stack-contracts"` |  |
+| image.repository | string | `"scrolltech/scroll-sdk-contracts"` |  |
 | image.tag | string | `"deploy-v0.0.9"` |  |
 
 ----------------------------------------------

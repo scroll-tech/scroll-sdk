@@ -2,7 +2,7 @@
 # This script funds the default L1 accounts when using an Anvil devnet.
 
 read_config() {
-    yq eval "$1" charts/scroll-stack/config.toml
+    yq eval "$1" charts/scroll-sdk/config.toml
 }
 
 L1_RPC_URL=$(read_config '.frontend.EXTERNAL_RPC_URI_L1')

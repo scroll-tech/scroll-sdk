@@ -116,7 +116,7 @@ Kubernetes: `>=1.22.0-0`
 | serviceMonitor.main.endpoints[0].path | string | `"/debug/metrics/prometheus"` |  |
 | serviceMonitor.main.endpoints[0].port | string | `"metrics"` |  |
 | serviceMonitor.main.endpoints[0].scrapeTimeout | string | `"10s"` |  |
-| serviceMonitor.main.labels.release | string | `"scroll-stack"` |  |
+| serviceMonitor.main.labels.release | string | `"scroll-sdk"` |  |
 | serviceMonitor.main.serviceName | string | `"{{ include \"scroll.common.lib.chart.names.fullname\" $ }}"` |  |
 
 ----------------------------------------------

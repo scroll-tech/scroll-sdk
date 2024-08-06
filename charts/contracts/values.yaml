@@ -1,6 +1,6 @@
 ---
 image:
-  repository: scrolltech/scroll-stack-contracts
+  repository: scrolltech/scroll-sdk-contracts
   tag: deploy-v0.0.9
 
 envFrom:

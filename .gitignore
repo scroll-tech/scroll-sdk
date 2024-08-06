@@ -3,13 +3,12 @@
 .idea
 genesis.json
 config-contracts.toml
-charts/scroll-stack/*.json
+charts/scroll-sdk/*.json
 .env.frontend
 charts/scroll-values.yaml
 
 .DS_Store
 
-charts/scroll-stack/configs/*.env
-devnet/scroll-stack/broadcast/
+charts/scroll-sdk/configs/*.env
+charts/scroll-sdk/broadcast/
 .vscode/
-
