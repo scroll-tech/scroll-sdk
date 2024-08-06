@@ -81,7 +81,7 @@ extract_from_config_toml() {
     exit 1
   fi
 
-  # The first 2 argument is the toml files
+  # The first 2 arguments is the toml files
   config_toml_file=$1
   config_contracts_toml_file=$2
 
