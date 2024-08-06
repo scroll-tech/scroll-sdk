@@ -12,10 +12,6 @@ scroll helm charts to deploy scroll sdk
 | ---- | ------ | --- |
 | scroll-tech | <sebastien@scroll.io> |  |
 
-## Source Code
-
-* <A list of URLs to source code for this project (optional)>
-
 ## Requirements
 
 Kubernetes: `>=1.22.0-0`

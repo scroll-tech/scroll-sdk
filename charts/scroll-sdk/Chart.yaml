@@ -12,9 +12,6 @@ keywords:
   - scroll
   - scroll-sdk
 home: https://github.com/scroll-tech/scroll-sdk
-sources:
-  - A list of URLs to source code for this project (optional)
-icon: A URL to an SVG or PNG image to be used as an icon (optional).
 dependencies:
   - name: l1-devnet
     version: 0.0.1
