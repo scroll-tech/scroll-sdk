@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -36,6 +37,14 @@ Kubernetes: `>=1.22.0-0`
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l1-devnet"` |  |
 | image.tag | string | `"v0.0.2"` |  |
+| ingress.main.annotations | object | `{}` |  |
+| ingress.main.enabled | bool | `true` |  |
+| ingress.main.hosts[0].host | string | `"l1.scrollsdk"` |  |
+| ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.main.ingressClassName | string | `"nginx"` |  |
+| ingress.main.labels | object | `{}` |  |
+| ingress.main.primary | bool | `true` |  |
 | persistence.chain-id.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.chain-id.enabled | bool | `true` |  |
 | persistence.chain-id.mounthPath | string | `"/chain-id"` |  |
@@ -44,6 +53,7 @@ Kubernetes: `>=1.22.0-0`
 | persistence.data.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.data.enabled | bool | `true` |  |
 | persistence.data.mounthPath | string | `"/data"` |  |
+| persistence.data.retain | bool | `true` |  |
 | persistence.data.size | string | `"10Gi"` |  |
 | persistence.data.type | string | `"pvc"` |  |
 | probes.liveness.<<.enabled | bool | `false` |  |

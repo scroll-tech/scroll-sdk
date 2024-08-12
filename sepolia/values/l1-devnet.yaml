@@ -1,0 +1,14 @@
+configMaps:
+  env:
+    enabled: true
+    data:
+      CHAIN_ID: "111111"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: l1-3.devnet.scroll.tech
+        paths:
+          - path: /
+            pathType: Prefix

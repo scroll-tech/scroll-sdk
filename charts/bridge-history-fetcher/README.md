@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -55,21 +56,21 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-init-db.env[0].name | string | `"POSTGRES_DB"` |  |
 | initContainers.2-init-db.env[0].value | string | `"scroll"` |  |
 | initContainers.2-init-db.env[1].name | string | `"PG_USER"` |  |
-| initContainers.2-init-db.env[1].valueFrom.secretKeyRef.key | string | `"PG_USER"` |  |
-| initContainers.2-init-db.env[1].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[1].valueFrom.configMapKeyRef.key | string | `"PG_USER"` |  |
+| initContainers.2-init-db.env[1].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[2].name | string | `"PGPASSWORD"` |  |
-| initContainers.2-init-db.env[2].valueFrom.secretKeyRef.key | string | `"PGPASSWORD"` |  |
-| initContainers.2-init-db.env[2].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[2].valueFrom.configMapKeyRef.key | string | `"PGPASSWORD"` |  |
+| initContainers.2-init-db.env[2].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[3].name | string | `"PG_HOST"` |  |
-| initContainers.2-init-db.env[3].valueFrom.secretKeyRef.key | string | `"PG_HOST"` |  |
-| initContainers.2-init-db.env[3].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[3].valueFrom.configMapKeyRef.key | string | `"PG_HOST"` |  |
+| initContainers.2-init-db.env[3].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[4].name | string | `"PG_PORT"` |  |
-| initContainers.2-init-db.env[4].valueFrom.secretKeyRef.key | string | `"PG_PORT"` |  |
-| initContainers.2-init-db.env[4].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[4].valueFrom.configMapKeyRef.key | string | `"PG_PORT"` |  |
+| initContainers.2-init-db.env[4].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[5].name | string | `"DB_USER"` |  |
-| initContainers.2-init-db.env[5].value | string | `"bridge_history_user"` |  |
+| initContainers.2-init-db.env[5].value | string | `"gas_oracle"` |  |
 | initContainers.2-init-db.env[6].name | string | `"DB_PASSWORD"` |  |
-| initContainers.2-init-db.env[6].valueFrom.secretKeyRef.key | string | `"BRIDGE_HISTORY_PASSWORD"` |  |
+| initContainers.2-init-db.env[6].valueFrom.secretKeyRef.key | string | `"GAS_ORACLE_PASSWORD"` |  |
 | initContainers.2-init-db.env[6].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.image | string | `"postgres:latest"` |  |
 | initContainers.2-init-db.volumeMounts[0].mountPath | string | `"/init-db.sh"` |  |
@@ -79,7 +80,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.3-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
 | initContainers.3-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.3-check-postgres-connection.args[3] | string | `"0"` |  |
-| initContainers.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
+| initContainers.3-check-postgres-connection.envFrom[0].configMap.name | string | `"bridge-history-fetcher-env"` |  |
 | initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.4-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.4-migrate-db.command[1] | string | `"-c"` |  |

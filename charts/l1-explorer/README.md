@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -78,7 +79,7 @@ Kubernetes: `>=1.22.0-0`
 | image.tag | string | `"6.6.0"` |  |
 | ingress.main.annotations | object | `{}` |  |
 | ingress.main.enabled | bool | `true` |  |
-| ingress.main.hosts[0].host | string | `"l1-explorer.devnet.scroll.tech"` |  |
+| ingress.main.hosts[0].host | string | `"l1-explorer.scrollsdk"` |  |
 | ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.main.ingressClassName | string | `"nginx"` |  |

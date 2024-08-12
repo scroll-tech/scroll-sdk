@@ -14,12 +14,16 @@ contracts helm charts
 
 Kubernetes: `>=1.22.0-0`
 
+| Repository | Name | Version |
+|------------|------|---------|
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
+
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| envFrom[0].configMapRef.name | string | `"contracts-env"` |  |
-| image.repository | string | `"scrolltech/scroll-sdk-contracts"` |  |
+| envFrom[0].configMapRef.name | string | `"contracts-deployment-env"` |  |
+| image.repository | string | `"scrolltech/scroll-stack-contracts"` |  |
 | image.tag | string | `"deploy-v0.0.9"` |  |
 
 ----------------------------------------------

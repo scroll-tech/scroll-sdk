@@ -4,15 +4,29 @@ l1-devnet:
   ingress:
     main:
       enabled: true
-      ingressClassName: "nginx"
       hosts:
-        - host: l1-devnet.scrollsdk
+        - host: l1.scrollsdk
           paths:
             - path: /
               pathType: Prefix
+  envFrom:
+    - configMapRef:
+        name: l1-devnet-env
 
 blockscout:
   enabled: true
+  envFrom:
+    - configMapRef:
+        name: blockscout-env
+  initContainers:
+    2-migrate-db:
+      envFrom:
+        - configMapRef:
+            name: blockscout-env
+  3-check-postgres-connection:
+    envFrom:
+      - configMapRef:
+          name: blockscout-env
 
 bridge-history-api:
   enabled: true

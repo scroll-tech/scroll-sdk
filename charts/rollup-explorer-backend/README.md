@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -54,7 +55,7 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.primary | bool | `true` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
-| persistence.app_name.name | string | `"rollup-explorer-config"` |  |
+| persistence.app_name.name | string | `"rollup-explorer-backend-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
 | ports[0].containerPort | int | `8080` |  |
 | probes.liveness.<<.custom | bool | `true` |  |

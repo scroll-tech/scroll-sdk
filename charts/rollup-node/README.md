@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -42,6 +43,9 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
 | initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
 | initContainers.1-wait-for-postgres.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.1-wait-for-postgres.volumeMounts[0].mountPath | string | `"/wait-for-l1.sh"` |  |
+| initContainers.1-wait-for-postgres.volumeMounts[0].name | string | `"wait-for-l1-script"` |  |
+| initContainers.1-wait-for-postgres.volumeMounts[0].subPath | string | `"wait-for-l1.sh"` |  |
 | initContainers.2-init-db.command[0] | string | `"bash"` |  |
 | initContainers.2-init-db.command[1] | string | `"-c"` |  |
 | initContainers.2-init-db.command[2] | string | `"./init-db.sh"` |  |
@@ -97,8 +101,8 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.6-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/conf/"` |  |
-| persistence.app_name.name | string | `"rollup-node-config"` |  |
-| persistence.app_name.type | string | `"configMap"` |  |
+| persistence.app_name.name | string | `"rollup-config"` |  |
+| persistence.app_name.type | string | `"secret"` |  |
 | persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |

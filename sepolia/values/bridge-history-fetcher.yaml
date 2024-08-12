@@ -1,0 +1,101 @@
+persistence:
+  bridge-history-fetcher:
+    enabled: true
+    type: secret
+    mountPath: /app/conf/
+    name: bridge-history-config
+
+initContainers:
+  2-init-db:
+    image: postgres:latest
+    env:
+      - name: POSTGRES_DB
+        value: scroll
+      - name: PG_USER
+        valueFrom:
+          secretKeyRef:
+            name: &env_secret bridge-history-fetcher-secret-env
+            key: PG_USER
+      - name: PGPASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: *env_secret
+            key: PGPASSWORD
+      - name: PG_HOST
+        valueFrom:
+          secretKeyRef:
+            name: *env_secret
+            key: PG_HOST
+      - name: PG_PORT
+        valueFrom:
+          secretKeyRef:
+            name: *env_secret
+            key: PG_PORT
+      - name: DB_USER
+        value: bridgehistory
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: *env_secret
+            key: BRIDGE_HISTORY_PASSWORD
+    command: ["bash", "-c", "./init-db.sh"]
+    volumeMounts:
+      - name: init-db
+        mountPath: /init-db.sh
+        subPath: init-db.sh
+  3-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: bridge-history-fetcher-secret-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: "https://alien-flashy-arm.ethereum-sepolia.quiknode.pro/2aeb75414e5ee0e930b64c2e7feff59efb537f30"
+      SCROLL_L2_RPC: "http://l2-sequencer:8545"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: bridge-history-api-3.devnet.scroll.tech
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  bridge-history-fetcher-secret-env:
+    data:
+      - remoteRef:
+          key: scroll-sepolia/bridge-history-fetcher-env
+          property: DATABASE_URL
+        secretKey: DATABASE_URL
+      - remoteRef:
+          key: scroll-sepolia/db
+          property: PG_HOST
+        secretKey: PG_HOST
+      - remoteRef:
+          key: scroll-sepolia/db
+          property: PG_USER
+        secretKey: PG_USER
+      - remoteRef:
+          key: scroll-sepolia/db
+          property: PGPASSWORD
+        secretKey: PGPASSWORD
+      - remoteRef:
+          key: scroll-sepolia/db
+          property: PG_PORT
+        secretKey: PG_PORT
+      - remoteRef:
+          key: scroll-sepolia/db
+          property: BRIDGE_HISTORY_PASSWORD
+        secretKey: BRIDGE_HISTORY_PASSWORD
+    refreshInterval: 2m
+    serviceAccount: external-secrets

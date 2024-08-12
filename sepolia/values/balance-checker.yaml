@@ -1,0 +1,21 @@
+persistence:
+  balance-checker:
+    enabled: true
+    type: secret
+    mountPath: /app/config/
+    name: balance-checker-config
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: "https://alien-flashy-arm.ethereum-sepolia.quiknode.pro/2aeb75414e5ee0e930b64c2e7feff59efb537f30"
+
+externalSecrets:
+  balance-checker-config:
+    data:
+      - remoteRef:
+          key: scroll-sepolia/balance-checker-config
+        secretKey: balance-checker-config.json
+    refreshInterval: 10s
+    serviceAccount: external-secrets

@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -67,7 +68,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"l2-sequencer"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"v5.5.17-arm64"` |  |
+| image.tag | string | `"scroll-v5.5.17"` |  |
 | initContainers.wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |
@@ -91,10 +92,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.subPath | string | `"genesis.json"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |
-| persistence.l2-sequencer.enabled | bool | `true` |  |
-| persistence.l2-sequencer.mountPath | string | `"/l2geth/conf/"` |  |
-| persistence.l2-sequencer.name | string | `"l2-sequencer-config"` |  |
-| persistence.l2-sequencer.type | string | `"configMap"` |  |
 | persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |
 | persistence.wait-for-l1-script.enabled | bool | `true` |  |
 | persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |

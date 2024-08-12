@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -65,7 +66,15 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"l2-rpc"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"v5.5.17-arm64"` |  |
+| image.tag | string | `"scroll-v5.5.17"` |  |
+| ingress.main.annotations | object | `{}` |  |
+| ingress.main.enabled | bool | `true` |  |
+| ingress.main.hosts[0].host | string | `"l2-rpc.scrollsdk"` |  |
+| ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.main.ingressClassName | string | `"nginx"` |  |
+| ingress.main.labels | object | `{}` |  |
+| ingress.main.primary | bool | `true` |  |
 | initContainers.1-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.1-wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.1-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |

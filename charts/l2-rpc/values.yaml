@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: v5.5.17-arm64
+  tag: scroll-v5.5.17
 
 service:
   main:
@@ -19,10 +19,10 @@ service:
     ports:
       http:
         enabled: true
-        port: &HTTP_PORT 8545
+        port: 8545
       ws:
         enabled: true
-        port: &WS_PORT 8546
+        port: 8546
       metrics:
         enabled: true
         port: 6060
@@ -143,6 +143,19 @@ persistence:
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"
+
+ingress:
+  main:
+    enabled: true
+    primary: true
+    annotations: {}
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - host: l2-rpc.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix
 
 serviceMonitor:
   main:

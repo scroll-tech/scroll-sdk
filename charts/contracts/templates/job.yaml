@@ -27,7 +27,7 @@ spec:
             - /wait-for-l1.sh $L1_RPC_ENDPOINT
           envFrom:
             - configMapRef:
-                name: contracts-env
+                name: contracts-deployment-env
           volumeMounts:
             - name: wait-for-l1-script
               mountPath: /wait-for-l1.sh
@@ -44,10 +44,10 @@ spec:
             - "0"
           envFrom:
             - configMapRef:
-                name: contracts-env
+                name: contracts-deployment-env
       volumes:
         - configMap:
-            name: scroll-smart-contracts-config
+            name: contracts-deployment-config
           name: config
         - configMap:
             name: wait-for-l1-script

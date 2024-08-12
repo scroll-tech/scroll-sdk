@@ -101,31 +101,31 @@ initContainers:
         value: scroll
       - name: PG_USER
         valueFrom:
-          secretKeyRef:
+          configMapKeyRef:
             name: db-secrets
             key: PG_USER
       - name: PGPASSWORD
         valueFrom:
-          secretKeyRef:
+          configMapKeyRef:
             name: db-secrets
             key: PGPASSWORD
       - name: PG_HOST
         valueFrom:
-          secretKeyRef:
+          configMapKeyRef:
             name: db-secrets
             key: PG_HOST
       - name: PG_PORT
         valueFrom:
-          secretKeyRef:
+          configMapKeyRef:
             name: db-secrets
             key: PG_PORT
       - name: DB_USER
-        value: bridge_history_user
+        value: gas_oracle
       - name: DB_PASSWORD
         valueFrom:
           secretKeyRef:
             name: db-secrets
-            key: BRIDGE_HISTORY_PASSWORD
+            key: GAS_ORACLE_PASSWORD
     command: ["bash", "-c", "./init-db.sh"]
     volumeMounts:
       - name: init-db
@@ -139,7 +139,7 @@ initContainers:
       - --timeout
       - "0"
     envFrom:
-      - configMapRef:
+      - configMap:
           name: bridge-history-fetcher-env
   4-migrate-db:
     image: scrolltech/bridgehistoryapi-db-cli:v4.4.14
@@ -175,6 +175,7 @@ initContainers:
       - configMapRef:
           name: bridge-history-fetcher-env
 
+#TODO remove this
 configMaps:
   config:
     enabled: true

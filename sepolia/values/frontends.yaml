@@ -1,0 +1,24 @@
+persistence:
+  frontends:
+    enabled: true
+    type: secret
+    mountPath: /app/conf/
+    name: frontends-config
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: frontends-3.devnet.scroll.tech
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  frontends-config:
+    data:
+      - remoteRef:
+          key: scroll-sepolia/frontends-config
+        secretKey: frontend-config
+    refreshInterval: 2m
+    serviceAccount: external-secrets

@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -100,7 +101,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.6-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/conf/"` |  |
-| persistence.app_name.name | string | `"rollup-node-config"` |  |
+| persistence.app_name.name | string | `"rollup-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
 | persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |

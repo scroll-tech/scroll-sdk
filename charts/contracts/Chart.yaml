@@ -8,3 +8,7 @@ kubeVersion: ">=1.22.0-0"
 maintainers:
   - name: scroll-tech
     email: sebastien@scroll.io
+dependencies:
+  - name: external-secrets-lib
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
+    version: 0.0.1

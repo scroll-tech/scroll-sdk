@@ -55,9 +55,9 @@ probes:
 persistence:
   *app_name:
     enabled: true
-    type: configMap
+    type: secret
     mountPath: /app/conf/
-    name: rollup-node-config
+    name: rollup-config
   genesis:
     enabled: true
     type: configMap
@@ -89,6 +89,10 @@ initContainers:
       - postgresql:5432
       - --timeout
       - "0"
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
   2-init-db:
     image: postgres:latest
     env:
@@ -167,7 +171,6 @@ initContainers:
     envFrom:
       - configMapRef:
           name: rollup-node-env
-
 
 # Need genesis file and config.json
 configMaps:

@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -24,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"/bin/bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"awk 'NF {gsub(/ /, \"\"); print \"export \" $0}' /app/conf/.env.frontend > /usr/share/nginx/html/.env && source /usr/share/nginx/html/.env && /usr/local/bin/entrypoint.sh"` |  |
+| command[2] | string | `"awk 'NF {gsub(/ /, \"\"); print \"export \" $0}' /app/conf/frontend-config > /usr/share/nginx/html/.env && source /usr/share/nginx/html/.env && /usr/local/bin/entrypoint.sh"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"deployment"` |  |

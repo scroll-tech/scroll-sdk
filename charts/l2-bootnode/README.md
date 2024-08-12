@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -63,7 +64,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"l2-bootnode"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"v5.5.17-arm64"` |  |
+| image.tag | string | `"scroll-v5.5.17"` |  |
 | initContainers.wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |
@@ -76,6 +77,7 @@ Kubernetes: `>=1.22.0-0`
 | persistence.data.enabled | bool | `true` |  |
 | persistence.data.mountPath | string | `"/l2geth/data"` |  |
 | persistence.data.size | string | `"10Gi"` |  |
+| persistence.data.storageClass | string | `"ebs-sc-retain"` |  |
 | persistence.data.type | string | `"pvc"` |  |
 | persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |

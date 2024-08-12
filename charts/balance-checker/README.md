@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -41,10 +42,21 @@ Kubernetes: `>=1.22.0-0`
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/balance-checker"` |  |
 | image.tag | string | `"0.0.2"` |  |
-| initContainers.wait-for-other-pod.args[0] | string | `"/bin/sh"` |  |
-| initContainers.wait-for-other-pod.args[1] | string | `"-c"` |  |
-| initContainers.wait-for-other-pod.args[2] | string | `"set -x; while [ $(curl -sw '%{http_code}' \"l2-rpc:8545\" -o /dev/null) -ne 200 ] && [ $(curl -sw '%{http_code}' \"l1-devnet:8545\" -o /dev/null) -ne 404 ]; do\n  sleep 5;\ndone\n"` |  |
-| initContainers.wait-for-other-pod.image | string | `"curlimages/curl"` |  |
+| initContainers.1-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
+| initContainers.1-wait-for-l1.command[1] | string | `"-c"` |  |
+| initContainers.1-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $SCROLL_L1_RPC"` |  |
+| initContainers.1-wait-for-l1.envFrom[0].configMapRef.name | string | `"balance-checker-env"` |  |
+| initContainers.1-wait-for-l1.image | string | `"scrolltech/scroll-alpine:v0.0.1"` |  |
+| initContainers.1-wait-for-l1.volumeMounts[0].mountPath | string | `"/wait-for-l1.sh"` |  |
+| initContainers.1-wait-for-l1.volumeMounts[0].name | string | `"wait-for-l1-script"` |  |
+| initContainers.1-wait-for-l1.volumeMounts[0].subPath | string | `"wait-for-l1.sh"` |  |
+| initContainers.2-wait-for-l2-rpc.args[0] | string | `"http"` |  |
+| initContainers.2-wait-for-l2-rpc.args[1] | string | `"http://l2-rpc:8545"` |  |
+| initContainers.2-wait-for-l2-rpc.args[2] | string | `"--expect-status-code"` |  |
+| initContainers.2-wait-for-l2-rpc.args[3] | string | `"200"` |  |
+| initContainers.2-wait-for-l2-rpc.args[4] | string | `"--timeout"` |  |
+| initContainers.2-wait-for-l2-rpc.args[5] | string | `"0"` |  |
+| initContainers.2-wait-for-l2-rpc.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"balance-checker-config"` |  |
@@ -53,6 +65,10 @@ Kubernetes: `>=1.22.0-0`
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"balance-checker-env"` |  |
 | persistence.env.type | string | `"configMap"` |  |
+| persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |
+| persistence.wait-for-l1-script.enabled | bool | `true` |  |
+| persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |
+| persistence.wait-for-l1-script.type | string | `"configMap"` |  |
 | probes.liveness.<<.custom | bool | `true` |  |
 | probes.liveness.<<.enabled | bool | `true` |  |
 | probes.liveness.<<.spec.httpGet.path | string | `"/"` |  |

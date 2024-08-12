@@ -1,0 +1,56 @@
+{
+  "l1_config": {
+    "l1_url": "https://alien-flashy-arm.ethereum-sepolia.quiknode.pro/2aeb75414e5ee0e930b64c2e7feff59efb537f30",
+    "confirm": "0x20",
+    "start_number": 0,
+    "l1_contracts": {
+      "l1_gateways": {
+        "eth_gateway": "0xf5DBBD4d9f104704A523424eC9498c3fc62aBdB4",
+        "weth_gateway": "0xcfEA63D129E23ff133916DC648b35D720f89C46F",
+        "standard_erc20_gateway": "0xA49CD0248385F9c4e306A9163034ca77e8DD6dDa",
+        "custom_erc20_gateway": "0x5BB71fb3F9FFFBC7B064666B283F1860dC27c9EC",
+        "erc721_gateway": "0xDaaB7C5349B44f287c19ac0A294be42633b8234e",
+        "erc1155_gateway": "0xfBC69FA8F9BEfe8F0Af30350Da5C2323406971cB",
+        "dai_gateway": "0x0000000000000000000000000000000000000000",
+        "usdc_gateway": "0x0000000000000000000000000000000000000000",
+        "lido_gateway": "0x0000000000000000000000000000000000000000",
+        "puffer_gateway": "0x0000000000000000000000000000000000000000"
+      },
+      "scroll_messenger": "0x7f25fD0D0e9619048F59F06a6F19e1ba6dD1AB2D",
+      "message_queue": "0x4ADC77ad056134E011e7470560349277846B50Bd",
+      "scroll_chain": "0xA5607a2fd1C1F1414E60f6cF2A462145Ce040F9F"
+    },
+    "start_messenger_balance": 1000000000000000000
+  },
+  "l2_config": {
+    "l2_url": "http://l2-sequencer:8545",
+    "confirm": "0x80",
+    "l2_contracts": {
+      "l2_gateways": {
+        "eth_gateway": "0xa47def02e273337Ae92d38b69Bc019318419f649",
+        "weth_gateway": "0xd5178b1AF15Cae7B2c8BeE6F3D83d2706d483ab6",
+        "standard_erc20_gateway": "0xF2F2eDdf4f9a17d5c1e79B68C3288E6f785CDe6b",
+        "custom_erc20_gateway": "0x199d2e4e7965046d3510bcd8778C8AcD4deD9257",
+        "erc721_gateway": "0xAeBE17146629b7Db03F8EDb774D0d1D41A15CA42",
+        "erc1155_gateway": "0x0b3a096210f6D5d2dFdd9DB3df76B596eA7E233F",
+        "dai_gateway": "0x0000000000000000000000000000000000000000",
+        "usdc_gateway": "0x0000000000000000000000000000000000000000",
+        "lido_gateway": "0x0000000000000000000000000000000000000000",
+        "puffer_gateway": "0x0000000000000000000000000000000000000000"
+      },
+      "scroll_messenger": "0x9C453aAF96957Fe5c90f154908436B9A0d21c23d",
+      "message_queue": "0x5300000000000000000000000000000000000000"
+    }
+  },
+  "slack_webhook_config": {
+    "webhook_url": "http://localhost:1234",
+    "worker_count": 5,
+    "worker_buffer_size": 1000
+  },
+  "db_config": {
+    "driver_name": "postgres",
+    "dsn": "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable",
+    "maxOpenNum": 100,
+    "maxIdleNum": 20
+  }
+}

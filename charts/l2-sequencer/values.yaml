@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: v5.5.17-arm64
+  tag: scroll-v5.5.17
 
 env:
   - name: L2GETH_ROLE
@@ -150,11 +150,12 @@ persistence:
     type: configMap
     mountPath: /config/
     name: l2-sequencer-env
-  l2-sequencer:
-    enabled: true
-    type: configMap
-    mountPath: /l2geth/conf/
-    name: l2-sequencer-config
+#TODO is this needed ?
+#  l2-sequencer:
+#    enabled: true
+#    type: configMap
+#    mountPath: /l2geth/conf/
+#    name: l2-sequencer-config
   genesis:
     enabled: true
     type: configMap

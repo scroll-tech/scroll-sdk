@@ -2,7 +2,7 @@
 # This script creates a dedicated env file for each service needing it from the config.toml file
 # We hence centralize the configuration of the services on the config.toml file.
 
-CONFIG_TOML="charts/scroll-sdk/config.toml"
+CHART_DIR=$1
 
 # Function to check if a file exists and delete it if it does
 delete_file_if_exists() {
@@ -21,35 +21,35 @@ delete_file_if_exists() {
 }
 
 # Function to get variables for a given service
-get_service_variables() {
+get_service_configmap_variables() {
     local service_name=$1
     case "$service_name" in
         balance-checker)
             echo "CHAIN_ID_L1:SCROLL_L1_RPC CHAIN_ID_L2:SCROLL_L2_RPC"
             ;;
         blockscout)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC BLOCKSCOUT_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
             ;;
         bridge-history-api)
             echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC  L2_RPC_ENDPOINT:SCROLL_L2_RPC"
             ;;
         bridge-history-fetcher)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC L2_RPC_ENDPOINT:SCROLL_L2_RPC BRIDGE_HISTORY_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC L2_RPC_ENDPOINT:SCROLL_L2_RPC"
             ;;
         chain-monitor)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC CHAIN_MONITOR_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
             ;;
         contracts)
             echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT CHAIN_ID_L1:CHAIN_ID_L1 CHAIN_ID_L2:CHAIN_ID_L2"
             ;;
         coordinator)
-            echo "DATABASE_HOST:DATABASE_HOST DATABASE_PORT:DATABASE_PORT COORDINATOR_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "DATABASE_HOST:DATABASE_HOST DATABASE_PORT:DATABASE_PORT"
             ;;
         event-watcher)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC EVENT_WATCHER_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
             ;;
         gas-oracle)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC GAS_ORACLE_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
             ;;
         l1-devnet)
             echo "CHAIN_ID_L1:CHAIN_ID"
@@ -67,7 +67,40 @@ get_service_variables() {
             echo "CHAIN_ID_L2:CHAIN_ID L1_RPC_ENDPOINT:L2GETH_L1_ENDPOINT L2GETH_SIGNER_0_ADDRESS:L2GETH_SIGNER_ADDRESS L1_CONTRACT_DEPLOYMENT_BLOCK:L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"
             ;;
         rollup-node)
-            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT"
+            ;;
+        *)
+            echo "Service $service_name not found."
+            ;;
+    esac
+}
+
+get_service_secret_variables() {
+    local service_name=$1
+    case "$service_name" in
+        blockscout)
+            echo "BLOCKSCOUT_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        bridge-history-fetcher)
+            echo "BRIDGE_HISTORY_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        chain-monitor)
+            echo "CHAIN_MONITOR_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        coordinator)
+            echo "COORDINATOR_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        event-watcher)
+            echo "EVENT_WATCHER_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        gas-oracle)
+            echo "AS_ORACLE_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        l1-explorer)
+            echo "L1_EXPLORER_DB_CONNECTION_STRING:DATABASE_URL"
+            ;;
+        rollup-node)
+            echo "ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         *)
             echo "Service $service_name not found."
@@ -86,15 +119,22 @@ extract_from_config_toml() {
   # The first argument is the toml file
   toml_file=$1
 
-  # The first argument is the service name
+  # The second argument is the service name
   service=$2
-  shift 2
+
+  # The third argument is the file to export
+  file=$3
+
+  # The rest is the key/value pair
+  shift 3
+
 
   # Function to extract and export variables
   extract_and_export() {
     local service=$1
     local source_var=$2
     local target_var=$3
+    local file=$4
     local value
 
     # Extract the value of the source variable from the toml file
@@ -110,7 +150,7 @@ extract_from_config_toml() {
     value=$(echo $value | sed -E 's/^([0-9]+)$/\"\1\"/')
 
     # Export the value as the target variable
-    echo "$target_var: $value" >> charts/scroll-sdk/configs/$service.env
+    echo "$target_var: $value" >> $file
   }
 
   # Loop through the source:target pairs
@@ -122,19 +162,27 @@ extract_from_config_toml() {
       continue
     fi
 
-    extract_and_export $service "$source_var" "$target_var"
+    extract_and_export $service "$source_var" "$target_var" $file
   done
 
 }
 
 # List of services
-# Note: frontend is excluded from this list as its env file is generated by the container scroll-sdk-contracts.
-services=("balance-checker" "bridge-history-api" "bridge-history-fetcher" "blockscout" "chain-monitor" "contracts" "coordinator" "event-watcher" "gas-oracle" "l1-devnet" "l1-explorer" "l2-bootnode" "l2-rpc" "l2-sequencer" "rollup-node")
+# Note: frontend is excluded from this list as its env file is generated by the container scroll-stack-contracts.
+services_configmap=("balance-checker" "bridge-history-api" "bridge-history-fetcher" "blockscout" "chain-monitor" "contracts" "coordinator" "event-watcher" "gas-oracle" "l1-devnet" "l1-explorer" "l2-bootnode" "l2-rpc" "l2-sequencer" "rollup-node")
+services_secret=("bridge-history-fetcher" "blockscout" "chain-monitor" "coordinator" "event-watcher" "gas-oracle" "l1-explorer" "rollup-node")
 
 # Loop over the list of services and execute the function
-for service in "${services[@]}"; do
-    get_service_variables $service
-    env_file="charts/scroll-sdk/configs/$service.env"
+for service in "${services_configmap[@]}"; do
+    get_service_configmap_variables $service
+    env_file="$CHART_DIR/configs/$service.env"
     delete_file_if_exists $env_file
-    extract_from_config_toml $CONFIG_TOML $service $(get_service_variables $service)
+    extract_from_config_toml $CHART_DIR/config.toml $service $CHART_DIR/configs/$service.env $(get_service_configmap_variables $service)
+done
+
+for service in "${services_secret[@]}"; do
+    get_service_secret_variables $service
+    env_file="$CHART_DIR/configs/$service.secret.env"
+    delete_file_if_exists $env_file
+    extract_from_config_toml $CHART_DIR/config.toml $service $CHART_DIR/configs/$service.secret.env $(get_service_secret_variables $service)
 done

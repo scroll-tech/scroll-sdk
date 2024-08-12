@@ -1,8 +1,8 @@
 ---
 image:
-  repository: scrolltech/scroll-sdk-contracts
+  repository: scrolltech/scroll-stack-contracts
   tag: deploy-v0.0.9
 
 envFrom:
   - configMapRef:
-      name: contracts-env
+      name: contracts-deployment-env

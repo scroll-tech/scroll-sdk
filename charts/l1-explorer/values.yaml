@@ -88,7 +88,6 @@ probes:
   startup:
     <<: *default_probes
 
-
 persistence:
   env:
     enabled: true
@@ -138,7 +137,7 @@ ingress:
     labels: {}
     ingressClassName: "nginx"
     hosts:
-      - host: l1-explorer.devnet.scroll.tech
+      - host: l1-explorer.scrollsdk
         paths:
           - path: /
             pathType: Prefix

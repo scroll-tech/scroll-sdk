@@ -41,6 +41,7 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
     mounthPath: /data
+    retain: true
 
 service:
   main:
@@ -63,3 +64,16 @@ probes:
     <<: *default_probes
   startup:
     <<: *default_probes
+
+ingress:
+  main:
+    enabled: true
+    primary: true
+    annotations: {}
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - host: l1.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix

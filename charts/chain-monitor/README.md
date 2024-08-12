@@ -17,6 +17,7 @@ Kubernetes: `>=1.22.0-0`
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.1 |
 
 ## Values
 
@@ -47,22 +48,22 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-init-db.env[0].name | string | `"POSTGRES_DB"` |  |
 | initContainers.2-init-db.env[0].value | string | `"scroll"` |  |
 | initContainers.2-init-db.env[1].name | string | `"PG_USER"` |  |
-| initContainers.2-init-db.env[1].valueFrom.secretKeyRef.key | string | `"PG_USER"` |  |
-| initContainers.2-init-db.env[1].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[1].valueFrom.configMapKeyRef.key | string | `"PG_USER"` |  |
+| initContainers.2-init-db.env[1].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[2].name | string | `"PGPASSWORD"` |  |
-| initContainers.2-init-db.env[2].valueFrom.secretKeyRef.key | string | `"PGPASSWORD"` |  |
-| initContainers.2-init-db.env[2].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[2].valueFrom.configMapKeyRef.key | string | `"PGPASSWORD"` |  |
+| initContainers.2-init-db.env[2].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[3].name | string | `"PG_HOST"` |  |
-| initContainers.2-init-db.env[3].valueFrom.secretKeyRef.key | string | `"PG_HOST"` |  |
-| initContainers.2-init-db.env[3].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[3].valueFrom.configMapKeyRef.key | string | `"PG_HOST"` |  |
+| initContainers.2-init-db.env[3].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[4].name | string | `"PG_PORT"` |  |
-| initContainers.2-init-db.env[4].valueFrom.secretKeyRef.key | string | `"PG_PORT"` |  |
-| initContainers.2-init-db.env[4].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[4].valueFrom.configMapKeyRef.key | string | `"PG_PORT"` |  |
+| initContainers.2-init-db.env[4].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.env[5].name | string | `"DB_USER"` |  |
 | initContainers.2-init-db.env[5].value | string | `"chain_monitor"` |  |
 | initContainers.2-init-db.env[6].name | string | `"DB_PASSWORD"` |  |
-| initContainers.2-init-db.env[6].valueFrom.secretKeyRef.key | string | `"CHAIN_MONITOR_PASSWORD"` |  |
-| initContainers.2-init-db.env[6].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[6].valueFrom.configMapKeyRef.key | string | `"CHAIN_MONITOR_PASSWORD"` |  |
+| initContainers.2-init-db.env[6].valueFrom.configMapKeyRef.name | string | `"db-secrets"` |  |
 | initContainers.2-init-db.image | string | `"postgres:latest"` |  |
 | initContainers.2-init-db.volumeMounts[0].mountPath | string | `"/init-db.sh"` |  |
 | initContainers.2-init-db.volumeMounts[0].name | string | `"init-db"` |  |
@@ -79,21 +80,21 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.4-migrate-db.image | string | `"scrolltech/chain-monitorv2:v1.1.26"` |  |
 | initContainers.4-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
 | initContainers.4-migrate-db.volumeMounts[0].name | string | `"chain-monitor"` |  |
-| initContainers.4-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
-| initContainers.4-wait-for-l1.command[1] | string | `"-c"` |  |
-| initContainers.4-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $SCROLL_L1_RPC"` |  |
-| initContainers.4-wait-for-l1.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
-| initContainers.4-wait-for-l1.image | string | `"scrolltech/scroll-alpine:v0.0.1"` |  |
-| initContainers.4-wait-for-l1.volumeMounts[0].mountPath | string | `"/wait-for-l1.sh"` |  |
-| initContainers.4-wait-for-l1.volumeMounts[0].name | string | `"wait-for-l1-script"` |  |
-| initContainers.4-wait-for-l1.volumeMounts[0].subPath | string | `"wait-for-l1.sh"` |  |
-| initContainers.5-wait-for-l2-sequencer.args[0] | string | `"http"` |  |
-| initContainers.5-wait-for-l2-sequencer.args[1] | string | `"http://l2-sequencer:8545"` |  |
-| initContainers.5-wait-for-l2-sequencer.args[2] | string | `"--expect-status-code"` |  |
-| initContainers.5-wait-for-l2-sequencer.args[3] | string | `"200"` |  |
-| initContainers.5-wait-for-l2-sequencer.args[4] | string | `"--timeout"` |  |
-| initContainers.5-wait-for-l2-sequencer.args[5] | string | `"0"` |  |
-| initContainers.5-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.5-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
+| initContainers.5-wait-for-l1.command[1] | string | `"-c"` |  |
+| initContainers.5-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $SCROLL_L1_RPC"` |  |
+| initContainers.5-wait-for-l1.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
+| initContainers.5-wait-for-l1.image | string | `"scrolltech/scroll-alpine:v0.0.1"` |  |
+| initContainers.5-wait-for-l1.volumeMounts[0].mountPath | string | `"/wait-for-l1.sh"` |  |
+| initContainers.5-wait-for-l1.volumeMounts[0].name | string | `"wait-for-l1-script"` |  |
+| initContainers.5-wait-for-l1.volumeMounts[0].subPath | string | `"wait-for-l1.sh"` |  |
+| initContainers.6-wait-for-l2-sequencer.args[0] | string | `"http"` |  |
+| initContainers.6-wait-for-l2-sequencer.args[1] | string | `"http://l2-sequencer:8545"` |  |
+| initContainers.6-wait-for-l2-sequencer.args[2] | string | `"--expect-status-code"` |  |
+| initContainers.6-wait-for-l2-sequencer.args[3] | string | `"200"` |  |
+| initContainers.6-wait-for-l2-sequencer.args[4] | string | `"--timeout"` |  |
+| initContainers.6-wait-for-l2-sequencer.args[5] | string | `"0"` |  |
+| initContainers.6-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"chain-monitor-config"` |  |

@@ -71,7 +71,7 @@ persistence:
     enabled: true
     type: configMap
     mountPath: /app/config/
-    name: rollup-explorer-config
+    name: rollup-explorer-backend-config
 
 ingress:
   main:

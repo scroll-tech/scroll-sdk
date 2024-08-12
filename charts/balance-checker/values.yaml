@@ -21,17 +21,28 @@ env:
     value: ""
 
 initContainers:
-  wait-for-other-pod:
-    image: curlimages/curl
-    args:
+  1-wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
       - /bin/sh
       - -c
-      - >
-        set -x;
-        while [ $(curl -sw '%{http_code}' "l2-rpc:8545" -o /dev/null) -ne 200 ] &&
-        [ $(curl -sw '%{http_code}' "l1-devnet:8545" -o /dev/null) -ne 404 ]; do
-          sleep 5;
-        done
+      - /wait-for-l1.sh $SCROLL_L1_RPC
+    envFrom:
+      - configMapRef:
+          name: balance-checker-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
+  2-wait-for-l2-rpc:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - http://l2-rpc:8545
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
 
 resources:
   requests:
@@ -52,6 +63,11 @@ persistence:
     type: configMap
     mountPath: /config/
     name: balance-checker-env
+  wait-for-l1-script:
+    enabled: true
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
 
 service:
   main:

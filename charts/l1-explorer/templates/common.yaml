@@ -12,4 +12,5 @@ global:
 
 {{/* Render the templates */}}
 {{ include "scroll.common.loader.generate" . }}
-
+---
+{{- include "scrolllib.externalsecrets.tpl" . }}

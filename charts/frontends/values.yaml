@@ -16,7 +16,7 @@ command:
   [
     "/bin/bash",
     "-c",
-    "awk 'NF {gsub(/ /, \"\"); print \"export \" $0}' /app/conf/.env.frontend > /usr/share/nginx/html/.env && \
+    "awk 'NF {gsub(/ /, \"\"); print \"export \" $0}' /app/conf/frontend-config > /usr/share/nginx/html/.env && \
     source /usr/share/nginx/html/.env && \
     /usr/local/bin/entrypoint.sh"
   ]

@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: v5.5.17-arm64
+  tag: scroll-v5.5.17
 
 env:
   - name: L2GETH_ROLE
@@ -106,6 +106,7 @@ persistence:
     mountPath: /l2geth/data
     accessMode: ReadWriteOnce
     size: 10Gi
+    storageClass: "ebs-sc-retain"
   env:
     enabled: true
     type: configMap
