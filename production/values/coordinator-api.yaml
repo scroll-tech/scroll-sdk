@@ -1,0 +1,27 @@
+controller:
+  replicas: 2
+
+persistence:
+  coordinator-api:
+    enabled: true
+    type: secret
+    mountPath: /coordinator/conf/
+    name: coordinator-config
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: coordinator-api-2.devnet.scroll.tech
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  coordinator-config:
+    data:
+      - remoteRef:
+          key: scroll/coordinator-config
+        secretKey: coordinator-config.json
+    refreshInterval: 10s
+    serviceAccount: external-secrets

@@ -90,9 +90,6 @@ get_service_secret_variables() {
         coordinator)
             echo "COORDINATOR_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
-        event-watcher)
-            echo "EVENT_WATCHER_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
         gas-oracle)
             echo "AS_ORACLE_DB_CONNECTION_STRING:DATABASE_URL"
             ;;

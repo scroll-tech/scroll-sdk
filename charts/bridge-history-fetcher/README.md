@@ -26,8 +26,6 @@ Kubernetes: `>=1.22.0-0`
 | command[0] | string | `"/bin/sh"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"bridgehistoryapi-fetcher --config /app/conf/bridge-history-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"` |  |
-| configMaps.config.data | string | `nil` |  |
-| configMaps.config.enabled | bool | `true` |  |
 | configMaps.migrate-db.data."migrate-db.json" | string | `"{\n  \"l1\": {},\n  \"l2\": {},\n  \"db\": {\n    \"driver_name\": \"postgres\",\n    \"maxOpenNum\": 50,\n    \"maxIdleNume\": 5,\n    \"dsn\": \"postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable\"\n  }\n}\n"` |  |
 | configMaps.migrate-db.enabled | bool | `true` |  |
 | controller.replicas | int | `1` |  |

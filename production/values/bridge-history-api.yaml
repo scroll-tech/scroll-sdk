@@ -1,0 +1,31 @@
+persistence:
+  bridge-history-api:
+    enabled: true
+    type: secret
+    mountPath: /app/conf/
+    name: bridge-history-config
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: "http://l1-devnet:8545"
+      SCROLL_L2_RPC: "http://l2-sequencer:8545"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: bridge-history-api-2.devnet.scroll.tech
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  bridge-history-config:
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-config
+        secretKey: bridge-history-config.json
+    refreshInterval: 2m
+    serviceAccount: external-secrets

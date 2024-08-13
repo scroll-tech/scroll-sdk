@@ -67,7 +67,6 @@ Kubernetes: `>=1.22.0-0`
 | coordinator-api.enabled | bool | `false` |  |
 | coordinator-cron.enabled | bool | `false` |  |
 | db | object | `{"bridge_history_password":"test1234","chain_monitor_password":"test1234","event_watcher_password":"test1234","gas_oracle_password":"test1234","pg_host":"postgresql","pg_password":"qwerty12345","pg_port":"5432","pg_user":"postgres","rollup_node_password":"test1234","rpc_gateway_password":"test1234"}` | each services. A user with admin privilege is required. |
-| event-watcher.enabled | bool | `true` |  |
 | frontends.enabled | bool | `true` |  |
 | frontends.ingress.main.enabled | bool | `true` |  |
 | frontends.ingress.main.hosts[0].host | string | `"frontends.scrollsdk"` |  |

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-common.labels" $ | nindent 4 }}
+  name: wait-for-l1-script
+data:
+  wait-for-l1.sh: |
+    #!/bin/sh
+
+    # Get L1 endpoint
+    L1_ENDPOINT=$1
+
+    # Function to check the Geth node
+    check_geth_node() {
+    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST --data '{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":1}' -H "Content-Type: application/json" $L1_ENDPOINT)
+    echo "code is $HTTP_CODE"
+    if [ "$HTTP_CODE" -eq 200 ]; then
+    echo "Geth node is up and running!"
+    exit 0
+    else
+    echo "Geth node is not responding, HTTP code: $HTTP_CODE. Retrying in 5 seconds..."
+    sleep 5
+    fi
+    }
+
+    # Loop until the Geth node responds with HTTP 200
+    while true; do
+    check_geth_node
+    done

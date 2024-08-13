@@ -161,7 +161,6 @@ initContainers:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
         subPath: wait-for-l1.sh
-
   6-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:
@@ -177,9 +176,6 @@ initContainers:
 
 # TODO remove this
 configMaps:
-  config:
-    enabled: true
-    data:
   migrate-db:
     enabled: true
     data:

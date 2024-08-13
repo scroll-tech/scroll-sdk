@@ -1,0 +1,6 @@
+configMaps:
+  env:
+    enabled: true
+    data:
+      CHAIN_ID: "221122"
+      L2GETH_L1_ENDPOINT: "http://l1-devnet:8545"
