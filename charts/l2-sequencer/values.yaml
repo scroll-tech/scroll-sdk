@@ -150,12 +150,6 @@ persistence:
     type: configMap
     mountPath: /config/
     name: l2-sequencer-env
-#TODO is this needed ?
-#  l2-sequencer:
-#    enabled: true
-#    type: configMap
-#    mountPath: /l2geth/conf/
-#    name: l2-sequencer-config
   genesis:
     enabled: true
     type: configMap

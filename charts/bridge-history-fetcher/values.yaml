@@ -175,7 +175,7 @@ initContainers:
       - configMapRef:
           name: bridge-history-fetcher-env
 
-#TODO remove this
+# TODO remove this
 configMaps:
   config:
     enabled: true
