@@ -14,7 +14,7 @@ image:
   tag: v0.0.4
 
 command:
-  ["/bin/bash", "-c", "anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"]
+  ["/bin/bash", "-c", "anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60 --slots-in-an-epoch 3"]
 
 envFrom:
   - configMapRef:

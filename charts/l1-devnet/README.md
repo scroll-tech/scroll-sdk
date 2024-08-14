@@ -25,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"/bin/bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60"` |  |
+| command[2] | string | `"anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60 --slots-in-an-epoch 3"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"statefulset"` |  |

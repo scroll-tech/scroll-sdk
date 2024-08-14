@@ -37,7 +37,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"frontends"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/frontends"` |  |
-| image.tag | string | `"2.2.7"` |  |
+| image.tag | string | `"2.2.16"` |  |
 | ingress.main.annotations | object | `{}` |  |
 | ingress.main.enabled | bool | `true` |  |
 | ingress.main.hosts[0].host | string | `"frontends.scrollsdk"` |  |
