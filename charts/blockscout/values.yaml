@@ -123,27 +123,17 @@ persistence:
     name: blockscout-env
 
 initContainers:
-  1-wait-for-postgres:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
-      - --timeout
-      - "0"
+      - postgresql
+      - $(DATABASE_URL)
     envFrom:
       - configMapRef:
           name: blockscout-env
   2-migrate-db:
     image: blockscout/blockscout:6.6.0
     command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
-    envFrom:
-      - configMapRef:
-          name: blockscout-env
-  3-check-postgres-connection:
-    image: atkrad/wait4x:latest
-    args:
-      - postgresql
-      - $(DATABASE_URL)
     envFrom:
       - configMapRef:
           name: blockscout-env

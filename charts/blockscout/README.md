@@ -101,21 +101,15 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.ingressClassName | string | `"nginx"` |  |
 | ingress.main.labels | object | `{}` |  |
 | ingress.main.primary | bool | `true` |  |
-| initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
-| initContainers.1-wait-for-postgres.args[1] | string | `"$(DATABASE_HOST):$(DATABASE_PORT)"` |  |
-| initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
-| initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
-| initContainers.1-wait-for-postgres.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
-| initContainers.1-wait-for-postgres.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
+| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
+| initContainers.1-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""` |  |
 | initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
 | initContainers.2-migrate-db.image | string | `"blockscout/blockscout:6.6.0"` |  |
-| initContainers.3-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.3-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
-| initContainers.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
-| initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"blockscout-env"` |  |

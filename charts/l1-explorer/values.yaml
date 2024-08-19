@@ -102,23 +102,13 @@ persistence:
     defaultMode: "0777"
 
 initContainers:
-  1-wait-for-postgres:
-    image: atkrad/wait4x:latest
-    args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
-      - --timeout
-      - "0"
-    envFrom:
-      - configMapRef:
-          name: l1-explorer-env
-  2-migrate-db:
+  1-migrate-db:
     image: blockscout/blockscout:6.6.0
     command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:
       - configMapRef:
           name: l1-explorer-env
-  3-check-postgres-connection:
+  2-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql

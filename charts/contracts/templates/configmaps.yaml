@@ -8,13 +8,14 @@ data:
 {{- toYaml $values.data | nindent 2 }}
 ---
 {{- end }}
-
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: contracts-deployment-config
-data:
-  config.toml:
-    {{- toYaml $.Values.configToml | nindent 4 }}
-  config-contracts.toml:
-    {{- toYaml $.Values.configContracts | nindent 4 }}
+#
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: contracts-deployment-config
+#data:
+#  config.toml:
+#    {{- toYaml $.Values.configToml | nindent 4 }}
+#  config-contracts.toml:
+#    {{- toYaml $.Values.configContracts | nindent 4 }}
+4

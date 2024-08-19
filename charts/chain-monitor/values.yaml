@@ -73,54 +73,7 @@ probes:
     <<: *default_probes
 
 initContainers:
-  1-wait-for-postgres:
-    image: atkrad/wait4x:latest
-    args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
-      - --timeout
-      - "0"
-    envFrom:
-      - configMapRef:
-          name: chain-monitor-env
-  2-init-db:
-    image: postgres:latest
-    env:
-      - name: POSTGRES_DB
-        value: scroll
-      - name: PG_USER
-        valueFrom:
-          configMapKeyRef:
-            name: db-secrets
-            key: PG_USER
-      - name: PGPASSWORD
-        valueFrom:
-          configMapKeyRef:
-            name: db-secrets
-            key: PGPASSWORD
-      - name: PG_HOST
-        valueFrom:
-          configMapKeyRef:
-            name: db-secrets
-            key: PG_HOST
-      - name: PG_PORT
-        valueFrom:
-          configMapKeyRef:
-            name: db-secrets
-            key: PG_PORT
-      - name: DB_USER
-        value: chain_monitor
-      - name: DB_PASSWORD
-        valueFrom:
-          configMapKeyRef:
-            name: db-secrets
-            key: CHAIN_MONITOR_PASSWORD
-    command: ["bash", "-c", "./init-db.sh"]
-    volumeMounts:
-      - name: init-db
-        mountPath: /init-db.sh
-        subPath: init-db.sh
-  3-check-postgres-connection:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
@@ -130,7 +83,7 @@ initContainers:
     envFrom:
       - configMapRef:
           name: chain-monitor-env
-  4-migrate-db:
+  2-migrate-db:
     image: scrolltech/chain-monitorv2:v1.1.26
     command:
       - /bin/sh
@@ -139,7 +92,7 @@ initContainers:
     volumeMounts:
       - name: *app_name
         mountPath: /app/config/
-  5-wait-for-l1:
+  3-wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1
     command:
       - /bin/sh
@@ -152,7 +105,7 @@ initContainers:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
         subPath: wait-for-l1.sh
-  6-wait-for-l2-sequencer:
+  4-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:
       - http

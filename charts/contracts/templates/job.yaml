@@ -45,10 +45,17 @@ spec:
           envFrom:
             - configMapRef:
                 name: contracts-deployment-env
+
       volumes:
+        {{- if not .Values.useSecretConfig }}
         - configMap:
-            name: contracts-deployment-config
+            name: scroll-smart-contracts-config
           name: config
+        {{- else }}
+        - secret:
+            secretName: {{ .Values.secretName }}
+          name: config
+        {{- end }}
         - configMap:
             name: wait-for-l1-script
             defaultMode: 0777

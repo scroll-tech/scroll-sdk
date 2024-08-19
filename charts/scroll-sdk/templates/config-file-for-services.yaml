@@ -111,17 +111,6 @@ data:
 {{ .Files.Get "configs/contracts.env" | indent 2 }}
 ---
 {{- end }}
-{{- if index .Values "event-watcher" "enabled" }}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    {{- include "scroll-sdk.labels" $ | nindent 4 }}
-  name: event-watcher-env
-data:
-{{ .Files.Get "configs/event-watcher.env" | indent 2 }}
----
-{{- end }}
 {{- if index .Values "frontends" "enabled" }}
 apiVersion: v1
 kind: ConfigMap

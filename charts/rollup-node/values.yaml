@@ -55,7 +55,7 @@ probes:
 persistence:
   *app_name:
     enabled: true
-    type: secret
+    type: configMap
     mountPath: /app/conf/
     name: rollup-config
   genesis:
@@ -82,55 +82,7 @@ persistence:
     defaultMode: "0777"
 
 initContainers:
-  1-wait-for-postgres:
-    image: atkrad/wait4x:latest
-    args:
-      - tcp
-      - postgresql:5432
-      - --timeout
-      - "0"
-    volumeMounts:
-      - name: wait-for-l1-script
-        mountPath: /wait-for-l1.sh
-        subPath: wait-for-l1.sh
-  2-init-db:
-    image: postgres:latest
-    env:
-      - name: POSTGRES_DB
-        value: scroll
-      - name: PG_USER
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_USER
-      - name: PGPASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PGPASSWORD
-      - name: PG_HOST
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_HOST
-      - name: PG_PORT
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_PORT
-      - name: DB_USER
-        value: rollup_node
-      - name: DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: ROLLUP_NODE_PASSWORD
-    command: ["bash", "-c", "./init-db.sh"]
-    volumeMounts:
-      - name: init-db
-        mountPath: /init-db.sh
-        subPath: init-db.sh
-  3-check-postgres-connection:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
@@ -140,14 +92,14 @@ initContainers:
     envFrom:
       - configMapRef:
           name: rollup-node-env
-  4-migrate-db:
+  2-migrate-db:
     image: scrolltech/rollup-db-cli
     command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
     volumeMounts:
       - name: migrate-db
         mountPath: /config/migrate-db.json
         subPath: migrate-db.json
-  5-wait-for-l1:
+  3-wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1
     command:
       - /bin/sh
@@ -161,7 +113,7 @@ initContainers:
         mountPath: /wait-for-l1.sh
         subPath: wait-for-l1.sh
 
-  6-wait-for-l2-sequencer:
+  4-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:
       - http
