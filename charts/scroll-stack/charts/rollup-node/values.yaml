@@ -164,7 +164,6 @@ initContainers:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
         subPath: wait-for-l1.sh
-
   6-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:
@@ -180,14 +179,14 @@ initContainers:
     command:
       - /bin/sh
       - -c
-      - sh /wait-for-contracts.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR
+      - /wait-for-contract.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR
     envFrom:
       - configMapRef:
           name: rollup-node-env
     volumeMounts:
       - name: wait-for-contracts-script
-        mountPath: /wait-for-contracts.sh
-        subPath: wait-for-contracts.sh
+        mountPath: /wait-for-contract.sh
+        subPath: wait-for-contract.sh
 
 
 # Need genesis file and config.json
