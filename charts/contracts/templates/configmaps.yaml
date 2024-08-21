@@ -18,4 +18,3 @@ data:
 #    {{- toYaml $.Values.configToml | nindent 4 }}
 #  config-contracts.toml:
 #    {{- toYaml $.Values.configContracts | nindent 4 }}
-4
