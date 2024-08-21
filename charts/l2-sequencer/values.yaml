@@ -144,7 +144,6 @@ persistence:
   env:
     enabled: true
     type: configMap
-    mountPath: /config/
     name: l2-sequencer-env
   genesis:
     enabled: true

@@ -106,7 +106,7 @@ kind: ConfigMap
 metadata:
   labels:
     {{- include "scroll-sdk.labels" $ | nindent 4 }}
-  name: contracts-env
+  name: contracts-deployment-env
 data:
 {{ .Files.Get "configs/contracts.env" | indent 2 }}
 ---
@@ -119,7 +119,7 @@ metadata:
     {{- include "scroll-sdk.labels" $ | nindent 4 }}
   name: frontends-config
 data:
-{{ (.Files.Glob ".env.frontend").AsConfig | indent 2 }}
+{{ (.Files.Glob "frontend-config").AsConfig | indent 2 }}
 ---
 {{- end }}
 {{- if index .Values "gas-oracle" "enabled" }}
@@ -131,6 +131,15 @@ metadata:
   name: gas-oracle-env
 data:
 {{ .Files.Get "configs/gas-oracle.env" | indent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+  name: gas-oracle-config
+data:
+{{ (.Files.Glob "rollup-config").AsConfig | indent 2 }}
 ---
 {{- end }}
 {{- if index .Values "l1-devnet" "enabled" }}
@@ -194,7 +203,7 @@ kind: ConfigMap
 metadata:
   labels:
     {{- include "scroll-sdk.labels" $ | nindent 4 }}
-  name: rollup-node-config
+  name: rollup-config
 data:
 {{ (.Files.Glob "rollup-config.json").AsConfig | indent 2 }}
 ---
@@ -206,5 +215,17 @@ metadata:
   name: rollup-node-env
 data:
 {{ .Files.Get "configs/rollup-node.env" | indent 2 }}
+---
+{{- end }}
+{{- if index .Values "rollup-explorer-backend" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+  name: rollup-explorer-backend-config
+data:
+  config.json: |
+{{ .Files.Get "rollup-explorer-backend-config.json" | indent 4 }}
 ---
 {{- end }}

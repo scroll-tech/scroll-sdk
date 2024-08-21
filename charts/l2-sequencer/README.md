@@ -83,7 +83,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.data.size | string | `"10Gi"` |  |
 | persistence.data.type | string | `"pvc"` |  |
 | persistence.env.enabled | bool | `true` |  |
-| persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"l2-sequencer-env"` |  |
 | persistence.env.type | string | `"configMap"` |  |
 | persistence.genesis.enabled | bool | `true` |  |

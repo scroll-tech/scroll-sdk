@@ -46,7 +46,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
-| initContainers.1-check-postgres-connection.envFrom[0].configMap.name | string | `"bridge-history-fetcher-env"` |  |
+| initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
 | initContainers.1-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |

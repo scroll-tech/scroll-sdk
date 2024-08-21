@@ -48,10 +48,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | balance-checker.enabled | bool | `true` |  |
 | blockscout-sc-verifier.enabled | bool | `false` |  |
-| blockscout.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
 | blockscout.enabled | bool | `true` |  |
-| blockscout.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
-| blockscout.initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
 | bridge-history-api.enabled | bool | `true` |  |
 | bridge-history-api.ingress.main.annotations | object | `{}` |  |
 | bridge-history-api.ingress.main.enabled | bool | `true` |  |
@@ -113,7 +110,6 @@ Kubernetes: `>=1.22.0-0`
 | kube-prometheus-stack.prometheus-node-exporter.nameOverride | string | `"node-exporter"` |  |
 | kube-prometheus-stack.prometheus.enabled | bool | `true` |  |
 | l1-devnet.enabled | bool | `true` |  |
-| l1-devnet.envFrom[0].configMapRef.name | string | `"l1-devnet-env"` |  |
 | l1-devnet.ingress.main.enabled | bool | `true` |  |
 | l1-devnet.ingress.main.hosts[0].host | string | `"l1.scrollsdk"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |

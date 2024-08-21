@@ -27,7 +27,6 @@ command: [
     --log.debug --verbosity 3",
 ]
 
-
 resources:
   requests:
     memory: "50Mi"
@@ -112,8 +111,7 @@ initContainers:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
         subPath: wait-for-l1.sh
-
-  4-wait-for-l2-sequencer:
+  4-wait-for-contract:
     image: scrolltech/scroll-alpine:v0.0.1
     command:
       - /bin/sh

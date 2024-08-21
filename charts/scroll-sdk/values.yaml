@@ -9,24 +9,9 @@ l1-devnet:
           paths:
             - path: /
               pathType: Prefix
-  envFrom:
-    - configMapRef:
-        name: l1-devnet-env
 
 blockscout:
   enabled: true
-  envFrom:
-    - configMapRef:
-        name: blockscout-env
-  initContainers:
-    2-migrate-db:
-      envFrom:
-        - configMapRef:
-            name: blockscout-env
-  3-check-postgres-connection:
-    envFrom:
-      - configMapRef:
-          name: blockscout-env
 
 bridge-history-api:
   enabled: true

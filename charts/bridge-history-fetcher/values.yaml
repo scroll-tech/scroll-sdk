@@ -86,7 +86,7 @@ initContainers:
       - --timeout
       - "0"
     envFrom:
-      - configMap:
+      - configMapRef:
           name: bridge-history-fetcher-env
   2-migrate-db:
     image: scrolltech/bridgehistoryapi-db-cli:v4.4.14

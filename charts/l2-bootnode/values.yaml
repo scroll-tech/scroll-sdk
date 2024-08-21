@@ -106,7 +106,6 @@ persistence:
     mountPath: /l2geth/data
     accessMode: ReadWriteOnce
     size: 10Gi
-    storageClass: "ebs-sc-retain"
   env:
     enabled: true
     type: configMap

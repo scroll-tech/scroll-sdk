@@ -77,7 +77,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.data.enabled | bool | `true` |  |
 | persistence.data.mountPath | string | `"/l2geth/data"` |  |
 | persistence.data.size | string | `"10Gi"` |  |
-| persistence.data.storageClass | string | `"ebs-sc-retain"` |  |
 | persistence.data.type | string | `"pvc"` |  |
 | persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
