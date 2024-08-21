@@ -28,34 +28,31 @@ get_service_configmap_variables() {
             echo "CHAIN_ID_L1:SCROLL_L1_RPC CHAIN_ID_L2:SCROLL_L2_RPC"
             ;;
         blockscout)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC BLOCKSCOUT_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         bridge-history-api)
             echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC  L2_RPC_ENDPOINT:SCROLL_L2_RPC"
             ;;
         bridge-history-fetcher)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC L2_RPC_ENDPOINT:SCROLL_L2_RPC"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC L2_RPC_ENDPOINT:SCROLL_L2_RPC BRIDGE_HISTORY_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         chain-monitor)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC CHAIN_MONITOR_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         contracts)
             echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT CHAIN_ID_L1:CHAIN_ID_L1 CHAIN_ID_L2:CHAIN_ID_L2"
             ;;
         coordinator)
-            echo "DATABASE_HOST:DATABASE_HOST DATABASE_PORT:DATABASE_PORT"
-            ;;
-        event-watcher)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
+            echo "DATABASE_HOST:DATABASE_HOST DATABASE_PORT:DATABASE_PORT COORDINATOR_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         gas-oracle)
-            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC"
+            echo "L1_RPC_ENDPOINT:SCROLL_L1_RPC GAS_ORACLE_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         l1-devnet)
             echo "CHAIN_ID_L1:CHAIN_ID"
             ;;
         l1-explorer)
-            echo "CHAIN_ID_L1:CHAIN_ID L1_EXPLORER_DB_CONNECTION_STRING:DATABASE_URL L1_RPC_ENDPOINT:ETHEREUM_JSONRPC_HTTP_URL L1_RPC_ENDPOINT:ETHEREUM_JSONRPC_TRACE_URL L1_RPC_ENDPOINT:JSON_RPC L1_RPC_ENDPOINT_WEBSOCKET:ETHEREUM_JSONRPC_WS_URL"
+            echo "CHAIN_ID_L1:CHAIN_ID L1_EXPLORER_DB_CONNECTION_STRING:DATABASE_URL L1_RPC_ENDPOINT:ETHEREUM_JSONRPC_HTTP_URL L1_RPC_ENDPOINT:ETHEREUM_JSONRPC_TRACE_URL L1_RPC_ENDPOINT:JSON_RPC L1_RPC_ENDPOINT_WEBSOCKET:ETHEREUM_JSONRPC_WS_URL L1_EXPLORER_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         l2-bootnode)
             echo "CHAIN_ID_L2:CHAIN_ID L1_RPC_ENDPOINT:L2GETH_L1_ENDPOINT"
@@ -67,7 +64,7 @@ get_service_configmap_variables() {
             echo "CHAIN_ID_L2:CHAIN_ID L1_RPC_ENDPOINT:L2GETH_L1_ENDPOINT L2GETH_SIGNER_0_ADDRESS:L2GETH_SIGNER_ADDRESS L1_CONTRACT_DEPLOYMENT_BLOCK:L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"
             ;;
         rollup-node)
-            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT"
+            echo "L1_SCROLL_CHAIN_PROXY_ADDR:L1_SCROLL_CHAIN_PROXY_ADDR L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL"
             ;;
         *)
             echo "Service $service_name not found."
@@ -75,35 +72,6 @@ get_service_configmap_variables() {
     esac
 }
 
-get_service_secret_variables() {
-    local service_name=$1
-    case "$service_name" in
-        blockscout)
-            echo "BLOCKSCOUT_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        bridge-history-fetcher)
-            echo "BRIDGE_HISTORY_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        chain-monitor)
-            echo "CHAIN_MONITOR_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        coordinator)
-            echo "COORDINATOR_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        gas-oracle)
-            echo "AS_ORACLE_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        l1-explorer)
-            echo "L1_EXPLORER_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        rollup-node)
-            echo "ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL"
-            ;;
-        *)
-            echo "Service $service_name not found."
-            ;;
-    esac
-}
 
 extract_from_config_toml() {
   # Check if the correct number of arguments is given
@@ -116,11 +84,14 @@ extract_from_config_toml() {
   # The first argument is the toml file
   toml_file=$1
 
-  # The second argument is the service name
-  service=$2
+  # The second argument is the toml file
+  toml_contracts_file=$2
 
-  # The third argument is the file to export
-  file=$3
+  # The third argument is the service name
+  service=$3
+
+  # The fourth argument is the file to export
+  file=$4
 
   # The rest is the key/value pair
   shift 3
@@ -136,6 +107,12 @@ extract_from_config_toml() {
 
     # Extract the value of the source variable from the toml file
     value=$(grep -E "^${source_var} =" "$toml_file" | sed 's/ *= */=/' | cut -d'=' -f2-)
+
+    # Check if the value is found in config.toml, otherwise look in config-contract.toml
+    if [ -z "$value" ]; then
+      echo "Variable $source_var not found in $toml_file, looking in $toml_contracts_file..."
+      value=$(grep -E "^${source_var} =" "$toml_contracts_file" | sed 's/ *= */=/' | cut -d'=' -f2-)
+    fi
 
     # Check if the value is found
     if [ -z "$value" ]; then
@@ -166,20 +143,15 @@ extract_from_config_toml() {
 
 # List of services
 # Note: frontend is excluded from this list as its env file is generated by the container scroll-stack-contracts.
-services_configmap=("balance-checker" "bridge-history-api" "bridge-history-fetcher" "blockscout" "chain-monitor" "contracts" "coordinator" "event-watcher" "gas-oracle" "l1-devnet" "l1-explorer" "l2-bootnode" "l2-rpc" "l2-sequencer" "rollup-node")
-services_secret=("bridge-history-fetcher" "blockscout" "chain-monitor" "coordinator" "event-watcher" "gas-oracle" "l1-explorer" "rollup-node")
+services_configmap=("balance-checker" "bridge-history-api" "bridge-history-fetcher" "blockscout" "chain-monitor" "contracts" "coordinator" "gas-oracle" "l1-devnet" "l1-explorer" "l2-bootnode" "l2-rpc" "l2-sequencer" "rollup-node")
 
 # Loop over the list of services and execute the function
 for service in "${services_configmap[@]}"; do
     get_service_configmap_variables $service
     env_file="$CHART_DIR/configs/$service.env"
     delete_file_if_exists $env_file
-    extract_from_config_toml $CHART_DIR/config.toml $service $CHART_DIR/configs/$service.env $(get_service_configmap_variables $service)
+    extract_from_config_toml $CHART_DIR/config.toml $CHART_DIR/config-contracts.toml $service $CHART_DIR/configs/$service.env $(get_service_configmap_variables $service)
 done
 
-for service in "${services_secret[@]}"; do
-    get_service_secret_variables $service
-    env_file="$CHART_DIR/configs/$service.secret.env"
-    delete_file_if_exists $env_file
-    extract_from_config_toml $CHART_DIR/config.toml $service $CHART_DIR/configs/$service.secret.env $(get_service_secret_variables $service)
-done
+# TODO: this is a workaround, we should name correctly that file directly from the gen-config docker image
+cp $CHART_DIR/.env.frontend $CHART_DIR/frontend-config
