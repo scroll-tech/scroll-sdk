@@ -75,11 +75,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.bridge-history-fetcher.mountPath | string | `"/app/conf/"` |  |
 | persistence.bridge-history-fetcher.name | string | `"bridge-history-config"` |  |
 | persistence.bridge-history-fetcher.type | string | `"configMap"` |  |
-| persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | bool | `true` |  |
-| persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
-| persistence.init-db.name | string | `"init-db"` |  |
-| persistence.init-db.type | string | `"configMap"` |  |
 | persistence.migrate-db.defaultMode | string | `"0777"` |  |
 | persistence.migrate-db.enabled | bool | `true` |  |
 | persistence.migrate-db.mountPath | string | `"/config/migrate-db.json"` |  |

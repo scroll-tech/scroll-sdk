@@ -101,15 +101,11 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.ingressClassName | string | `"nginx"` |  |
 | ingress.main.labels | object | `{}` |  |
 | ingress.main.primary | bool | `true` |  |
-| initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
-| initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
-| initContainers.1-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
-| initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
-| initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
-| initContainers.2-migrate-db.command[2] | string | `"/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""` |  |
-| initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
-| initContainers.2-migrate-db.image | string | `"blockscout/blockscout:6.6.0"` |  |
+| initContainers.1-migrate-db.command[0] | string | `"/bin/sh"` |  |
+| initContainers.1-migrate-db.command[1] | string | `"-c"` |  |
+| initContainers.1-migrate-db.command[2] | string | `"/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""` |  |
+| initContainers.1-migrate-db.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
+| initContainers.1-migrate-db.image | string | `"blockscout/blockscout:6.6.0"` |  |
 | persistence.env.enabled | bool | `true` |  |
 | persistence.env.mountPath | string | `"/config/"` |  |
 | persistence.env.name | string | `"blockscout-env"` |  |
@@ -118,11 +114,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |
-| persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | bool | `true` |  |
-| persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
-| persistence.init-db.name | string | `"init-db"` |  |
-| persistence.init-db.type | string | `"configMap"` |  |
 | probes.liveness.<<.custom | bool | `true` |  |
 | probes.liveness.<<.enabled | bool | `true` |  |
 | probes.liveness.<<.spec.httpGet.path | string | `"/"` |  |

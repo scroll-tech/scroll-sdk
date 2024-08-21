@@ -110,12 +110,6 @@ persistence:
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
-  init-db:
-    enabled: true
-    type: configMap
-    mountPath: /init-db.sh
-    name: init-db
-    defaultMode: "0777"
   env:
     enabled: true
     type: configMap
@@ -123,15 +117,7 @@ persistence:
     name: blockscout-env
 
 initContainers:
-  1-check-postgres-connection:
-    image: atkrad/wait4x:latest
-    args:
-      - postgresql
-      - $(DATABASE_URL)
-    envFrom:
-      - configMapRef:
-          name: blockscout-env
-  2-migrate-db:
+  1-migrate-db:
     image: blockscout/blockscout:6.6.0
     command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:

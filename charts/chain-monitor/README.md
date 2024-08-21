@@ -67,11 +67,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"chain-monitor-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
-| persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | bool | `true` |  |
-| persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
-| persistence.init-db.name | string | `"init-db"` |  |
-| persistence.init-db.type | string | `"configMap"` |  |
 | persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |
 | persistence.wait-for-l1-script.enabled | bool | `true` |  |
 | persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |

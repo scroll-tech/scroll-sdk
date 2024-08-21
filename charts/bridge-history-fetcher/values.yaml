@@ -41,12 +41,6 @@ persistence:
     type: configMap
     mountPath: /app/conf/
     name: bridge-history-config
-  init-db:
-    enabled: true
-    type: configMap
-    mountPath: /init-db.sh
-    name: init-db
-    defaultMode: "0777"
   migrate-db:
     enabled: true
     type: configMap

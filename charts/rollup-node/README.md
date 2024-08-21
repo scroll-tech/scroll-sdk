@@ -73,11 +73,6 @@ Kubernetes: `>=1.22.0-0`
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |
-| persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | bool | `true` |  |
-| persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
-| persistence.init-db.name | string | `"init-db"` |  |
-| persistence.init-db.type | string | `"configMap"` |  |
 | persistence.migrate-db.defaultMode | string | `"0777"` |  |
 | persistence.migrate-db.enabled | bool | `true` |  |
 | persistence.migrate-db.mountPath | string | `"/config/migrate-db.json"` |  |
