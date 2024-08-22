@@ -1,0 +1,18 @@
+---
+apiVersion: v2
+description: scroll helm charts to deploy common scripts and configuration
+name: scroll-common-config
+version: 0.0.1
+appVersion: v0.1.0
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: scroll-tech
+    email: sebastien@scroll.io
+keywords:
+  - scroll
+  - common
+home: https://github.com/scroll-tech/scroll-sdk
+dependencies:
+  - name: external-secrets-lib
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
+    version: 0.0.1
