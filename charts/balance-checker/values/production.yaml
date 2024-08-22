@@ -1,0 +1,8 @@
+global:
+  isStandalone: true
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""

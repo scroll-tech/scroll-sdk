@@ -1,0 +1,63 @@
+global:
+  isStandalone: true
+
+persistence:
+  # TODO make this consistent with devnet, we should use bridge-history-fetcher-config instead of bridge-history-config
+  bridge-history-fetcher:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: bridge-history-fetcher-config
+  migrate-db:
+    enabled: true
+    type: secret
+    mountPath: /config/migrate-db.json
+    name: bridge-history-fetcher-migrate-db
+    defaultMode: "0777"
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: bridge-history-fetcher-secret-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: "http://l2-sequencer:8545"
+  migrate-db:
+    enabled: false
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: bridge-history-api.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  bridge-history-fetcher-secret-env:
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-fetcher-secret-env
+          property: DATABASE_URL
+        secretKey: DATABASE_URL
+    refreshInterval: 2m
+    serviceAccount: external-secrets
+  bridge-history-fetcher-migrate-db:
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-fetcher-migrate-db
+        secretKey: migrate-db.json
+    refreshInterval: 2m
+    serviceAccount: external-secrets

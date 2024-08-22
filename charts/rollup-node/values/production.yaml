@@ -1,0 +1,58 @@
+global:
+  isStandalone: true
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: rollup-node-secret-env
+
+persistence:
+  migrate-db:
+    enabled: true
+    type: secret
+    mountPath: /config/migrate-db.json
+    name: rollup-node-migrate-db
+    defaultMode: "0777"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: rollup-node.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      L1_RPC_ENDPOINT: ""
+      L2_RPC_ENDPOINT: ""
+      L1_SCROLL_CHAIN_PROXY_ADDR: ""
+  migrate-db:
+    enabled: false
+
+externalSecrets:
+  rollup-node-secret-env:
+    data:
+      - remoteRef:
+          key: scroll/rollup-node-secret-env
+          property: DATABASE_URL
+        secretKey: DATABASE_URL
+    refreshInterval: 2m
+    serviceAccount: external-secrets
+  rollup-node-migrate-db:
+    data:
+      - remoteRef:
+          key: scroll/rollup-node-migrate-db
+        secretKey: migrate-db.json
+    refreshInterval: 2m
+    serviceAccount: external-secrets

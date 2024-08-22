@@ -61,9 +61,9 @@ resources:
 persistence:
   *app_name:
     enabled: true
-    type: secret
+    type: configMap
     mountPath: /app/conf/
-    name: coordinator-config
+    name: coordinator-cron-config
   genesis:
     enabled: true
     type: configMap

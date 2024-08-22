@@ -32,10 +32,10 @@ bridge-history-fetcher:
   enabled: true
 
 balance-checker:
-  enabled: true
+  enabled: false
 
 chain-monitor:
-  enabled: false
+  enabled: true
 
 contracts:
   enabled: true
@@ -61,7 +61,7 @@ gas-oracle:
   enabled: true
 
 grafana:
-  enabled: true
+  enabled: false
   fullnameOverride: grafana
   nameOverride: grafana
   adminUser: admin
@@ -122,13 +122,13 @@ rollup-node:
   enabled: true
 
 l1-explorer:
-  enabled: false
+  enabled: true
   ingress:
     main:
       enabled: true
       ingressClassName: "nginx"
       hosts:
-        - host: l1-devnet-explorer.scrollsdk
+        - host: l1-explorer.scrollsdk
           paths:
             - path: /
               pathType: Prefix

@@ -73,7 +73,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.parameter-download.volumeMounts[1].subPath | string | `"download-params.sh"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/coordinator/conf/"` |  |
-| persistence.app_name.name | string | `"coordinator-config"` |  |
+| persistence.app_name.name | string | `"coordinator-api-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
 | persistence.download-params.defaultMode | string | `"0777"` |  |
 | persistence.download-params.enabled | bool | `true` |  |

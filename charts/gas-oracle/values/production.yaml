@@ -1,0 +1,58 @@
+global:
+  isStandalone: true
+
+persistence:
+  #TODO is it still needed or can I use the default value ?
+  gas-oracle:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: gas-oracle-config
+  migrate-db:
+    enabled: true
+    type: secret
+    mountPath: /config/migrate-db.json
+    name: gas-oracle-migrate-db
+    defaultMode: "0777"
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: gas-oracle-secret-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: "https://alien-flashy-arm.ethereum-sepolia.quiknode.pro/2aeb75414e5ee0e930b64c2e7feff59efb537f30"
+#      POSTGRES_DB: "scroll"
+#      PG_USER: "postgres"
+#      PG_HOST: "postgresql-rollup"
+#      PG_PORT: "5432"
+#      DB_USER: "gasoracle"
+  migrate-db:
+    enabled: false
+
+externalSecrets:
+  gas-oracle-secret-env:
+    data:
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: DATABASE_URL
+        secretKey: DATABASE_URL
+    refreshInterval: 2m
+    serviceAccount: external-secrets
+  gas-oracle-migrate-db:
+    data:
+      - remoteRef:
+          key: scroll/gas-oracle-migrate-db
+        secretKey: migrate-db.json
+    refreshInterval: 2m
+    serviceAccount: external-secrets

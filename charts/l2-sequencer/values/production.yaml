@@ -1,0 +1,32 @@
+envFrom:
+  - configMapRef:
+      name: l2-sequencer-env
+  - secretRef:
+      name: l2-sequencer-secret-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      CHAIN_ID: ""
+      L2GETH_L1_ENDPOINT: ""
+      L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK: ""
+      L2GETH_SIGNER_ADDRESS: ""
+
+externalSecrets:
+  l2-sequencer-secret-env:
+    data:
+      - remoteRef:
+          key: scroll/l2-sequencer-secret-env
+          property: L2GETH_KEYSTORE
+        secretKey: L2GETH_KEYSTORE
+      - remoteRef:
+          key: scroll/l2-sequencer-secret-env
+          property: L2GETH_PASSWORD
+        secretKey: L2GETH_PASSWORD
+      - remoteRef:
+          key: scroll/l2-sequencer-secret-env
+          property: L2GETH_NODEKEY
+        secretKey: L2GETH_NODEKEY
+    refreshInterval: 2m
+    serviceAccount: external-secrets

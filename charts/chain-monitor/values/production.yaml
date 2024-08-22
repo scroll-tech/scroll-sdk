@@ -1,0 +1,30 @@
+global:
+  isStandalone: true
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: chain-monitor-secret-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+
+externalSecrets:
+  chain-monitor-secret-env:
+    data:
+      - remoteRef:
+          key: scroll/chain-monitor-secret-env
+          property: DATABASE_URL
+        secretKey: DATABASE_URL
+    refreshInterval: 2m
+    serviceAccount: external-secrets

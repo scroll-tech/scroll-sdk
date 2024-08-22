@@ -46,7 +46,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| balance-checker.enabled | bool | `true` |  |
+| balance-checker.enabled | bool | `false` |  |
 | blockscout-sc-verifier.enabled | bool | `false` |  |
 | blockscout.enabled | bool | `true` |  |
 | bridge-history-api.enabled | bool | `true` |  |
@@ -59,7 +59,7 @@ Kubernetes: `>=1.22.0-0`
 | bridge-history-api.ingress.main.labels | object | `{}` |  |
 | bridge-history-api.ingress.main.primary | bool | `true` |  |
 | bridge-history-fetcher.enabled | bool | `true` |  |
-| chain-monitor.enabled | bool | `false` |  |
+| chain-monitor.enabled | bool | `true` |  |
 | contracts.enabled | bool | `true` |  |
 | coordinator-api.enabled | bool | `false` |  |
 | coordinator-cron.enabled | bool | `false` |  |
@@ -94,7 +94,7 @@ Kubernetes: `>=1.22.0-0`
 | grafana.datasources."datasources.yaml".datasources[1].name | string | `"Loki"` |  |
 | grafana.datasources."datasources.yaml".datasources[1].type | string | `"loki"` |  |
 | grafana.datasources."datasources.yaml".datasources[1].url | string | `"http://loki:3100"` |  |
-| grafana.enabled | bool | `true` |  |
+| grafana.enabled | bool | `false` |  |
 | grafana.fullnameOverride | string | `"grafana"` |  |
 | grafana.ingress.enabled | bool | `true` |  |
 | grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
@@ -114,9 +114,9 @@ Kubernetes: `>=1.22.0-0`
 | l1-devnet.ingress.main.hosts[0].host | string | `"l1.scrollsdk"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| l1-explorer.enabled | bool | `false` |  |
+| l1-explorer.enabled | bool | `true` |  |
 | l1-explorer.ingress.main.enabled | bool | `true` |  |
-| l1-explorer.ingress.main.hosts[0].host | string | `"l1-devnet-explorer.scrollsdk"` |  |
+| l1-explorer.ingress.main.hosts[0].host | string | `"l1-explorer.scrollsdk"` |  |
 | l1-explorer.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | l1-explorer.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | l1-explorer.ingress.main.ingressClassName | string | `"nginx"` |  |

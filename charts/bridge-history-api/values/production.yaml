@@ -1,0 +1,29 @@
+global:
+  isStandalone: true
+
+controller:
+  replicas: 2
+
+# TODO make this consistent with devnet, we should use bridge-history-api-config instead of bridge-history-config
+persistence:
+  bridge-history-api:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: bridge-history-api-config
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: "http://l2-sequencer:8545"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: bridge-history-api.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix

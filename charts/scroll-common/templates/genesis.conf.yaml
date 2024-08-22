@@ -5,4 +5,4 @@ metadata:
     {{- include "scroll-common.labels" $ | nindent 4 }}
   name: genesis-config
 data:
-{{ (.Files.Glob "genesis.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "configs/genesis.json").AsConfig | indent 2 }}

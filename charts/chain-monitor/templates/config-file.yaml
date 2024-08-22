@@ -1,0 +1,10 @@
+{{- if .Values.global.isStandalone }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chain-monitor-config
+data:
+{{ (.Files.Glob "configs/chain-monitor-config.json").AsConfig | indent 2 }}
+---
+{{- end }}

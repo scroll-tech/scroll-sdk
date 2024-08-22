@@ -46,7 +46,7 @@ persistence:
     enabled: true
     type: configMap
     mountPath: /coordinator/conf/
-    name: coordinator-config
+    name: coordinator-api-config
   download-params:
     enabled: true
     type: configMap

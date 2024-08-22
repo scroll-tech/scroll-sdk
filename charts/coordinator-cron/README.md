@@ -59,8 +59,8 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/conf/"` |  |
-| persistence.app_name.name | string | `"coordinator-config"` |  |
-| persistence.app_name.type | string | `"secret"` |  |
+| persistence.app_name.name | string | `"coordinator-cron-config"` |  |
+| persistence.app_name.type | string | `"configMap"` |  |
 | persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
