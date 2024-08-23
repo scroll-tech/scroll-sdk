@@ -164,7 +164,7 @@ Kubernetes: `>=1.22.0-0`
 | rollup-explorer-backend.ingress.main.labels | object | `{}` |  |
 | rollup-explorer-backend.ingress.main.primary | bool | `true` |  |
 | rollup-node.enabled | bool | `true` |  |
-| rpc-gateway.enabled | bool | `true` |  |
+| rpc-gateway.enabled | bool | `false` |  |
 | rpc-gateway.ingress.main.enabled | bool | `true` |  |
 | rpc-gateway.ingress.main.hosts[0].host | string | `"l2-rpc-gateway.scrollsdk"` |  |
 | rpc-gateway.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |

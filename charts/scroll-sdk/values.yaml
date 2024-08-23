@@ -169,7 +169,7 @@ blockscout-sc-verifier:
   enabled: false
 
 rpc-gateway:
-  enabled: true
+  enabled: false
   ingress:
     main:
       enabled: true
