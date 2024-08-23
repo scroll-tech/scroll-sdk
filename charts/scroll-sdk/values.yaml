@@ -61,7 +61,7 @@ gas-oracle:
   enabled: true
 
 grafana:
-  enabled: false
+  enabled: true
   fullnameOverride: grafana
   nameOverride: grafana
   adminUser: admin

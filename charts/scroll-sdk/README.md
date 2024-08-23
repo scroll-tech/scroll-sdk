@@ -94,7 +94,7 @@ Kubernetes: `>=1.22.0-0`
 | grafana.datasources."datasources.yaml".datasources[1].name | string | `"Loki"` |  |
 | grafana.datasources."datasources.yaml".datasources[1].type | string | `"loki"` |  |
 | grafana.datasources."datasources.yaml".datasources[1].url | string | `"http://loki:3100"` |  |
-| grafana.enabled | bool | `false` |  |
+| grafana.enabled | bool | `true` |  |
 | grafana.fullnameOverride | string | `"grafana"` |  |
 | grafana.ingress.enabled | bool | `true` |  |
 | grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
