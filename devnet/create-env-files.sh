@@ -67,7 +67,7 @@ get_service_configmap_variables() {
             echo "CHAIN_ID_L2:CHAIN_ID L1_RPC_ENDPOINT:L2GETH_L1_ENDPOINT L2GETH_SIGNER_0_ADDRESS:L2GETH_SIGNER_ADDRESS L1_CONTRACT_DEPLOYMENT_BLOCK:L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"
             ;;
         rollup-node)
-            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "L1_RPC_ENDPOINT:L1_RPC_ENDPOINT L2_RPC_ENDPOINT:L2_RPC_ENDPOINT ROLLUP_NODE_DB_CONNECTION_STRING:DATABASE_URL L1_SCROLL_CHAIN_PROXY_ADDR:L1_SCROLL_CHAIN_PROXY_ADDR"
             ;;
         *)
             echo "Service $service_name not found."
@@ -86,14 +86,17 @@ extract_from_config_toml() {
   # The first argument is the toml file
   toml_file=$1
 
-  # The second argument is the service name
-  service=$2
+  # The second argument is the toml file
+  toml_contracts_file=$2
 
-  # The third argument is the file to export
-  file=$3
+  # The third argument is the service name
+  service=$3
+
+  # The fourth argument is the file to export
+  file=$4
 
   # The rest is the key/value pair
-  shift 3
+  shift 4
 
 
   # Function to extract and export variables
@@ -106,6 +109,12 @@ extract_from_config_toml() {
 
     # Extract the value of the source variable from the toml file
     value=$(grep -E "^${source_var} =" "$toml_file" | sed 's/ *= */=/' | cut -d'=' -f2-)
+
+    # Check if the value is found in config.toml, otherwise look in config-contract.toml
+    if [ -z "$value" ]; then
+      echo "Variable $source_var not found in $toml_file, looking in $toml_contracts_file..."
+      value=$(grep -E "^${source_var} =" "$toml_contracts_file" | sed 's/ *= */=/' | cut -d'=' -f2-)
+    fi
 
     # Check if the value is found
     if [ -z "$value" ]; then
@@ -143,5 +152,5 @@ for service in "${services_configmap[@]}"; do
     get_service_configmap_variables $service
     env_file="$CHART_DIR/configs/$service.env"
     delete_file_if_exists $env_file
-    extract_from_config_toml $CHART_DIR/config.toml $service $CHART_DIR/configs/$service.env $(get_service_configmap_variables $service)
+    extract_from_config_toml $CHART_DIR/config.toml $CHART_DIR/config-contracts.toml $service $CHART_DIR/configs/$service.env $(get_service_configmap_variables $service)
 done
