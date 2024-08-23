@@ -9,7 +9,7 @@ bootstrap:
 		./create-env-files.sh scroll-sdk
 
 install:
-		helm install scroll-sdk scroll-sdk/
+		helm upgrade -i scroll-sdk scroll-sdk/
 
 reload-env-files:
 		./create-env-files.sh scroll-sdk
