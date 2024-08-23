@@ -54,7 +54,7 @@ ROLLUP_EXPLORER_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgr
 
 [frontend]
 
-EXTERNAL_RPC_URI_L1 ="http://l1.scrollsdk"
+EXTERNAL_RPC_URI_L1 ="http://l1-devnet.scrollsdk"
 EXTERNAL_RPC_URI_L2 = "http://l2-rpc.scrollsdk"
 BRIDGE_API_URI = "http://bridge-history-api.scrollsdk/api"
 ROLLUPSCAN_API_URI = "http://rollup-explorer-backend.scrollsdk/api"
