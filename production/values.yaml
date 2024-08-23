@@ -1,9 +1,0 @@
----
-externalSecrets:
-  db-secrets:
-    data:
-      - remoteRef:
-          key: scroll-sepolia/db
-        secretKey: db-secrets
-    refreshInterval: 10s
-    serviceAccount: external-secrets

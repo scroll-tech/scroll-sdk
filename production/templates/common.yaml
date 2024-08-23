@@ -1,2 +1,0 @@
----
-{{- include "scrolllib.externalsecrets.tpl" . }}
