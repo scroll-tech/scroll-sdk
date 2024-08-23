@@ -36,10 +36,10 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"l1-devnet"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l1-devnet"` |  |
-| image.tag | string | `"v0.0.2"` |  |
+| image.tag | string | `"v0.0.4"` |  |
 | ingress.main.annotations | object | `{}` |  |
 | ingress.main.enabled | bool | `true` |  |
-| ingress.main.hosts[0].host | string | `"l1.scrollsdk"` |  |
+| ingress.main.hosts[0].host | string | `"l1-devnet.scrollsdk"` |  |
 | ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.main.ingressClassName | string | `"nginx"` |  |

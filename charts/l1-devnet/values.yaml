@@ -73,7 +73,7 @@ ingress:
     labels: {}
     ingressClassName: "nginx"
     hosts:
-      - host: l1.scrollsdk
+      - host: l1-devnet.scrollsdk
         paths:
           - path: /
             pathType: Prefix
