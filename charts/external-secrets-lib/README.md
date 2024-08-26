@@ -1,6 +1,6 @@
 # external-secrets-lib
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
 
 External secrets function library for Helm charts
 
@@ -18,9 +18,18 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| externalSecrets.my-vault-secret.data[0].remoteRef.key | string | `"data/postgres"` |  |
+| externalSecrets.my-vault-secret.data[0].remoteRef.property | string | `"POSTGRES_PASSWORD"` |  |
+| externalSecrets.my-vault-secret.data[0].secretKey | string | `"POSTGRES_PASSWORD"` |  |
+| externalSecrets.my-vault-secret.path | string | `"data"` |  |
+| externalSecrets.my-vault-secret.provider | string | `"vault"` |  |
+| externalSecrets.my-vault-secret.server | string | `"https://my-vault-server:8200"` |  |
+| externalSecrets.my-vault-secret.tokenSecretKey | string | `"token"` |  |
+| externalSecrets.my-vault-secret.tokenSecretName | string | `"vault-token"` |  |
 | externalSecrets.test-secret.data[0].remoteRef.key | string | `"devnet/prover-stats-api"` |  |
 | externalSecrets.test-secret.data[0].remoteRef.property | string | `"config-json"` |  |
 | externalSecrets.test-secret.data[0].secretKey | string | `"config-json"` |  |
+| externalSecrets.test-secret.my-aws-secret.provider | string | `"aws"` |  |
 | externalSecrets.test-secret.serviceAccount | string | `"external-secrets"` |  |
 
 ----------------------------------------------
