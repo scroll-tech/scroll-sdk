@@ -15,4 +15,4 @@ home: https://github.com/scroll-tech/scroll-sdk
 dependencies:
   - name: external-secrets-lib
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
-    version: 0.0.1
+    version: 0.0.2

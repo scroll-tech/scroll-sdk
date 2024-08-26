@@ -42,6 +42,7 @@ configMaps:
 
 externalSecrets:
   rollup-node-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/rollup-node-secret-env
@@ -50,6 +51,7 @@ externalSecrets:
     refreshInterval: 2m
     serviceAccount: external-secrets
   rollup-node-migrate-db:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/rollup-node-migrate-db

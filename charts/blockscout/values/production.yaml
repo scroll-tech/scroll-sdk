@@ -35,6 +35,7 @@ ingress:
 
 externalSecrets:
   blockscout-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/blockscout-secret-env

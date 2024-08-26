@@ -47,6 +47,7 @@ ingress:
 
 externalSecrets:
   bridge-history-fetcher-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/bridge-history-fetcher-secret-env
@@ -55,6 +56,7 @@ externalSecrets:
     refreshInterval: 2m
     serviceAccount: external-secrets
   bridge-history-fetcher-migrate-db:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/bridge-history-fetcher-migrate-db

@@ -21,6 +21,7 @@ configMaps:
 
 externalSecrets:
   chain-monitor-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/chain-monitor-secret-env

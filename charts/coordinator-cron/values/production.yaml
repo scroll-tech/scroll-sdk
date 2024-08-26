@@ -44,6 +44,7 @@ ingress:
 
 externalSecrets:
   coordinator-cron-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/coordinator-secret-env

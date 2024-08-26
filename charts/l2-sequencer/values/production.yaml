@@ -15,6 +15,7 @@ configMaps:
 
 externalSecrets:
   l2-sequencer-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/l2-sequencer-secret-env

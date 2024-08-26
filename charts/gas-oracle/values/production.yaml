@@ -42,6 +42,7 @@ configMaps:
 
 externalSecrets:
   gas-oracle-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/gas-oracle-secret-env
@@ -50,6 +51,7 @@ externalSecrets:
     refreshInterval: 2m
     serviceAccount: external-secrets
   gas-oracle-migrate-db:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/gas-oracle-migrate-db
