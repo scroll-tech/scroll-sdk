@@ -111,7 +111,7 @@ Kubernetes: `>=1.22.0-0`
 | kube-prometheus-stack.prometheus.enabled | bool | `true` |  |
 | l1-devnet.enabled | bool | `true` |  |
 | l1-devnet.ingress.main.enabled | bool | `true` |  |
-| l1-devnet.ingress.main.hosts[0].host | string | `"l1.scrollsdk"` |  |
+| l1-devnet.ingress.main.hosts[0].host | string | `"l1-devnet.scrollsdk"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | l1-explorer.enabled | bool | `true` |  |

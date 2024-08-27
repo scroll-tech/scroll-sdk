@@ -5,7 +5,7 @@ l1-devnet:
     main:
       enabled: true
       hosts:
-        - host: l1.scrollsdk
+        - host: l1-devnet.scrollsdk
           paths:
             - path: /
               pathType: Prefix
