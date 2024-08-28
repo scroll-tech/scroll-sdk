@@ -4,6 +4,10 @@ global:
 controller:
   replicas: 2
 
+envFrom:
+  - secretRef:
+      name: bridge-history-api-secret-env
+
 # TODO make this consistent with devnet, we should use bridge-history-api-config instead of bridge-history-config
 persistence:
   bridge-history-api:
@@ -27,3 +31,18 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
+
+externalSecrets:
+  bridge-history-api-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-api-secret-env
+          property: SCROLL_BRIDGE_HISTORY_DB_DSN
+        secretKey: SCROLL_BRIDGE_HISTORY_DB_DSN
+      - remoteRef:
+          key: scroll/bridge-history-api-env
+          property: SCROLL_BRIDGE_HISTORY_REDIS_PASSWORD
+        secretKey: SCROLL_BRIDGE_HISTORY_REDIS_PASSWORD
+    refreshInterval: 2m
+    serviceAccount: external-secrets

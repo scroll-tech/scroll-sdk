@@ -38,7 +38,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"gas-oracle"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/gas-oracle"` |  |
-| image.tag | string | `"v4.4.31"` |  |
+| image.tag | string | `"v4.4.57"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |

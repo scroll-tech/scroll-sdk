@@ -41,7 +41,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"bridge-history-fetcher"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/bridgehistoryapi-fetcher"` |  |
-| image.tag | string | `"v4.4.14"` |  |
+| image.tag | string | `"v4.4.57"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |

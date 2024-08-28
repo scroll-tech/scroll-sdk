@@ -1,6 +1,10 @@
 global:
   isStandalone: true
 
+envFrom:
+  - secretRef:
+      name: bridge-history-fetcher-secret-env
+
 persistence:
   # TODO make this consistent with devnet, we should use bridge-history-fetcher-config instead of bridge-history-config
   bridge-history-fetcher:
@@ -20,7 +24,7 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_BRIDGE_HISTORY_DB_DSN)
       - --timeout
       - "0"
     envFrom:
@@ -51,8 +55,8 @@ externalSecrets:
     data:
       - remoteRef:
           key: scroll/bridge-history-fetcher-secret-env
-          property: DATABASE_URL
-        secretKey: DATABASE_URL
+          property: SCROLL_BRIDGE_HISTORY_DB_DSN
+        secretKey: SCROLL_BRIDGE_HISTORY_DB_DSN
     refreshInterval: 2m
     serviceAccount: external-secrets
   bridge-history-fetcher-migrate-db:
