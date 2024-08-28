@@ -8,11 +8,6 @@ global:
   nameOverride: &app_name coordinator-api
   fullnameOverride: *app_name
 
-#image:
-#  repository: scrolltech/coordinator-api
-#  pullPolicy: Always
-#  tag: v4.4.26-devnet
-
 image:
   repository: scrolltech/coordinator-api
   pullPolicy: Always
