@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  labels:
-    {{- include "scroll-sdk.labels" $ | nindent 4 }}
-  name: scroll-smart-contracts-config
-data:
-{{ (.Files.Glob "config.toml").AsConfig | indent 2 }}
-{{ (.Files.Glob "config-contracts.toml").AsConfig | indent 2 }}
