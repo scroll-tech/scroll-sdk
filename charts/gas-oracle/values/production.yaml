@@ -15,12 +15,16 @@ persistence:
     name: gas-oracle-migrate-db
     defaultMode: "0777"
 
+envFrom:
+  - secretRef:
+      name: gas-oracle-secret-env
+
 initContainers:
   1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_ROLLUP_DB_CONFIG_DSN)
       - --timeout
       - "0"
     envFrom:
@@ -31,12 +35,7 @@ configMaps:
   env:
     enabled: true
     data:
-      SCROLL_L1_RPC: "https://alien-flashy-arm.ethereum-sepolia.quiknode.pro/2aeb75414e5ee0e930b64c2e7feff59efb537f30"
-#      POSTGRES_DB: "scroll"
-#      PG_USER: "postgres"
-#      PG_HOST: "postgresql-rollup"
-#      PG_PORT: "5432"
-#      DB_USER: "gasoracle"
+      SCROLL_L1_RPC: ""
   migrate-db:
     enabled: false
 
@@ -46,8 +45,24 @@ externalSecrets:
     data:
       - remoteRef:
           key: scroll/gas-oracle-secret-env
-          property: DATABASE_URL
-        secretKey: DATABASE_URL
+          property: SCROLL_ROLLUP_DB_CONFIG_DSN
+        secretKey: SCROLL_ROLLUP_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_L1_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+        secretKey: SCROLL_ROLLUP_L1_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_COMMIT_SENDER_PRIVATE_KEY
+        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_COMMIT_SENDER_PRIVATE_KEY
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_FINALIZE_SENDER_PRIVATE_KEY
+        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_FINALIZE_SENDER_PRIVATE_KEY
     refreshInterval: 2m
     serviceAccount: external-secrets
   gas-oracle-migrate-db:

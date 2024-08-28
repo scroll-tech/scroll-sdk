@@ -10,7 +10,7 @@ controller:
 image:
   repository: scrolltech/bridgehistoryapi-api
   pullPolicy: Always
-  tag: v4.4.14
+  tag: v4.4.57
 
 command:
   [

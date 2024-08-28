@@ -4,34 +4,21 @@ global:
 controller:
   replicas: 2
 
+envFrom:
+  - secretRef:
+      name: coordinator-cron-secret-env
+
 initContainers:
-  1-wait-for-postgres:
-    image: atkrad/wait4x:latest
-    args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
-      - --timeout
-      - "0"
-    envFrom:
-      - configMapRef:
-          name: coordinator-cron-env
-  2-check-postgres-connection:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_COORDINATOR_DB_DSN)
       - --timeout
       - "0"
     envFrom:
       - secretRef:
           name: coordinator-cron-secret-env
-
-configMaps:
-  env:
-    enabled: true
-    data:
-      DATABASE_HOST: "postgresql"
-      DATABASE_PORT: "5432"
 
 ingress:
   main:
@@ -44,11 +31,14 @@ ingress:
 
 externalSecrets:
   coordinator-cron-secret-env:
-    provider: aws
     data:
       - remoteRef:
-          key: scroll/coordinator-secret-env
-          property: DATABASE_URL
-        secretKey: DATABASE_URL
+          key: scroll/coordinator-cron-secret-env
+          property: SCROLL_COORDINATOR_DB_DSN
+        secretKey: SCROLL_COORDINATOR_DB_DSN
+      - remoteRef:
+          key: scroll/coordinator-api-secret-env
+          property: SCROLL_COORDINATOR_AUTH_SECRET
+        secretKey: SCROLL_COORDINATOR_AUTH_SECRET
     refreshInterval: 2m
     serviceAccount: external-secrets

@@ -41,7 +41,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"bridge-history-api"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/bridgehistoryapi-api"` |  |
-| image.tag | string | `"v4.4.14"` |  |
+| image.tag | string | `"v4.4.57"` |  |
 | ingress.main.annotations | object | `{}` |  |
 | ingress.main.enabled | bool | `true` |  |
 | ingress.main.hosts[0].host | string | `"bridge-history-api.scrollsdk"` |  |

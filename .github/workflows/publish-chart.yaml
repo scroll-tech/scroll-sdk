@@ -2,9 +2,9 @@ name: Lint, test and publish charts
 
 on:
   push:
-#    branches: [ main ]
-#    paths:
-#      - 'charts/**'
+    branches: [ develop ]
+    paths:
+      - 'charts/**'
 
 jobs:
   helm-chart-testing:
