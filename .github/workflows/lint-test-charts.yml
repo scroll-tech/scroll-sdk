@@ -2,8 +2,8 @@ name: Lint,test charts
 
 on:
   push:
-#    paths:
-#      - "charts/**"
+    paths:
+      - "charts/**"
 
 jobs:
   changed:
@@ -51,13 +51,22 @@ jobs:
         with:
           version: v3.12.1
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.x'
           check-latest: true
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@v2.6.0
+
+      - name: Setup scroll-sdk values
+        run: cd charts/scroll-sdk && docker run --rm -t -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.9
+
+      - name: Helm registry login
+        run: |
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+        env:
+          HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
       - name: Run chart-testing (list-changed)
         id: list-changed
@@ -69,4 +78,4 @@ jobs:
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch ${{ github.event.repository.default_branch }} --config .github/ct.yaml --lint-conf .github/lintconf.yaml --chart-yaml-schema .github/chart_schema.yaml
+        run: ct lint --config ct.yaml --target-branch ${{ github.event.repository.default_branch }}
