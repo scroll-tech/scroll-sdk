@@ -11,7 +11,7 @@ global:
 image:
   repository: scrolltech/coordinator-api
   pullPolicy: Always
-  tag: v4.4.26-devnet
+  tag: v4.4.46
 
 env:
   - name: HTTP_PORT
@@ -98,13 +98,10 @@ probes:
 initContainers:
   parameter-download:
     image: ubuntu
-    command: ["sh", "-c", "/download-params.sh "]
-    env:
-      - name: RELEASE_VERSION
-        value: "v0.11.4"
+    command: ["sh", "-c", "/download-params.sh params"]
     volumeMounts:
       - name: verifier
-        mountPath: /data
+        mountPath: /verifier
       - name: download-params
         mountPath: /download-params.sh
         subPath: download-params.sh
@@ -113,7 +110,23 @@ initContainers:
         memory: "2Gi"
         cpu: "1"
       limits:
-        memory: "4Gi"
+        memory: "8Gi"
+        cpu: "2"
+  assets-download:
+    image: ubuntu
+    command: ["sh", "-c", "/download-params.sh assets"]
+    volumeMounts:
+      - name: verifier
+        mountPath: /verifier
+      - name: download-params
+        mountPath: /download-params.sh
+        subPath: download-params.sh
+    resources:
+      requests:
+        memory: "2Gi"
+        cpu: "1"
+      limits:
+        memory: "8Gi"
         cpu: "2"
 
 configMaps:
@@ -122,204 +135,148 @@ configMaps:
     data:
       download-params.sh: |
         #!/bin/sh
+        set -ex
         apt update
         apt install wget libdigest-sha-perl -y
 
+        RELEASE_VERSION_HI=v0.12.0
+        RELEASE_VERSION_LO=v0.11.4
+
+        case $CHAIN_ID in
+        "5343532222") # staging network
+          echo "staging network not supported"
+          exit 1
+          ;;
+        "534353") # alpha network
+          echo "alpha network not supported"
+          exit 1
+          ;;
+        esac
+
         P_CHECKSUMS=$(wget -O- https://circuit-release.s3.us-west-2.amazonaws.com/setup/sha256sum)
-        DOWNLOAD_RESULT=$?
-        ERROR=$(echo "$P_CHECKSUMS" | grep "Error")
+        # DOWNLOAD_RESULT=$?
+        # ERROR=$(echo "$P_CHECKSUMS" | grep "Error")
 
-        if [ $DOWNLOAD_RESULT -ne 0 ] || [ "$ERROR" != "" ]; then
-        echo "Failed to download params checksums"
-        echo "$P_CHECKSUMS"
-        exit 1
-        fi
+        # if [ $DOWNLOAD_RESULT -ne 0 ] || [ "$ERROR" != "" ]; then
+        #   echo "Failed to download params checksums"
+        #   echo "$P_CHECKSUMS"
+        #   exit 1
+        # fi
 
-        R_CHECKSUMS=$(wget -O- https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION/sha256sum)
-        DOWNLOAD_RESULT=$?
-        ERROR=$(echo "$R_CHECKSUMS" | grep "Error")
+        R_CHECKSUMS_HI=$(wget -O- https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/sha256sum)
+        # DOWNLOAD_RESULT=$?
+        # ERROR=$(echo "$R_CHECKSUMS_HI" | grep "Error")
+        # if [ $DOWNLOAD_RESULT -ne 0 ] || [ "$ERROR" != "" ]; then
+        #   echo "Failed to download release checksum for $RELEASE_VERSION_HI"
+        #   echo "$R_CHECKSUMS_HI"
+        #   exit 1
+        # fi
 
-        if [ $DOWNLOAD_RESULT -ne 0 ] || [ "$ERROR" != "" ]; then
-        echo "Failed to download release checksum"
-        echo "$R_CHECKSUMS"
-        exit 1
-        fi
+        R_CHECKSUMS_LO=$(wget -O- https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/sha256sum)
+        # DOWNLOAD_RESULT=$?
+        # ERROR=$(echo "$R_CHECKSUMS_LO" | grep "Error")
+        # if [ $DOWNLOAD_RESULT -ne 0 ] || [ "$ERROR" != "" ]; then
+        #   echo "Failed to download release checksum for $RELEASE_VERSION_LO"
+        #   echo "$R_CHECKSUMS_LO"
+        #   exit 1
+        # fi
 
         PARAMS20_SHASUM=$(echo "$P_CHECKSUMS" | grep "params20" | cut -d " " -f 1)
         PARAMS21_SHASUM=$(echo "$P_CHECKSUMS" | grep "params21" | cut -d " " -f 1)
         PARAMS24_SHASUM=$(echo "$P_CHECKSUMS" | grep "params24" | cut -d " " -f 1)
         PARAMS25_SHASUM=$(echo "$P_CHECKSUMS" | grep "params25" | cut -d " " -f 1)
         PARAMS26_SHASUM=$(echo "$P_CHECKSUMS" | grep "params26" | cut -d " " -f 1)
-        CHUNK_VK_SHASUM=$(echo "$R_CHECKSUMS" | grep "chunk_vk.vkey" | cut -d " " -f 1)
-        BATCH_VK_SHASUM=$(echo "$R_CHECKSUMS" | grep "agg_vk.vkey" | cut -d " " -f 1)
-        VRFR_SHASUM=$(echo "$R_CHECKSUMS" | grep "evm_verifier.bin" | cut -d " " -f 1)
-        CFG2_SHASUM=$(echo "$R_CHECKSUMS" | grep "layer2.config" | cut -d " " -f 1)
-        CFG4_SHASUM=$(echo "$R_CHECKSUMS" | grep "layer4.config" | cut -d " " -f 1)
 
-        check_shasum () {
-        SHASUM=$(shasum -a 256 $1 | cut -d " " -f 1)
-        if [ "$SHASUM" != "$2" ]; then
-        echo "Shasum mismatch: expected=$2, actual=$SHASUM"
-          return 1;
+        # assets_high
+        VK_CHUNK_SHASUM_HI=$(echo "$R_CHECKSUMS_HI" | grep "vk_chunk.vkey" | cut -d " " -f 1)
+        VK_BATCH_SHASUM_HI=$(echo "$R_CHECKSUMS_HI" | grep "vk_batch.vkey" | cut -d " " -f 1)
+        VK_BUNDLE_SHASUM_HI=$(echo "$R_CHECKSUMS_HI" | grep "vk_bundle.vkey" | cut -d " " -f 1)
+        VRFR_SHASUM_HI=$(echo "$R_CHECKSUMS_HI" | grep "evm_verifier.bin" | cut -d " " -f 1)
+        CFG2_SHASUM_HI=$(echo "$R_CHECKSUMS_HI" | grep "layer2.config" | cut -d " " -f 1)
+        CFG4_SHASUM_HI=$(echo "$R_CHECKSUMS_HI" | grep "layer4.config" | cut -d " " -f 1)
+
+        # assets_low
+        VK_CHUNK_SHASUM_LO=$(echo "$R_CHECKSUMS_LO" | grep "chunk_vk.vkey" | cut -d " " -f 1)
+        VK_BATCH_SHASUM_LO=$(echo "$R_CHECKSUMS_LO" | grep "agg_vk.vkey" | cut -d " " -f 1)
+        VRFR_SHASUM_LO=$(echo "$R_CHECKSUMS_LO" | grep "evm_verifier.bin" | cut -d " " -f 1)
+        CFG2_SHASUM_LO=$(echo "$R_CHECKSUMS_LO" | grep "layer2.config" | cut -d " " -f 1)
+        CFG4_SHASUM_LO=$(echo "$R_CHECKSUMS_LO" | grep "layer4.config" | cut -d " " -f 1)
+
+        check_file() {
+          file=$1
+          url=$2
+          shasum=$3
+          if [ -f $file ]; then
+            SHASUM=$(shasum -a 256 $file | cut -d " " -f 1)
+            if [ "$SHASUM" != "$shasum" ]; then
+              echo "Shasum mismatch: expected=$shasum, actual=$SHASUM, Removing incorrect file $file"
+              rm $file
+              download_file $file $url $shasum
+            else
+              echo "Shasum matched, no need to download"
+            fi
           else
-          return 0;
+            download_file $file $url $shasum
           fi
         }
-        # check existing file checksums
-        if [ -f /data/params/params20 ]; then
-        if ! check_shasum "/data/params/params20" "$PARAMS20_SHASUM"; then
-        echo "Removing incorrect file /data/params/params20\n"
-        rm /data/params/params20
-        fi
-        fi
 
-        if [ -f /data/params/params21 ]; then
-        if ! check_shasum "/data/params/params21" "$PARAMS21_SHASUM"; then
-        echo "Removing incorrect file /data/params/params21\n"
-        rm /data/params/params21
-        fi
-        fi
-
-        if [ -f /data/params/params24 ]; then
-        if ! check_shasum "/data/params/params24" "$PARAMS24_SHASUM"; then
-        echo "Removing incorrect file /data/params/params24\n"
-        rm /data/params/params24
-        fi
-        fi
-
-        if [ -f /data/params/params25 ]; then
-        if ! check_shasum "/data/params/params25" "$PARAMS25_SHASUM"; then
-        echo "Removing incorrect file /data/params/params25\n"
-        rm /data/params/params25
-        fi
-        fi
-
-        if [ -f /data/params/params26 ]; then
-        if ! check_shasum "/data/params/params26" "$PARAMS26_SHASUM"; then
-        echo "Removing incorrect file /data/params/params26\n"
-        rm /data/params/params26
-        fi
-        fi
-
-        if [ -f /data/assets/chunk_vk.vkey ]; then
-        if ! check_shasum "/data/assets/chunk_vk.vkey" "$CHUNK_VK_SHASUM"; then
-        echo "Removing incorrect file /data/assets/chunk_vk.vkey\n"
-        rm /data/assets/chunk_vk.vkey
-        fi
-        fi
-
-        if [ -f /data/assets/agg_vk.vkey ]; then
-        if ! check_shasum "/data/assets/agg_vk.vkey" "$BATCH_VK_SHASUM"; then
-        echo "Removing incorrect file /data/assets/agg_vk.vkey\n"
-        rm /data/assets/agg_vk.vkey
-        fi
-        fi
-
-        if [ -f /data/assets/evm_verifier.bin ]; then
-        if ! check_shasum "/data/assets/evm_verifier.bin" "$VRFR_SHASUM"; then
-        echo "Removing incorrect file /data/assets/evm_verifier.bin\n"
-        rm /data/assets/evm_verifier.bin
-        fi
-        fi
-
-        if [ -f /data/assets/layer2.config ]; then
-        if ! check_shasum "/data/assets/layer2.config" "$CFG2_SHASUM"; then
-        echo "Removing incorrect file /data/assets/layer2.config\n"
-        rm /data/assets/layer2.config
-        fi
-        fi
-
-        if [ -f /data/assets/layer4.config ]; then
-        if ! check_shasum "/data/assets/layer4.config" "$CFG4_SHASUM"; then
-        echo "Removing incorrect file /data/assets/layer4.config\n"
-        rm /data/assets/layer4.config
-        fi
-        fi
+        # download files
+        download_file() {
+          file=$1
+          url=$2
+          shasum=$3
+          if [ ! -f $file ]; then
+            mkdir -p $(dirname $file)
+            echo "Downloading $file..."
+            wget --progress=dot:giga $url -O $file
+            echo "Download completed $file"
+            if [ $(shasum -a 256 $file | cut -d " " -f 1) != $shasum ];then exit 1;fi
+          fi
+        }
 
 
-        # download missing files
+        main(){
+          case $1 in
+            "params")
+              # download params
+              # check_file "/verifier/params/params20" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params20" "$PARAMS20_SHASUM"
+              # check_file "/verifier/params/params21" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params21" "$PARAMS21_SHASUM"
+              # check_file "/verifier/params/params24" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24" "$PARAMS24_SHASUM"
+              # check_file "/verifier/params/params25" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25" "$PARAMS25_SHASUM"
+              check_file "/verifier/params/params26" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params26" "$PARAMS26_SHASUM"
+              ;;
+            "assets")
+              check_file "/verifier/params/params20" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params20" "$PARAMS20_SHASUM"
+              check_file "/verifier/params/params21" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params21" "$PARAMS21_SHASUM"
+              check_file "/verifier/params/params24" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24" "$PARAMS24_SHASUM"
+              check_file "/verifier/params/params25" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25" "$PARAMS25_SHASUM"
 
-        if [ ! -f /data/params/params20 ]; then
-        mkdir -p /data/params
-        echo "Downloading /data/params/params20..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/setup/params20 -O /data/params/params20
-        echo "Download completed\n"
-        if ! check_shasum "/data/params/params20" "$PARAMS20_SHASUM"; then exit 1; fi
-        fi
+              # download assets_hi v0.12.0
+              check_file "/verifier/assets/hi/vk_chunk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_chunk.vkey" "$VK_CHUNK_SHASUM_HI"
+              check_file "/verifier/assets/hi/vk_batch.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_batch.vkey" "$VK_BATCH_SHASUM_HI"
+              check_file "/verifier/assets/hi/vk_bundle.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_bundle.vkey" "$VK_BUNDLE_SHASUM_HI"
+              check_file "/verifier/assets/hi/evm_verifier.bin" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/evm_verifier.bin" "$VRFR_SHASUM_HI"
+              check_file "/verifier/assets/hi/layer2.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/layer2.config" "$CFG2_SHASUM_HI"
+              check_file "/verifier/assets/hi/layer4.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/layer4.config" "$CFG4_SHASUM_HI"
+              # download assets_low v0.11.4
+              check_file "/verifier/assets/lo/chunk_vk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/chunk_vk.vkey" "$VK_CHUNK_SHASUM_LO"
+              check_file "/verifier/assets/lo/agg_vk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/agg_vk.vkey" "$VK_BATCH_SHASUM_LO"
+              check_file "/verifier/assets/lo/evm_verifier.bin" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/evm_verifier.bin" "$VRFR_SHASUM_LO"
+              check_file "/verifier/assets/lo/layer2.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/layer2.config" "$CFG2_SHASUM_LO"
+              check_file "/verifier/assets/lo/layer4.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/layer4.config" "$CFG4_SHASUM_LO"
+              ;;
+              *)
+                echo "only suppoerts params or assets"
+                exit 1
+                ;;
+          esac
+        }
 
-        if [ ! -f /data/params/params21 ]; then
-        mkdir -p /data/params
-        echo "Downloading /data/params/params21..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/setup/params21 -O /data/params/params21
-        echo "Download completed\n"
-        if ! check_shasum "/data/params/params21" "$PARAMS21_SHASUM"; then exit 1; fi
-        fi
+        main $1
 
-        if [ ! -f /data/params/params24 ]; then
-        mkdir -p /data/params
-        echo "Downloading /data/params/params24..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24 -O /data/params/params24
-        echo "Download completed\n"
-        if ! check_shasum "/data/params/params24" "$PARAMS24_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/params/params25 ]; then
-        mkdir -p /data/params
-        echo "Downloading /data/params/params25..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25 -O /data/params/params25
-        echo "Download completed\n"
-        if ! check_shasum "/data/params/params25" "$PARAMS25_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/params/params26 ]; then
-        mkdir -p /data/params
-        echo "Downloading /data/params/params26..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/setup/params26 -O /data/params/params26
-        echo "Download completed\n"
-        if ! check_shasum "/data/params/params26" "$PARAMS26_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/assets/chunk_vk.vkey ]; then
-        mkdir -p /data/assets
-        echo "Downloading /data/assets/chunk_vk.vkey..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION/chunk_vk.vkey -O /data/assets/chunk_vk.vkey
-        echo "Download completed\n"
-        if ! check_shasum "/data/assets/chunk_vk.vkey" "$CHUNK_VK_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/assets/agg_vk.vkey ]; then
-        mkdir -p /data/assets
-        echo "Downloading /data/assets/agg_vk.vkey..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION/agg_vk.vkey -O /data/assets/agg_vk.vkey
-        echo "Download completed\n"
-        if ! check_shasum "/data/assets/agg_vk.vkey" "$BATCH_VK_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/assets/evm_verifier.bin ]; then
-        mkdir -p /data/assets
-        echo "Downloading /data/assets/evm_verifier.bin..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION/evm_verifier.bin -O /data/assets/evm_verifier.bin
-        echo "Download completed\n"
-        if ! check_shasum "/data/assets/evm_verifier.bin" "$VRFR_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/assets/layer2.config ]; then
-        mkdir -p /data/assets
-        echo "Downloading /data/assets/layer2.config..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION/layer2.config -O /data/assets/layer2.config
-        echo "Download completed\n"
-        if ! check_shasum "/data/assets/layer2.config" "$CFG2_SHASUM"; then exit 1; fi
-        fi
-
-        if [ ! -f /data/assets/layer4.config ]; then
-        mkdir -p /data/assets
-        echo "Downloading /data/assets/layer4.config..."
-        wget https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION/layer4.config -O /data/assets/layer4.config
-        echo "Download completed\n"
-        if ! check_shasum "/data/assets/layer4.config" "$CFG4_SHASUM"; then exit 1; fi
-        fi
-
-        ls -l /data/assets
+        ls -l /verifier/assets/li
+        ls -l /verifier/assets/ho
+        ls -l /verifier/params/
 
 serviceMonitor:
   main:

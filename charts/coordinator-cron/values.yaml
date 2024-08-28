@@ -29,17 +29,7 @@ command: [
 ]
 
 initContainers:
-  1-wait-for-postgres:
-    image: atkrad/wait4x:latest
-    args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
-      - --timeout
-      - "0"
-    envFrom:
-      - configMapRef:
-          name: coordinator-env
-  2-check-postgres-connection:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
