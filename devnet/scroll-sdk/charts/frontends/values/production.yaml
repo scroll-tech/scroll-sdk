@@ -1,0 +1,18 @@
+global:
+  isStandalone: true
+
+persistence:
+  frontends:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: frontends-config
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: frontends.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix

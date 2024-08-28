@@ -1,0 +1,147 @@
+---
+global:
+  nameOverride: &app_name rollup-node
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: Recreate
+  type: deployment
+
+image:
+  repository: scrolltech/rollup-relayer
+  pullPolicy: Always
+  tag: v4.4.31
+
+env:
+  - name: METRICS_PORT
+    value: 8090
+
+command: [
+  "/bin/sh",
+  "-c",
+  "rollup_relayer --config /app/conf/rollup-config.json \
+    --genesis /app/genesis/genesis.json \
+    --import-genesis \
+    --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} \
+    --log.debug --verbosity 3",
+]
+
+resources:
+  requests:
+    memory: "50Mi"
+    cpu: "50m"
+  limits:
+    memory: "200Mi"
+    cpu: "100m"
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 8090
+
+probes:
+  liveness:
+    enabled: false
+  readiness:
+    enabled: false
+  startup:
+    enabled: false
+
+
+persistence:
+  *app_name:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: rollup-config
+  genesis:
+    enabled: true
+    type: configMap
+    mountPath: /app/genesis/
+    name: genesis-config
+  migrate-db:
+    enabled: true
+    type: configMap
+    mountPath: /config/migrate-db.json
+    name: rollup-node-migrate-db
+    defaultMode: "0777"
+  wait-for-l1-script:
+    enabled: true
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
+  wait-for-contracts-script:
+    enabled: yes
+    type: configMap
+    name: wait-for-contracts-script
+    defaultMode: "0777"
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(DATABASE_URL)
+      - --timeout
+      - "0"
+    envFrom:
+      - configMapRef:
+          name: rollup-node-env
+  2-migrate-db:
+    image: scrolltech/rollup-db-cli
+    command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
+    volumeMounts:
+      - name: migrate-db
+        mountPath: /config/migrate-db.json
+        subPath: migrate-db.json
+  3-wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $L1_RPC_ENDPOINT
+    envFrom:
+      - configMapRef:
+          name: rollup-node-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
+  4-wait-for-contract:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-contract.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR
+    envFrom:
+      - configMapRef:
+          name: rollup-node-env
+    volumeMounts:
+      - name: wait-for-contracts-script
+        mountPath: /wait-for-contract.sh
+        subPath: wait-for-contract.sh
+
+configMaps:
+  migrate-db:
+    enabled: true
+    data:
+      migrate-db.json: |
+        {
+            "driver_name": "postgres",
+            "dsn": "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
+        }
+
+serviceMonitor:
+  main:
+    enabled: true
+    labels:
+      release: scroll-sdk
+    serviceName: '{{ include "scroll.common.lib.chart.names.fullname" $ }}'
+    endpoints:
+      - port: http
+        interval: 1m
+        scrapeTimeout: 10s

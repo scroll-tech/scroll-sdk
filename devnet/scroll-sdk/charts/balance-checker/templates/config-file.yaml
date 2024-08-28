@@ -1,0 +1,10 @@
+{{- if .Values.global.isStandalone }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: balance-checker-config
+data:
+{{ (.Files.Glob "configs/balance-checker-config.json").AsConfig | indent 2 }}
+---
+{{- end }}

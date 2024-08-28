@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-init-db
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: init-db
+          image: postgres:latest
+          env:
+            - name: PG_HOST
+              value: {{ .Values.db.pg_host }}
+            - name: POSTGRES_DB
+              value: scroll
+            - name: PG_USER
+              value: {{ .Values.db.pg_user }}
+            - name: PG_PORT
+              value: {{ .Values.db.pg_port | quote }}
+            - name: PGPASSWORD
+              value: {{ .Values.db.pg_password }}
+            - name: DB_USER
+              value: bridge_history
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.db.pg_password }}
+            - name: DB_PASSWORD
+              value: {{ .Values.db.bridge_history_password }}
+          command: ["bash", "-c", "./init-db.sh"]
+          volumeMounts:
+            - name: init-db
+              mountPath: /init-db.sh
+              subPath: init-db.sh
+      restartPolicy: Never
+      volumes:
+        - name: init-db
+          configMap:
+            name: init-db
+            defaultMode: 0777
+  backoffLimit: 4

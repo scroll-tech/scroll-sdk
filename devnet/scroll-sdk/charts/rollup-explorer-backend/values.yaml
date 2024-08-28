@@ -1,0 +1,98 @@
+global:
+  nameOverride: &app_name rollup-explorer-backend
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: Recreate
+  type: deployment
+
+image:
+  repository: scrolltech/rollup-explorer-backend
+  pullPolicy: Always
+  tag: "v0.0.11"
+
+resources:
+  requests:
+    memory: "4Gi"
+    cpu: "2"
+  limits:
+    memory: "6Gi"
+    cpu: "3"
+
+env:
+  - name: BIND_PORT
+    value: &container_port 8080
+  - name: METRICS_BIND_PORT
+    value: 8090
+  - name: OPEN_API_ADDR
+    value: /rollupscan
+  - name: MAX_PER_PAGE
+    value: 500
+  - name: RUST_LOG
+    value: debug
+
+ports:
+  - containerPort: *container_port
+
+service:
+  main:
+    labels:
+      app: *app_name
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 80
+        targetPort: *container_port
+      metrics:
+        enabled: true
+        port: 8090
+        targetPort: 8090
+
+defaultProbes: &default_probes
+  enabled: true
+  custom: true
+  spec:
+    httpGet:
+      path: "/metrics"
+      port: 8090
+
+probes:
+  liveness:
+    <<: *default_probes
+  readiness:
+    <<: *default_probes
+  startup:
+    <<: *default_probes
+
+persistence:
+  *app_name:
+    enabled: true
+    type: configMap
+    mountPath: /app/config/
+    name: rollup-explorer-backend-config
+
+ingress:
+  main:
+    enabled: true
+    primary: true
+    annotations: {}
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - host: rollup-explorer-backend.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix
+
+serviceMonitor:
+  main:
+    enabled: true
+    labels:
+      release: scroll-sdk
+    serviceName: '{{ include "scroll.common.lib.chart.names.fullname" $ }}'
+    endpoints:
+      - port: metrics
+        interval: 1m
+        scrapeTimeout: 10s

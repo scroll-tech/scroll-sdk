@@ -1,0 +1,10 @@
+{{- if .Values.global.isStandalone }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: coordinator-cron-config
+data:
+{{ (.Files.Glob "configs/coordinator-config.json").AsConfig | indent 2 }}
+---
+{{- end }}

@@ -1,0 +1,183 @@
+---
+global:
+  nameOverride: &app_name l2-sequencer
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: RollingUpdate
+  type: statefulset
+
+image:
+  repository: scrolltech/l2geth
+  pullPolicy: Always
+  tag: scroll-v5.5.17
+
+env:
+  - name: L2GETH_ROLE
+    value: "signer"
+  - name: L2GETH_PEER_LIST
+    value: [""]
+  - name: L2GETH_L1_WATCHER_CONFIRMATIONS
+    value: "0x6"
+  - name: L2GETH_LOCALS
+    value: ""
+  - name: L2GETH_ENABLE_CCC
+    value: "true"
+  - name: L2GETH_MINER_GASLIMIT
+    value: "10000000"
+  - name: L2GETH_RPC_HTTP_PORT
+    value: &http_port 8545
+  - name: L2GETH_RPC_WS_PORT
+    value: &ws_port 8546
+  - name: L2GETH_P2P_PORT
+    value: "30303"
+  - name: L2GETH_MIN_GAS_PRICE
+    value: "1000000"
+  - name: VERBOSITY
+    value: "3"
+
+envFrom:
+  - configMapRef:
+      name: l2-sequencer-env
+  - configMapRef:
+      name: l2-sequencer-keystore
+
+command:
+  [
+    "bash",
+    "-c",
+    "mkdir -p /l2geth/data/keystore && \
+    mkdir -p /l2geth/data/geth && \
+    echo ${L2GETH_PASSWORD} > /l2geth/password && \
+    echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && \
+    echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && \
+    geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
+    geth --datadir \"/l2geth/data\" \
+    --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" \
+    --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" \
+    --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
+    --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" \
+    --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine \
+    $CCC_FLAG \
+    --gcmode archive \
+    --cache.noprefetch \
+    --verbosity ${VERBOSITY} \
+    --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG \
+    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
+    --gpo.percentile 20 \
+    --gpo.blocks 100 \
+    --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" \
+    --rollup.verify \
+    --metrics --metrics.expensive \
+    $L2GETH_EXTRA_PARAMS"
+  ]
+
+initContainers:
+  wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $L2GETH_L1_ENDPOINT
+    envFrom:
+      - configMapRef:
+          name: l2-sequencer-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: *http_port
+        targetPort: *http_port
+      ws:
+        enabled: true
+        port: *ws_port
+        targetPort: *ws_port
+      p2p:
+        enabled: true
+        port: 30303
+        targetPort: 30303
+      metrics:
+        enabled: true
+        port: 6060
+        targetPort: 6060
+
+resources:
+  requests:
+    memory: "150Mi"
+    cpu: "50m"
+  limits:
+    memory: "8Gi"
+    cpu: "100m"
+
+defaultProbes: &default_probes
+  enabled: true
+  custom: true
+  spec:
+    httpGet:
+      path: "/"
+      port: 8545
+
+probes:
+  liveness:
+    <<: *default_probes
+  readiness:
+    <<: *default_probes
+  startup:
+    <<: *default_probes
+
+persistence:
+  data:
+    enabled: true
+    type: pvc
+    mountPath: /l2geth/data/
+    name: l2geth-data
+    size: 10Gi
+    accessMode: ReadWriteOnce
+  env:
+    enabled: true
+    type: configMap
+    name: l2-sequencer-env
+  genesis:
+    enabled: true
+    type: configMap
+    mountPath: /l2geth/genesis/genesis.json
+    subPath: genesis.json
+    name: genesis-config
+  wait-for-l1-script:
+    enabled: true
+    type: configMap
+    name: wait-for-l1-script
+    defaultMode: "0777"
+
+configMaps:
+  config:
+    enabled: true
+    data:
+      config.toml: |
+        [Node.P2P] StaticNodes = "[]"
+  keystore:
+    enabled: true
+    data:
+      L2GETH_KEYSTORE: '{"address":"756ea06bdee36de11f22dcca45a31d8a178ef3c6","crypto":{"cipher":"aes-128-ctr","ciphertext":"8bfb4e48c6b172f1f5794d2874476ca62f8184507c0916dbd45fe77a0056114c","cipherparams":{"iv":"509eb70e7379a776e0779634b6668277"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"ef0f0334e5db7c12d76993e1e9627593fd0d7cd44444b689e792c86bc8a5d75f"},"mac":"d766cac11d0bd563316f5655ebf07550b6fce98ba0ca3c13acdc1b65f5f185ca"},"id":"4459ad67-f2ce-48b2-8940-c0582106a4c6","version":3}'
+      L2GETH_PASSWORD: "scroll2022"
+      L2GETH_NODEKEY: "2f59ff2fdee1c42a3d8c8980c313bc8d6c2557463f7bb92b0f0bc89a6d3cbf01"
+
+serviceMonitor:
+  main:
+    enabled: true
+    labels:
+      release: scroll-sdk
+    serviceName: '{{ include "scroll.common.lib.chart.names.fullname" $ }}'
+    endpoints:
+      - port: metrics
+        interval: 1m
+        scrapeTimeout: 10s
+        path: /debug/metrics/prometheus

@@ -1,0 +1,20 @@
+apiVersion: v1
+entries:
+  common:
+  - apiVersion: v2
+    created: "2024-08-05T16:32:51.565109+02:00"
+    description: Function library for Helm charts
+    digest: d07ab4a4d7d7c063bfb26915ecb0da293fd9e0530313437b211a037452b5faac
+    keywords:
+    - common
+    - library
+    kubeVersion: '>=1.22.0-0'
+    maintainers:
+    - email: sebastien@scroll.io
+      name: sebastien
+    name: common
+    type: library
+    urls:
+    - charts/common-1.5.1.tgz
+    version: 1.5.1
+generated: "2024-08-05T16:32:51.563842+02:00"

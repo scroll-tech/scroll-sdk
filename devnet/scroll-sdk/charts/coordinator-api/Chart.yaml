@@ -1,0 +1,16 @@
+apiVersion: v2
+appVersion: v0.1.0
+dependencies:
+- name: common
+  repository: oci://ghcr.io/scroll-tech/scroll-sdk/helm
+  version: 1.5.1
+- name: external-secrets-lib
+  repository: oci://ghcr.io/scroll-tech/scroll-sdk/helm
+  version: 0.0.2
+description: coordinator-api helm charts
+kubeVersion: '>=1.22.0-0'
+maintainers:
+- email: sebastien@scroll.io
+  name: scroll-tech
+name: coordinator-api
+version: 0.0.1

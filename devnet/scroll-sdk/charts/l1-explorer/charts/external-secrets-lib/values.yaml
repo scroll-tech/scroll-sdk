@@ -1,0 +1,22 @@
+---
+externalSecrets:
+  test-secret:
+    my-aws-secret:
+      provider: aws
+    data:
+      - remoteRef:
+          key: devnet/prover-stats-api
+          property: config-json
+        secretKey: config-json
+    serviceAccount: external-secrets
+  my-vault-secret:
+    provider: vault
+    server: "https://my-vault-server:8200"
+    path: "data"
+    tokenSecretName: "vault-token"  # Use a secret called vault-token
+    tokenSecretKey: "token"  # Use this key to access the vault token
+    data:
+      - remoteRef:
+          key: data/postgres
+          property: POSTGRES_PASSWORD
+        secretKey: POSTGRES_PASSWORD

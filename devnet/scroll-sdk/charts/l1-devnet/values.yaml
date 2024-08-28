@@ -1,0 +1,79 @@
+---
+global:
+  nameOverride: &app_name l1-devnet
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: RollingUpdate
+  type: statefulset
+
+image:
+  repository: scrolltech/l1-devnet
+  pullPolicy: Always
+  tag: v0.0.4
+
+command:
+  ["/bin/bash", "-c", "anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60 --slots-in-an-epoch 3"]
+
+envFrom:
+  - configMapRef:
+      name: l1-devnet-env
+
+resources:
+  requests:
+    memory: "100Mi"
+    cpu: "50m"
+  limits:
+    memory: "500Mi"
+    cpu: "100m"
+
+persistence:
+  chain-id:
+    enabled: true
+    type: pvc
+    accessMode: ReadWriteOnce
+    size: 10Mi
+    mounthPath: /chain-id
+  data:
+    enabled: true
+    type: pvc
+    accessMode: ReadWriteOnce
+    size: 10Gi
+    mounthPath: /data
+    retain: true
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 8545
+        targetPort: 8545
+
+defaultProbes: &default_probes
+  enabled: false
+  tcpSocket:
+    port: 8545
+
+probes:
+  liveness:
+    <<: *default_probes
+  readiness:
+    <<: *default_probes
+  startup:
+    <<: *default_probes
+
+ingress:
+  main:
+    enabled: true
+    primary: true
+    annotations: {}
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - host: l1-devnet.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix

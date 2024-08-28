@@ -1,0 +1,138 @@
+---
+global:
+  nameOverride: &app_name blockscout
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: Recreate
+  type: deployment
+
+image:
+  repository: blockscout/blockscout
+  pullPolicy: Always
+  tag: 6.6.0
+
+env:
+  - name: ECTO_USE_SSL
+    value: false
+  - name: ETHEREUM_JSONRPC_HTTP_URL
+    value: http://l2-sequencer:8545
+  - name: ETHEREUM_JSONRPC_TRACE_URL
+    value: http://l2-sequencer:8545
+  - name: ETHEREUM_JSONRPC_VARIANT
+    value: geth
+  - name: ETHEREUM_JSONRPC_WS_URL
+    value: ws://l2-sequencer:8546
+  - name: INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER
+    value: true
+  - name: PORT
+    value: 3000
+  - name: NETWORK
+    value: [""]
+  - name: COIN
+    value: ETH
+  - name: COIN_NAME
+    value: ETH
+  - name: LOGO
+    value: /images/logo.svg
+  - name: WEBAPP_URL
+    value: https://blockscout.scroll.tech
+  - name: BLOCKSCOUT_HOST
+    value: test-blockscout.scroll.io
+  - name: JSON_RPC
+    value: http://l2-sequencer:8545
+  - name: SUBNETWORK
+    value: "Scroll Sepolia Testnet"
+  - name: SUPPORTED_CHAINS
+    value: '[{ "title": "Etherscan (Sepolia)", "url": "https://sepolia.etherscan.io", "test_net?": true }, { "title": "Scroll Sepolia Testnet", "url": "http://test-blockscout.scroll.io", "test_net?": true }]'
+  - name: DISABLE_EXCHANGE_RATES
+    value: true
+  - name: BLOCKSCOUT_VERSION
+    value: 5.2.1
+  - name: FOOTER_GITHUB_LINK
+    value: https://github.com/scroll-tech/blockscout
+  - name: RELEASE_LINK
+    value: https://github.com/scroll-tech
+  - name: RELEASE_NODE
+    value: l2_blockscout
+  - name: ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT
+    value: 10s
+  - name: INDEXER_MEMORY_LIMIT
+    value: 10gb
+  - name: BLOCK_TRANSFORMER
+    value: clique
+  - name: MICROSERVICE_SC_VERIFIER_ENABLED
+    value: true
+  - name: MICROSERVICE_SC_VERIFIER_URL
+    value: http://blockscout-sc-verifier:8080
+  - name: CHAIN_SPEC_PATH
+    value: /app/genesis/genesis.json
+
+envFrom:
+  - configMapRef:
+      name: blockscout-env
+
+command: [
+  "/bin/sh",
+  "-c",
+  "/app/bin/blockscout start"
+]
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 3000
+
+defaultProbes: &default_probes
+  enabled: true
+  custom: true
+  spec:
+    httpGet:
+      path: "/"
+      port: 3000
+
+probes:
+  liveness:
+    <<: *default_probes
+  readiness:
+    <<: *default_probes
+  startup:
+    <<: *default_probes
+
+
+persistence:
+  genesis:
+    enabled: true
+    type: configMap
+    mountPath: /app/genesis/
+    name: genesis-config
+  env:
+    enabled: true
+    type: configMap
+    mountPath: /config/
+    name: blockscout-env
+
+initContainers:
+  1-migrate-db:
+    image: blockscout/blockscout:6.6.0
+    command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
+    envFrom:
+      - configMapRef:
+          name: blockscout-env
+
+ingress:
+  main:
+    enabled: true
+    primary: true
+    annotations: {}
+    labels: {}
+    ingressClassName: "nginx"
+    hosts:
+      - host: blockscout.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix

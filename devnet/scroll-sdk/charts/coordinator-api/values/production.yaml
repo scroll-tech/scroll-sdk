@@ -1,0 +1,14 @@
+global:
+  isStandalone: true
+
+controller:
+  replicas: 2
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: coordinator-api.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix

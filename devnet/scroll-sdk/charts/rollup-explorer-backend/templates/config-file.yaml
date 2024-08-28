@@ -1,0 +1,11 @@
+{{- if .Values.global.isStandalone }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rollup-explorer-backend-config
+data:
+  config.json: |
+{{ .Files.Get "configs/rollup-explorer-backend-config.json" | indent 4 }}
+---
+{{- end }}

@@ -1,0 +1,11 @@
+---
+global:
+  isStandalone: false
+
+image:
+  repository: scrolltech/scroll-stack-contracts
+  tag: deploy-v0.0.16
+
+envFrom:
+  - configMapRef:
+      name: contracts-deployment-env

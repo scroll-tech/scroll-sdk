@@ -1,0 +1,80 @@
+---
+global:
+  nameOverride: &app_name blockscout-sc-verifier
+  fullnameOverride: *app_name
+
+controller:
+  replicas: 1
+  strategy: Recreate
+  type: deployment
+
+image:
+  repository: ghcr.io/blockscout/smart-contract-verifier
+  pullPolicy: Always
+  tag: v1.7.0
+
+env:
+  - name: SMART_CONTRACT_VERIFIER__SERVER__HTTP__ENABLED
+    value: true
+  - name: SMART_CONTRACT_VERIFIER__SERVER__HTTP__ADDR
+    value: "0.0.0.0:8080"
+  - name: SMART_CONTRACT_VERIFIER__SERVER__HTTP__MAX_BODY_SIZE
+    value: "2097152"
+  - name: SMART_CONTRACT_VERIFIER__SERVER__GRPC__ENABLED
+    value: false
+  - name: SMART_CONTRACT_VERIFIER__SERVER__GRPC__ADDR
+    value: "0.0.0.0:8051"
+  - name: SMART_CONTRACT_VERIFIER__SOLIDITY__ENABLED
+    value: true
+  - name: SMART_CONTRACT_VERIFIER__SOLIDITY__COMPILERS_DIR
+    value: "/tmp/solidity-compilers"
+  - name: SMART_CONTRACT_VERIFIER__SOLIDITY__REFRESH_VERSIONS_SCHEDULE
+    value: "0 0 * * * * *"
+  - name: SMART_CONTRACT_VERIFIER__SOLIDITY__FETCHER__LIST__LIST_URL
+    value: "https://solc-bin.ethereum.org/linux-amd64/list.json"
+    # value: "https://solc-bin.ethereum.org/macosx-arm64/list.json"
+  - name: SMART_CONTRACT_VERIFIER__VYPER__ENABLED
+    value: true
+  - name: SMART_CONTRACT_VERIFIER__VYPER__COMPILERS_DIR
+    value: "/tmp/vyper-compilers"
+  - name: SMART_CONTRACT_VERIFIER__VYPER__REFRESH_VERSIONS_SCHEDULE
+    value: "0 0 * * * * *"
+  - name: SMART_CONTRACT_VERIFIER__VYPER__FETCHER__LIST__LIST_URL
+    value: "https://raw.githubusercontent.com/blockscout/solc-bin/main/vyper.list.json"
+  - name: SMART_CONTRACT_VERIFIER__SOURCIFY__ENABLED
+    value: true
+  - name: SMART_CONTRACT_VERIFIER__SOURCIFY__API_URL
+    value: "https://sourcify.dev/server/"
+  - name: SMART_CONTRACT_VERIFIER__SOURCIFY__VERIFICATION_ATTEMPTS
+    value: "3"
+  - name: SMART_CONTRACT_VERIFIER__SOURCIFY__REQUEST_TIMEOUT
+    value: "10"
+  - name: SMART_CONTRACT_VERIFIER__METRICS__ENABLED
+    value: false
+  - name: SMART_CONTRACT_VERIFIER__METRICS__ADDR
+    value: "0.0.0.0:8090"
+  - name: SMART_CONTRACT_VERIFIER__METRICS__ROUTE
+    value: "/metrics"
+  - name: SMART_CONTRACT_VERIFIER__JAEGER__ENABLED
+    value: false
+  - name: SMART_CONTRACT_VERIFIER__JAEGER__AGENT_ENDPOINT
+    value: localhost:6831
+
+service:
+  main:
+    enabled: true
+    ports:
+      http:
+        enabled: true
+        port: 8080
+      metrics:
+        enabled: true
+        port: 8090
+
+probes:
+  liveness:
+    enabled: false
+  readiness:
+    enabled: false
+  startup:
+    enabled: false

@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-contracts-deployment
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: contracts-deployment
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          env:
+          {{- toYaml .Values.env | nindent 12 }}
+          envFrom:
+            {{- toYaml .Values.envFrom | nindent 10 }}
+          volumeMounts:
+            - mountPath: /contracts/volume
+              name: config
+      restartPolicy: Never
+      initContainers:
+        - name: 1-wait-for-l1
+          image: scrolltech/scroll-alpine:v0.0.1
+          command:
+            - /bin/sh
+            - -c
+            - /wait-for-l1.sh $L1_RPC_ENDPOINT
+          envFrom:
+            - configMapRef:
+                name: contracts-deployment-env
+          volumeMounts:
+            - name: wait-for-l1-script
+              mountPath: /wait-for-l1.sh
+              subPath: wait-for-l1.sh
+
+        - name: 2-wait-for-l2-sequencer
+          image: atkrad/wait4x:latest
+          args:
+            - http
+            - $(L2_RPC_ENDPOINT)
+            - --expect-status-code
+            - "200"
+            - --timeout
+            - "0"
+          envFrom:
+            - configMapRef:
+                name: contracts-deployment-env
+
+      volumes:
+        - configMap:
+            name: scroll-smart-contracts-config
+          name: config
+        - configMap:
+            name: wait-for-l1-script
+            defaultMode: 0777
+          name: wait-for-l1-script
+  backoffLimit: 4
