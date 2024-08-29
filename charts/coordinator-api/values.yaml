@@ -63,7 +63,6 @@ volumeClaimTemplates:
   - name: verifier
     accessMode: "ReadWriteOnce"
     size: "100Gi"
-    storageClass: "ebs-sc-retain"
     mountPath: "/verifier"
 
 service:
