@@ -1,6 +1,6 @@
 # frontends
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 frontends helm charts
 
@@ -24,8 +24,8 @@ Kubernetes: `>=1.22.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | command[0] | string | `"/bin/bash"` |  |
-| command[1] | string | `"-c"` |  |
-| command[2] | string | `"awk 'NF {gsub(/ /, \"\"); print \"export \" $0}' /app/conf/frontend-config > /usr/share/nginx/html/.env && source /usr/share/nginx/html/.env && /usr/local/bin/entrypoint.sh"` |  |
+| command[1] | string | `"-cx"` |  |
+| command[2] | string | `"awk 'NF {gsub(/ /, \"\"); print \"export \" $0}' /app/conf/frontend-config > /usr/share/nginx/html/.env\nsource /usr/share/nginx/html/.env\nsed -i \"s|src=\\\"/runtime-env.js\\\"|src=\\\"/runtime-env.js?rand=$RANDOM\\\"|\" index.html\nexec /usr/local/bin/entrypoint.sh\n"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"deployment"` |  |
