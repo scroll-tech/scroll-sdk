@@ -273,10 +273,6 @@ configMaps:
 
         main $1
 
-        ls -l /verifier/assets/li
-        ls -l /verifier/assets/ho
-        ls -l /verifier/params/
-
 serviceMonitor:
   main:
     enabled: true
