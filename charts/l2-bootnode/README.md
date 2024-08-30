@@ -1,6 +1,6 @@
 # l2-bootnode
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-bootnode helm chart
 
@@ -36,30 +36,28 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l2-bootnode-env"` |  |
 | env[0].name | string | `"L2GETH_ROLE"` |  |
 | env[0].value | string | `"bootnode"` |  |
-| env[10].name | string | `"CCC_FLAG"` |  |
-| env[10].value | string | `"--ccc"` |  |
-| env[11].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
-| env[11].value | string | `"1000000"` |  |
-| env[12].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
-| env[12].value | string | `""` |  |
+| env[10].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
+| env[10].value | string | `"1000000"` |  |
+| env[11].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
+| env[11].value | string | `""` |  |
 | env[1].name | string | `"L2GETH_NODEKEY"` |  |
 | env[1].value | string | `""` |  |
-| env[2].name | string | `"L2GETH_PEER_LIST"` |  |
-| env[2].value | string | `"[\"enode://848a7d59dd8f60dd1a51160e6bc15c194937855443de9be4b2abd83e11a5c4ac21d61d065448c5c520826fe83f1f29eb5a452daccca27b8113aa897074132507@l2-sequencer:30303\"]"` |  |
-| env[3].name | string | `"L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"` |  |
-| env[3].value | string | `"0"` |  |
-| env[4].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
-| env[4].value | string | `"0x6"` |  |
-| env[5].name | string | `"L2GETH_P2P_PORT"` |  |
-| env[5].value | int | `30303` |  |
-| env[6].name | string | `"L2GETH_ENABLE_CCC"` |  |
-| env[6].value | bool | `false` |  |
-| env[7].name | string | `"L2GETH_CCC_RUST_LOG_LEVEL"` |  |
-| env[7].value | string | `"info"` |  |
-| env[8].name | string | `"L2GETH_MAX_PEERS"` |  |
-| env[8].value | int | `500` |  |
-| env[9].name | string | `"VERBOSITY"` |  |
-| env[9].value | int | `3` |  |
+| env[2].name | string | `"L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"` |  |
+| env[2].value | string | `"0"` |  |
+| env[3].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
+| env[3].value | string | `"0x6"` |  |
+| env[4].name | string | `"L2GETH_P2P_PORT"` |  |
+| env[4].value | int | `30303` |  |
+| env[5].name | string | `"L2GETH_ENABLE_CCC"` |  |
+| env[5].value | bool | `false` |  |
+| env[6].name | string | `"L2GETH_CCC_RUST_LOG_LEVEL"` |  |
+| env[6].value | string | `"info"` |  |
+| env[7].name | string | `"L2GETH_MAX_PEERS"` |  |
+| env[7].value | int | `500` |  |
+| env[8].name | string | `"VERBOSITY"` |  |
+| env[8].value | int | `3` |  |
+| env[9].name | string | `"CCC_FLAG"` |  |
+| env[9].value | string | `"--ccc"` |  |
 | global.fullnameOverride | string | `"l2-bootnode"` |  |
 | global.nameOverride | string | `"l2-bootnode"` |  |
 | image.pullPolicy | string | `"Always"` |  |
