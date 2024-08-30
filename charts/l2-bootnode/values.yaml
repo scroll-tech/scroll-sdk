@@ -18,8 +18,6 @@ env:
     value: bootnode
   - name: L2GETH_NODEKEY
     value: ""
-  - name: L2GETH_PEER_LIST
-    value: '["enode://848a7d59dd8f60dd1a51160e6bc15c194937855443de9be4b2abd83e11a5c4ac21d61d065448c5c520826fe83f1f29eb5a452daccca27b8113aa897074132507@l2-sequencer:30303"]'
   - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK
     value: "0"
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
