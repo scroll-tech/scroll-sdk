@@ -7,7 +7,8 @@ on:
       - 'charts/**'
 
 jobs:
-  helm-chart-testing:
+  helm-chart-testing-not-scroll-sdk:
+    name: chart-testing-without-scroll-sdk
     runs-on: ubuntu-latest
     environment: test
     steps:
@@ -29,32 +30,30 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.0
 
-      - name: Setup scroll-sdk values
-        run: cd charts/scroll-sdk && docker run --rm -t -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.9
-
       - name: Helm registry login
         run: |
           helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
+      #  List chart change except scroll-sdk
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          changed=$(ct list-changed --excluded-charts scroll-sdk --target-branch ${{ github.event.repository.default_branch }} )
           if [[ -n "$changed" ]]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --config ct.yaml --target-branch ${{ github.event.repository.default_branch }}
+        run: ct lint --config ct.yaml --excluded-charts scroll-sdk --target-branch ${{ github.event.repository.default_branch }}
 
-  publish-ghcr:
-    name: publish-to-github
+  publish-ghcr-not-scroll-sdk:
+    name: publish-to-github-without-scroll-sdk
     runs-on: ubuntu-latest
     needs:
-      - helm-chart-testing
+      - helm-chart-testing-not-scroll-sdk
     outputs:
       charts: ${{ steps.list-changed.outputs.changed }}
     steps:
@@ -65,11 +64,112 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: filter
         with:
-          base: ${{ github.ref }}
+          base: ${{ github.event.repository.default_branch }}
           list-files: shell
           filters: |
             addedOrModified:
               - added|modified: 'charts/**'
+
+      - name: Helm registry login
+        run: |
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+        env:
+          HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
+
+        # We filter here the scroll-sdk chart
+      - name: Push chart to ghcr
+        if: steps.filter.outputs.addedOrModified == 'true'
+        env:
+          HELM_EXPERIMENTAL_OCI: 1
+        run: |
+          set -x
+          CHARTS=()
+          PATHS=(${{ steps.filter.outputs.addedOrModified_files }})
+          echo ${PATHS}
+          # Get only the chart paths
+          for i in "${PATHS[@]}"
+          do
+            chart=$(echo $i | awk -F "/" '{print $2}')
+            if [ "$chart" != "scroll-sdk" ]; then
+            CHARTS+=($chart)
+            fi
+          done
+          # Remove duplicates
+          CHARTS=( `for i in ${CHARTS[@]}; do echo $i; done | sort -u` )
+          echo "CHARTS: ${CHARTS[@]}"
+          for chart in ${CHARTS[@]}; do
+            helm dependencies build charts/$chart
+            helm package charts/$chart
+            export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
+            helm push $chart-${CHART_VERSION}.tgz oci://ghcr.io/scroll-tech/scroll-sdk/helm
+          done
+
+  helm-chart-testing-scroll-sdk:
+    name: chart-testing-scroll-sdk
+    runs-on: ubuntu-latest
+    needs:
+      - publish-ghcr-not-scroll-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.6.0
+
+      - name: Setup scroll-sdk values
+        run: cd charts/scroll-sdk && docker run --rm -t -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.17
+
+      - name: Helm registry login
+        run: |
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+        env:
+          HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
+
+      #  List scroll-sdk chart if it has changed
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --chart-dirs charts/scroll-sdk --target-branch ${{ github.event.repository.default_branch }} )
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run chart-testing (lint)
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct lint --config ct.yaml --charts scroll-sdk --target-branch ${{ github.event.repository.default_branch }}
+
+  publish-ghcr-scroll-sdk:
+    name: publish-scroll-sdk-to-github
+    runs-on: ubuntu-latest
+    needs:
+      - helm-chart-testing-scroll-sdk
+    outputs:
+      charts: ${{ steps.list-changed.outputs.changed }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: ${{ github.event.repository.default_branch }}
+          list-files: shell
+          filters: |
+            addedOrModified:
+              - added|modified: 'charts/scroll-sdk/**'
 
       - name: Helm registry login
         run: |

@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -29,14 +29,14 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | chain-monitor | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | contracts | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-api | 0.0.1 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-cron | 0.0.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-cron | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | frontends | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | gas-oracle | 0.0.1 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-devnet | 0.0.1 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-explorer | 0.0.1 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.4 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.5 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.4 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.4 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.5 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.0.1 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.0.1 |
