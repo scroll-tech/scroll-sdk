@@ -29,7 +29,7 @@ jobs:
         uses: helm/chart-testing-action@v2.6.0
 
       - name: Setup scroll-sdk values
-        run: cd charts/scroll-sdk && docker run --rm -t -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.9
+        run: cd charts/scroll-sdk && docker run --rm -t -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.17-clean-up-config
 
       - name: Helm registry login
         run: |
