@@ -1,12 +1,12 @@
 global:
-  fullnameOverride: l2-rpc
+  fullnameOverride: l2-bootnode-1
 
 envFrom:
   - configMapRef:
-      name: l2-rpc-env
+      name: l2-bootnode-1-env
 
 initContainers:
-  1-wait-for-l1:
+  wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1
     command:
       - /bin/sh
@@ -14,7 +14,7 @@ initContainers:
       - /wait-for-l1.sh $L2GETH_L1_ENDPOINT
     envFrom:
       - configMapRef:
-          name: l2-rpc-env
+          name: l2-bootnode-1-env
     volumeMounts:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
@@ -25,7 +25,7 @@ persistence:
     enabled: true
     type: configMap
     mountPath: /config/
-    name: l2-rpc-env
+    name: l2-bootnode-1-env
 
 configMaps:
   env:
@@ -33,13 +33,3 @@ configMaps:
     data:
       CHAIN_ID: ""
       L2GETH_L1_ENDPOINT: ""
-      L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK: ""
-
-ingress:
-  main:
-    ingressClassName: "nginx"
-    hosts:
-      - host: l2-rpc.scrollsdk
-        paths:
-          - path: /
-            pathType: Prefix

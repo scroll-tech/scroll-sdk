@@ -3,5 +3,5 @@ target-branch: develop
 chart-dirs:
   - charts
 validate-maintainers: true
-check-version-increment: false #TODO set to true
+check-version-increment: true
 debug: true

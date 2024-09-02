@@ -45,12 +45,8 @@ probes:
     <<: *default_probes
 
 env:
-  - name: L2GETH_ROLE
-    value: rpc
   - name: L2GETH_NODEKEY
     value: ""
-  - name: L2GETH_PEER_LIST
-    value: '["enode://848a7d59dd8f60dd1a51160e6bc15c194937855443de9be4b2abd83e11a5c4ac21d61d065448c5c520826fe83f1f29eb5a452daccca27b8113aa897074132507@l2-sequencer:30303"]'
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
     value: "0x6"
   - name: L2GETH_RPC_HTTP_PORT
@@ -122,12 +118,6 @@ initContainers:
         subPath: wait-for-l1.sh
 
 persistence:
-  data:
-    enabled: true
-    type: pvc
-    mountPath: /l2geth/data
-    accessMode: ReadWriteOnce
-    size: 10Gi
   env:
     enabled: true
     type: configMap
@@ -143,6 +133,12 @@ persistence:
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"
+
+volumeClaimTemplates:
+  - name: data
+    accessMode: "ReadWriteOnce"
+    size: "100Gi"
+    mountPath: "/l2geth/data"
 
 ingress:
   main:

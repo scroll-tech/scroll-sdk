@@ -2185,7 +2185,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": false
         },
         "datasource": "Prometheus",
         "definition": "label_values({service=\"$service\"}, instance)",
