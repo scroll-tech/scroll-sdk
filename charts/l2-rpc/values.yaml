@@ -45,8 +45,6 @@ probes:
     <<: *default_probes
 
 env:
-  - name: L2GETH_ROLE
-    value: rpc
   - name: L2GETH_NODEKEY
     value: ""
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
@@ -120,12 +118,6 @@ initContainers:
         subPath: wait-for-l1.sh
 
 persistence:
-  data:
-    enabled: true
-    type: pvc
-    mountPath: /l2geth/data
-    accessMode: ReadWriteOnce
-    size: 10Gi
   env:
     enabled: true
     type: configMap
@@ -141,6 +133,12 @@ persistence:
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"
+
+volumeClaimTemplates:
+  - name: data
+    accessMode: "ReadWriteOnce"
+    size: "100Gi"
+    mountPath: "/l2geth/data"
 
 ingress:
   main:
