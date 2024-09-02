@@ -40,8 +40,6 @@ env:
 envFrom:
   - configMapRef:
       name: l2-sequencer-env
-  - configMapRef:
-      name: l2-sequencer-keystore
 
 command:
   [
@@ -163,12 +161,6 @@ configMaps:
     data:
       config.toml: |
         [Node.P2P] StaticNodes = "[]"
-  keystore:
-    enabled: true
-    data:
-      L2GETH_KEYSTORE: '{"address":"756ea06bdee36de11f22dcca45a31d8a178ef3c6","crypto":{"cipher":"aes-128-ctr","ciphertext":"8bfb4e48c6b172f1f5794d2874476ca62f8184507c0916dbd45fe77a0056114c","cipherparams":{"iv":"509eb70e7379a776e0779634b6668277"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"ef0f0334e5db7c12d76993e1e9627593fd0d7cd44444b689e792c86bc8a5d75f"},"mac":"d766cac11d0bd563316f5655ebf07550b6fce98ba0ca3c13acdc1b65f5f185ca"},"id":"4459ad67-f2ce-48b2-8940-c0582106a4c6","version":3}'
-      L2GETH_PASSWORD: "scroll2022"
-      L2GETH_NODEKEY: "2f59ff2fdee1c42a3d8c8980c313bc8d6c2557463f7bb92b0f0bc89a6d3cbf01"
 
 serviceMonitor:
   main:

@@ -28,10 +28,6 @@ Kubernetes: `>=1.22.0-0`
 | command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth && echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine $CCC_FLAG --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
 | configMaps.config.data."config.toml" | string | `"[Node.P2P] StaticNodes = \"[]\"\n"` |  |
 | configMaps.config.enabled | bool | `true` |  |
-| configMaps.keystore.data.L2GETH_KEYSTORE | string | `"{\"address\":\"756ea06bdee36de11f22dcca45a31d8a178ef3c6\",\"crypto\":{\"cipher\":\"aes-128-ctr\",\"ciphertext\":\"8bfb4e48c6b172f1f5794d2874476ca62f8184507c0916dbd45fe77a0056114c\",\"cipherparams\":{\"iv\":\"509eb70e7379a776e0779634b6668277\"},\"kdf\":\"scrypt\",\"kdfparams\":{\"dklen\":32,\"n\":262144,\"p\":1,\"r\":8,\"salt\":\"ef0f0334e5db7c12d76993e1e9627593fd0d7cd44444b689e792c86bc8a5d75f\"},\"mac\":\"d766cac11d0bd563316f5655ebf07550b6fce98ba0ca3c13acdc1b65f5f185ca\"},\"id\":\"4459ad67-f2ce-48b2-8940-c0582106a4c6\",\"version\":3}"` |  |
-| configMaps.keystore.data.L2GETH_NODEKEY | string | `"2f59ff2fdee1c42a3d8c8980c313bc8d6c2557463f7bb92b0f0bc89a6d3cbf01"` |  |
-| configMaps.keystore.data.L2GETH_PASSWORD | string | `"scroll2022"` |  |
-| configMaps.keystore.enabled | bool | `true` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"statefulset"` |  |
@@ -40,7 +36,6 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.spec.httpGet.path | string | `"/"` |  |
 | defaultProbes.spec.httpGet.port | int | `8545` |  |
 | envFrom[0].configMapRef.name | string | `"l2-sequencer-env"` |  |
-| envFrom[1].configMapRef.name | string | `"l2-sequencer-keystore"` |  |
 | env[0].name | string | `"L2GETH_ROLE"` |  |
 | env[0].value | string | `"signer"` |  |
 | env[10].name | string | `"VERBOSITY"` |  |
