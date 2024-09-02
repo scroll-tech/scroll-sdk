@@ -24,13 +24,14 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: coordinator-api-2.devnet.scroll.tech
+      - host: coordinator-api.scrollsdk
         paths:
           - path: /
             pathType: Prefix
 
 externalSecrets:
   coordinator-cron-secret-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/coordinator-cron-secret-env
