@@ -41,7 +41,7 @@ persistence:
     accessMode: ReadWriteOnce
     size: 10Gi
     mounthPath: /data
-    retain: true
+    retain: false
 
 service:
   main:

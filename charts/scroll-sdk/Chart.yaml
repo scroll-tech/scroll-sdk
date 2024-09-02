@@ -14,7 +14,7 @@ keywords:
 home: https://github.com/scroll-tech/scroll-sdk
 dependencies:
   - name: l1-devnet
-    version: 0.0.1
+    version: 0.0.2
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-devnet.enabled
   - name: balance-checker

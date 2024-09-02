@@ -1,6 +1,6 @@
 # l1-devnet
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l1-devnet helm charts
 
@@ -53,7 +53,7 @@ Kubernetes: `>=1.22.0-0`
 | persistence.data.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.data.enabled | bool | `true` |  |
 | persistence.data.mounthPath | string | `"/data"` |  |
-| persistence.data.retain | bool | `true` |  |
+| persistence.data.retain | bool | `false` |  |
 | persistence.data.size | string | `"10Gi"` |  |
 | persistence.data.type | string | `"pvc"` |  |
 | probes.liveness.<<.enabled | bool | `false` |  |
