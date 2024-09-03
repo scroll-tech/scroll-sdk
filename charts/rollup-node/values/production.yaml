@@ -25,15 +25,6 @@ persistence:
     name: rollup-node-migrate-db
     defaultMode: "0777"
 
-ingress:
-  main:
-    ingressClassName: "nginx"
-    hosts:
-      - host: ""
-        paths:
-          - path: /
-            pathType: Prefix
-
 configMaps:
   env:
     enabled: true
