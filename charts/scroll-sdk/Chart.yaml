@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.17
+version: 0.0.18
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -46,7 +46,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: contracts.enabled
   - name: coordinator-api
-    version: 0.0.3
+    version: 0.0.4
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-api.enabled
   - name: coordinator-cron
