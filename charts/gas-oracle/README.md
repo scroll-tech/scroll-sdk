@@ -1,6 +1,6 @@
 # gas-oracle
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 gas-oracle helm charts
 
@@ -38,7 +38,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"gas-oracle"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/gas-oracle"` |  |
-| image.tag | string | `"v4.4.57"` |  |
+| image.tag | string | `"v4.4.59"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |

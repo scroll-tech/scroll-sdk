@@ -1,7 +1,7 @@
 # Define variables for architecture-specific settings
 ARCH_ARM64 := $(shell if [ "$$(uname -m)" = "arm64" ] || [ "$$(uname -m)" = "aarch64" ]; then echo "-arm64"; else echo ""; fi)
 ARCH_OTHER := $(shell if [ "$$(uname -m)" != "arm64" ] && [ "$$(uname -m)" != "aarch64" ]; then echo "scroll-"; else echo ""; fi)
-L2_IMAGE_TAG := $(ARCH_OTHER)v5.6.0$(ARCH_ARM64)
+L2_IMAGE_TAG := $(ARCH_OTHER)v5.7.5$(ARCH_ARM64)
 L1_RPC_HOST := l1-devnet.scrollsdk
 
 bootstrap:

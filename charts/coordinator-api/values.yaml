@@ -11,7 +11,7 @@ global:
 image:
   repository: scrolltech/coordinator-api
   pullPolicy: Always
-  tag: v4.4.46
+  tag: v4.4.58
 
 env:
   - name: HTTP_PORT

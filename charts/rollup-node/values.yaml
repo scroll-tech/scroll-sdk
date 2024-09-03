@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/rollup-relayer
   pullPolicy: Always
-  tag: v4.4.57
+  tag: v4.4.59
 
 env:
   - name: METRICS_PORT
