@@ -55,14 +55,6 @@ externalSecrets:
           key: scroll/gas-oracle-secret-env
           property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
         secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
-      - remoteRef:
-          key: scroll/gas-oracle-secret-env
-          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_COMMIT_SENDER_PRIVATE_KEY
-        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_COMMIT_SENDER_PRIVATE_KEY
-      - remoteRef:
-          key: scroll/gas-oracle-secret-env
-          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_FINALIZE_SENDER_PRIVATE_KEY
-        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_FINALIZE_SENDER_PRIVATE_KEY
     refreshInterval: 2m
     serviceAccount: external-secrets
   gas-oracle-migrate-db:
