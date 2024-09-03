@@ -29,7 +29,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: rollup-node.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix

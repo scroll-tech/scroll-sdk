@@ -28,7 +28,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: blockscout.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix

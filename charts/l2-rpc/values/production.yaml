@@ -40,7 +40,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: l2-rpc.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix

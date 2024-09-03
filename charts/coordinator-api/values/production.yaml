@@ -12,7 +12,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: coordinator-api.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix

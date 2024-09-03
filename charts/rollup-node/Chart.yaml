@@ -2,7 +2,7 @@
 apiVersion: v2
 description: rollup-node helm charts
 name: rollup-node
-version: 0.0.4
+version: 0.0.5
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:

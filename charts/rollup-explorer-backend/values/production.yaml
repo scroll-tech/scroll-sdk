@@ -8,7 +8,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: rollup-explorer-backend.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix
