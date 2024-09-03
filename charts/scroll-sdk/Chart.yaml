@@ -50,7 +50,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-api.enabled
   - name: coordinator-cron
-    version: 0.0.4
+    version: 0.0.5
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-cron.enabled
   - name: frontends
@@ -58,7 +58,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: frontends.enabled
   - name: gas-oracle
-    version: 0.0.4
+    version: 0.0.5
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: gas-oracle.enabled
   - name: l1-explorer
