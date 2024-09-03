@@ -2,7 +2,7 @@
 apiVersion: v2
 description: l2-rpc helm chart
 name: l2-rpc
-version: 0.0.5
+version: 0.0.6
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -14,4 +14,4 @@ dependencies:
     version: 1.5.1
   - name: external-secrets-lib
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
-    version: 0.0.2
+    version: 0.0.3
