@@ -12,12 +12,25 @@ initContainers:
     envFrom:
       - secretRef:
           name: chain-monitor-secret-env
+  4-wait-for-l2-sequencer:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - $(SCROLL_L2_RPC)
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
+    envFrom:
+      - configMapRef:
+          name: chain-monitor-env
 
 configMaps:
   env:
     enabled: true
     data:
       SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: ""
 
 externalSecrets:
   chain-monitor-secret-env:
