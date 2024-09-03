@@ -1,6 +1,6 @@
 # l2-bootnode
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-bootnode helm chart
 
@@ -62,7 +62,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"l2-bootnode"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"scroll-v5.6.0"` |  |
+| image.tag | string | `"scroll-v5.7.5"` |  |
 | initContainers.wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |

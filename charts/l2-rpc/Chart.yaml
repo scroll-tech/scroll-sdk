@@ -2,7 +2,7 @@
 apiVersion: v2
 description: l2-rpc helm chart
 name: l2-rpc
-version: 0.0.6
+version: 0.0.7
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
