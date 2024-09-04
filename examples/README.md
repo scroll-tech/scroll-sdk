@@ -1,6 +1,12 @@
 # Scroll SDK Helper Scripts
 
-This directory contains helper scripts for managing and interacting with your Scroll SDK deployment.
+This directory contains helper files examples and scripts for managing and interacting with your Scroll SDK deployment.
+
+For additional, more robust helper scripts, checkout the [scroll-sdk-cli](https://github.com/scroll-tech/scroll-sdk-cli).
+
+## Example Files
+1. `Makefile.example`: A basic makefile for quickly installing and deleting the charts necessary for the Scroll SDK.
+2. `config.toml.example`: A template config.toml file for new deployments. A good starting point for filling out chain-specific details or using the Scroll SDK CLI tool.
 
 ## Scripts
 
