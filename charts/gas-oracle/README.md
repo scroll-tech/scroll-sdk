@@ -1,6 +1,6 @@
 # gas-oracle
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 gas-oracle helm charts
 
@@ -32,6 +32,7 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `true` |  |
 | defaultProbes.spec.httpGet.path | string | `"/health"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
+| envFrom[0].configMapRef.name | string | `"gas-oracle-env"` |  |
 | env[0].name | string | `"METRICS_PORT"` |  |
 | env[0].value | int | `8090` |  |
 | global.fullnameOverride | string | `"gas-oracle"` |  |
@@ -40,7 +41,7 @@ Kubernetes: `>=1.22.0-0`
 | image.repository | string | `"scrolltech/gas-oracle"` |  |
 | image.tag | string | `"v4.4.59"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_ROLLUP_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"gas-oracle-env"` |  |

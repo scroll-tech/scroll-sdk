@@ -1,6 +1,6 @@
 # bridge-history-fetcher
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 bridge-history-fetcher helm charts
 
@@ -35,6 +35,7 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `true` |  |
 | defaultProbes.spec.httpGet.path | string | `"/health"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
+| envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
 | env[0].name | string | `"METRICS_PORT"` |  |
 | env[0].value | string | `"8090"` |  |
 | global.fullnameOverride | string | `"bridge-history-fetcher"` |  |
@@ -43,7 +44,7 @@ Kubernetes: `>=1.22.0-0`
 | image.repository | string | `"scrolltech/bridgehistoryapi-fetcher"` |  |
 | image.tag | string | `"v4.4.59"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_BRIDGE_HISTORY_DB_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |

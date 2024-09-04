@@ -23,6 +23,10 @@ env:
   - name: METRICS_PORT
     value: "8090"
 
+envFrom:
+  - configMapRef:
+      name: bridge-history-api-env
+
 initContainers:
   1-wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1

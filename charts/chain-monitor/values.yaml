@@ -6,13 +6,17 @@ global:
 image:
   repository: scrolltech/chain-monitorv2
   pullPolicy: Always
-  tag: v1.1.27
+  tag: v1.1.28
 
 env:
   - name: CHAIN_MONITOR_SERVER_PORT
     value: 8080
   - name: CHAIN_MONITOR_METRICS_PORT
     value: 8090
+
+envFrom:
+  - configMapRef:
+      name: chain-monitor-env
 
 command:
   [
@@ -71,14 +75,14 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN)
       - --timeout
       - "0"
     envFrom:
       - configMapRef:
           name: chain-monitor-env
   2-migrate-db:
-    image: scrolltech/chain-monitorv2:v1.1.26
+    image: scrolltech/chain-monitorv2:v1.1.28
     command:
       - /bin/sh
       - -c
@@ -86,6 +90,9 @@ initContainers:
     volumeMounts:
       - name: *app_name
         mountPath: /app/config/
+    envFrom:
+      - configMapRef:
+          name: chain-monitor-env
   3-wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1
     command:

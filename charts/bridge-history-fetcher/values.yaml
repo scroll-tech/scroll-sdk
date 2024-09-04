@@ -23,6 +23,10 @@ env:
   - name: METRICS_PORT
     value: "8090"
 
+envFrom:
+  - configMapRef:
+      name: bridge-history-fetcher-env
+
 service:
   main:
     enabled: true
@@ -82,7 +86,7 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_BRIDGE_HISTORY_DB_DSN)
       - --timeout
       - "0"
     envFrom:

@@ -17,6 +17,10 @@ env:
   - name: METRICS_PORT
     value: 8090
 
+envFrom:
+  - configMapRef:
+      name: rollup-node-env
+
 command: [
   "/bin/sh",
   "-c",
@@ -85,7 +89,7 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_ROLLUP_DB_CONFIG_DSN)
       - --timeout
       - "0"
     envFrom:

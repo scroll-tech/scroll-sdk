@@ -2,7 +2,7 @@
 apiVersion: v2
 description: gas-oracle helm charts
 name: gas-oracle
-version: 0.0.5
+version: 0.0.6
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:

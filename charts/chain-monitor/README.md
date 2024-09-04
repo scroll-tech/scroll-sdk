@@ -1,6 +1,6 @@
 # chain-monitor
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 chain-monitor helm charts
 
@@ -27,6 +27,7 @@ Kubernetes: `>=1.22.0-0`
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"chain-monitor --config /app/config/chain-monitor-config.json --http --http.port ${CHAIN_MONITOR_SERVER_PORT} --metrics --metrics.addr 0.0.0.0 --metrics.port ${CHAIN_MONITOR_METRICS_PORT} --verbosity 3"` |  |
 | defaultProbes.enabled | bool | `false` |  |
+| envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
 | env[0].name | string | `"CHAIN_MONITOR_SERVER_PORT"` |  |
 | env[0].value | int | `8080` |  |
 | env[1].name | string | `"CHAIN_MONITOR_METRICS_PORT"` |  |
@@ -35,9 +36,9 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"chain-monitor"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/chain-monitorv2"` |  |
-| image.tag | string | `"v1.1.27"` |  |
+| image.tag | string | `"v1.1.28"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
@@ -45,7 +46,8 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate"` |  |
-| initContainers.2-migrate-db.image | string | `"scrolltech/chain-monitorv2:v1.1.26"` |  |
+| initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
+| initContainers.2-migrate-db.image | string | `"scrolltech/chain-monitorv2:v1.1.28"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"chain-monitor"` |  |
 | initContainers.3-wait-for-l1.command[0] | string | `"/bin/sh"` |  |

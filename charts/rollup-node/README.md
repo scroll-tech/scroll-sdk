@@ -1,6 +1,6 @@
 # rollup-node
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 rollup-node helm charts
 
@@ -31,6 +31,7 @@ Kubernetes: `>=1.22.0-0`
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"Recreate"` |  |
 | controller.type | string | `"deployment"` |  |
+| envFrom[0].configMapRef.name | string | `"rollup-node-env"` |  |
 | env[0].name | string | `"METRICS_PORT"` |  |
 | env[0].value | int | `8090` |  |
 | global.fullnameOverride | string | `"rollup-node"` |  |
@@ -39,7 +40,7 @@ Kubernetes: `>=1.22.0-0`
 | image.repository | string | `"scrolltech/rollup-relayer"` |  |
 | image.tag | string | `"v4.4.59"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_ROLLUP_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"rollup-node-env"` |  |

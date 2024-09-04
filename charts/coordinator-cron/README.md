@@ -1,6 +1,6 @@
 # coordinator-cron
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 coordinator-cron helm charts
 
@@ -30,6 +30,7 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `true` |  |
 | defaultProbes.spec.httpGet.path | string | `"/health"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
+| envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |
 | env[0].name | string | `"HTTP_PORT"` |  |
 | env[0].value | string | `"8555"` |  |
 | env[1].name | string | `"WS_PORT"` |  |
@@ -46,7 +47,7 @@ Kubernetes: `>=1.22.0-0`
 | image.repository | string | `"scrolltech/coordinator-cron"` |  |
 | image.tag | string | `"v4.4.58"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
-| initContainers.1-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_COORDINATOR_DB_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
 | initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |

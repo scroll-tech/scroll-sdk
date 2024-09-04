@@ -1,6 +1,6 @@
 # bridge-history-api
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 bridge-history-api helm charts
 
@@ -35,6 +35,7 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `true` |  |
 | defaultProbes.spec.httpGet.path | string | `"/health"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
+| envFrom[0].configMapRef.name | string | `"bridge-history-api-env"` |  |
 | env[0].name | string | `"METRICS_PORT"` |  |
 | env[0].value | string | `"8090"` |  |
 | global.fullnameOverride | string | `"bridge-history-api"` |  |

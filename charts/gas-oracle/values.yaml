@@ -82,12 +82,16 @@ env:
   - name: METRICS_PORT
     value: 8090
 
+envFrom:
+  - configMapRef:
+      name: gas-oracle-env
+
 initContainers:
   1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_ROLLUP_DB_CONFIG_DSN)
       - --timeout
       - "0"
     envFrom:
