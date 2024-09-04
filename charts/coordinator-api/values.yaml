@@ -226,7 +226,6 @@ configMaps:
           check_file "/verifier/params/params24" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24" "$PARAMS24_SHASUM"
           check_file "/verifier/params/params25" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25" "$PARAMS25_SHASUM"
           check_file "/verifier/params/params26" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params26" "$PARAMS26_SHASUM"
-          ;;
 
           # download assets_hi v0.12.0
           check_file "/verifier/assets/hi/vk_chunk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_chunk.vkey" "$VK_CHUNK_SHASUM_HI"
