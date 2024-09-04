@@ -44,7 +44,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: bridge-history-api.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix

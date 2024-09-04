@@ -21,13 +21,13 @@ configMaps:
     enabled: true
     data:
       SCROLL_L1_RPC: ""
-      SCROLL_L2_RPC: "http://l2-sequencer:8545"
+      SCROLL_L2_RPC: "http://l2-rpc:8545"
 
 ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: bridge-history-api.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix
@@ -40,9 +40,5 @@ externalSecrets:
           key: scroll/bridge-history-api-secret-env
           property: SCROLL_BRIDGE_HISTORY_DB_DSN
         secretKey: SCROLL_BRIDGE_HISTORY_DB_DSN
-      - remoteRef:
-          key: scroll/bridge-history-api-env
-          property: SCROLL_BRIDGE_HISTORY_REDIS_PASSWORD
-        secretKey: SCROLL_BRIDGE_HISTORY_REDIS_PASSWORD
     refreshInterval: 2m
     serviceAccount: external-secrets

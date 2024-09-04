@@ -1,0 +1,31 @@
+install:
+	helm upgrade -i scroll-common scroll-common
+	helm upgrade -i l2-sequencer l2-sequencer --values l2-sequencer/values/production-1.yaml
+	helm upgrade -i coordinator-api coordinator-api --values coordinator-api/values/production.yaml
+	helm upgrade -i bridge-history-api bridge-history-api --values bridge-history-api/values/production.yaml
+	helm upgrade -i bridge-history-fetcher bridge-history-fetcher --values bridge-history-fetcher/values/production.yaml
+	helm upgrade -i chain-monitor chain-monitor --values chain-monitor/values/production.yaml
+	helm upgrade -i coordinator-cron coordinator-cron --values coordinator-cron/values/production.yaml
+	helm upgrade -i frontends frontends --values frontends/values/production.yaml
+	helm upgrade -i gas-oracle gas-oracle --values gas-oracle/values/production.yaml
+	helm upgrade -i l2-bootnode l2-bootnode --values l2-bootnode/values/production-1.yaml
+	helm upgrade -i l2-rpc l2-rpc --values l2-rpc/values/production.yaml
+	helm upgrade -i rollup-explorer-backend rollup-explorer-backend --values rollup-explorer-backend/values/production.yaml
+	helm upgrade -i rollup-node rollup-node --values rollup-node/values/production.yaml
+	helm upgrade -i contracts contracts --values contracts/values/production.yaml
+
+delete:
+	helm delete scroll-common
+	helm delete l2-sequencer
+	helm delete coordinator-api
+	helm delete bridge-history-api
+	helm delete bridge-history-fetcher
+	helm delete chain-monitor
+	helm delete coordinator-cron
+	helm delete frontends
+	helm delete gas-oracle
+	helm delete l2-bootnode
+	helm delete l2-rpc
+	helm delete rollup-explorer-backend
+	helm delete rollup-node
+	helm delete contracts

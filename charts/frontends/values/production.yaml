@@ -12,7 +12,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: frontends.scrollsdk
+      - host: ""
         paths:
           - path: /
             pathType: Prefix

@@ -25,15 +25,6 @@ persistence:
     name: rollup-node-migrate-db
     defaultMode: "0777"
 
-ingress:
-  main:
-    ingressClassName: "nginx"
-    hosts:
-      - host: rollup-node.scrollsdk
-        paths:
-          - path: /
-            pathType: Prefix
-
 configMaps:
   env:
     enabled: true
@@ -52,14 +43,6 @@ externalSecrets:
           key: scroll/rollup-node-secret-env
           property: SCROLL_ROLLUP_DB_CONFIG_DSN
         secretKey: SCROLL_ROLLUP_DB_CONFIG_DSN
-      - remoteRef:
-          key: scroll/rollup-node-secret-env
-          property: SCROLL_ROLLUP_L1_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
-        secretKey: SCROLL_ROLLUP_L1_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
-      - remoteRef:
-          key: scroll/rollup-node-secret-env
-          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
-        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
       - remoteRef:
           key: scroll/rollup-node-secret-env
           property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_COMMIT_SENDER_PRIVATE_KEY
