@@ -23,7 +23,7 @@ Additional SDK tooling is available in our [scroll-sdk-cli](https://www.npmjs.co
 
 ## Get Started
 
-To get started using the repo, checkout our guides on running [a local devnet deployment](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/guides/devnet-deployment/) or complete [production deployment](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/guides/production-deployment/).
+To get started using the repo, checkout our guides on running [a local devnet deployment](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/guides/devnet-deployment/), [an alt-gas token testnet on Digital Ocean](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/guides/digital-ocean-alt-gas-token/), or see our [production deployment](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/guides/production-deployment/) page.
 
 ## Contributing
 
