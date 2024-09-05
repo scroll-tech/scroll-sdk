@@ -36,7 +36,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"chain-monitor"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/chain-monitorv2"` |  |
-| image.tag | string | `"v1.1.28"` |  |
+| image.tag | string | `"v1.1.29"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |

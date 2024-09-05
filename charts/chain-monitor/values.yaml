@@ -6,7 +6,7 @@ global:
 image:
   repository: scrolltech/chain-monitorv2
   pullPolicy: Always
-  tag: v1.1.28
+  tag: v1.1.29
 
 env:
   - name: CHAIN_MONITOR_SERVER_PORT
