@@ -82,7 +82,7 @@ initContainers:
       - configMapRef:
           name: chain-monitor-env
   2-migrate-db:
-    image: scrolltech/chain-monitorv2:v1.1.28
+    image: scrolltech/chain-monitorv2:v1.1.29
     command:
       - /bin/sh
       - -c

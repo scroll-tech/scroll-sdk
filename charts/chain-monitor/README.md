@@ -47,7 +47,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate"` |  |
 | initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
-| initContainers.2-migrate-db.image | string | `"scrolltech/chain-monitorv2:v1.1.28"` |  |
+| initContainers.2-migrate-db.image | string | `"scrolltech/chain-monitorv2:v1.1.29"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"chain-monitor"` |  |
 | initContainers.3-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
