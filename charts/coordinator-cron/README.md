@@ -30,7 +30,7 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `true` |  |
 | defaultProbes.spec.httpGet.path | string | `"/health"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
-| envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |
+| envFrom[0].configMapRef.name | string | `"coordinator-cron-env"` |  |
 | env[0].name | string | `"HTTP_PORT"` |  |
 | env[0].value | string | `"8555"` |  |
 | env[1].name | string | `"WS_PORT"` |  |
@@ -50,7 +50,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_COORDINATOR_DB_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
 | initContainers.1-check-postgres-connection.args[3] | string | `"0"` |  |
-| initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"coordinator-env"` |  |
+| initContainers.1-check-postgres-connection.envFrom[0].configMapRef.name | string | `"coordinator-cron-env"` |  |
 | initContainers.1-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/conf/"` |  |

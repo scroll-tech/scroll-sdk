@@ -22,7 +22,7 @@ env:
 
 envFrom:
   - configMapRef:
-      name: coordinator-env
+      name: coordinator-cron-env
 
 command: [
   "/bin/sh",
@@ -42,7 +42,7 @@ initContainers:
       - "0"
     envFrom:
       - configMapRef:
-          name: coordinator-env
+          name: coordinator-cron-env
 
 resources:
   requests:
