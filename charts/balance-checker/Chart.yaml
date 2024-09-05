@@ -2,7 +2,7 @@
 apiVersion: v2
 description: balance-checker helm charts
 name: balance-checker
-version: 0.0.3
+version: 0.0.4
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
