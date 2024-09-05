@@ -1,4 +1,4 @@
-name: Lint, test and publish charts
+name: Lint, test and publish dev charts
 
 on:
   push:
@@ -103,7 +103,7 @@ jobs:
             helm dependencies build charts/$chart
             helm package charts/$chart
             export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
-            helm push $chart-${CHART_VERSION}.tgz oci://$(HELM_REGISTRY)
+            helm push $chart-${CHART_VERSION}.tgz oci://${HELM_REGISTRY}
           done
 
   helm-chart-testing-scroll-sdk:
@@ -200,5 +200,5 @@ jobs:
             helm dependencies build charts/$chart
             helm package charts/$chart
             export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
-            helm push $chart-${CHART_VERSION}.tgz oci://$(HELM_REGISTRY)
+            helm push $chart-${CHART_VERSION}.tgz oci://${HELM_REGISTRY}
           done
