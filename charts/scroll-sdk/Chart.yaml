@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.25
+version: 0.0.26
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -54,7 +54,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-cron.enabled
   - name: frontends
-    version: 0.0.5
+    version: 0.0.6
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: frontends.enabled
   - name: gas-oracle
