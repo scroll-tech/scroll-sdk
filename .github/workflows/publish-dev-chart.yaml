@@ -179,6 +179,10 @@ jobs:
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
+      - name: Replace helm registry by helm/dev
+        run: |
+          sed -i 's|oci://ghcr.io/scroll-tech/scroll-sdk/helm|oci://ghcr.io/scroll-tech/scroll-sdk/helm/dev|g' charts/scroll-sdk/Chart.yaml
+
       - name: Push chart to ghcr
         if: steps.filter.outputs.addedOrModified == 'true'
         env:
