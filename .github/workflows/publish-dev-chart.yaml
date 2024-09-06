@@ -74,7 +74,7 @@ jobs:
 
       - name: Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.HELM_GITHUB_PASSWORD }}
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
