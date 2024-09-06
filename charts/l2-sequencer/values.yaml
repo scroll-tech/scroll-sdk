@@ -11,11 +11,9 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.7.5
+  tag: scroll-v5.7.10
 
 env:
-  - name: L2GETH_ROLE
-    value: "signer"
   - name: L2GETH_PEER_LIST
     value: [""]
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
@@ -57,12 +55,12 @@ command:
     --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
     --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" \
     --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine \
-    $CCC_FLAG \
+    --ccc --ccc.numworkers 5 \
     --gcmode archive \
     --cache.noprefetch \
     --verbosity ${VERBOSITY} \
     --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG \
-    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
+    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
     --gpo.percentile 20 \
     --gpo.blocks 100 \
     --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" \

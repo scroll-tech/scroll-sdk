@@ -1,6 +1,6 @@
 # l2-bootnode
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-bootnode helm chart
 
@@ -34,35 +34,33 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.spec.httpGet.path | string | `"/"` |  |
 | defaultProbes.spec.httpGet.port | int | `8545` |  |
 | envFrom[0].configMapRef.name | string | `"l2-bootnode-env"` |  |
-| env[0].name | string | `"L2GETH_ROLE"` |  |
-| env[0].value | string | `"bootnode"` |  |
-| env[10].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
-| env[10].value | string | `"1000000"` |  |
-| env[11].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
-| env[11].value | string | `""` |  |
-| env[1].name | string | `"L2GETH_NODEKEY"` |  |
-| env[1].value | string | `""` |  |
-| env[2].name | string | `"L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"` |  |
-| env[2].value | string | `"0"` |  |
-| env[3].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
-| env[3].value | string | `"0x6"` |  |
-| env[4].name | string | `"L2GETH_P2P_PORT"` |  |
-| env[4].value | int | `30303` |  |
-| env[5].name | string | `"L2GETH_ENABLE_CCC"` |  |
-| env[5].value | bool | `false` |  |
-| env[6].name | string | `"L2GETH_CCC_RUST_LOG_LEVEL"` |  |
-| env[6].value | string | `"info"` |  |
-| env[7].name | string | `"L2GETH_MAX_PEERS"` |  |
-| env[7].value | int | `500` |  |
-| env[8].name | string | `"VERBOSITY"` |  |
-| env[8].value | int | `3` |  |
-| env[9].name | string | `"CCC_FLAG"` |  |
-| env[9].value | string | `"--ccc"` |  |
+| env[0].name | string | `"L2GETH_NODEKEY"` |  |
+| env[0].value | string | `""` |  |
+| env[10].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
+| env[10].value | string | `""` |  |
+| env[1].name | string | `"L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"` |  |
+| env[1].value | string | `"0"` |  |
+| env[2].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
+| env[2].value | string | `"0x6"` |  |
+| env[3].name | string | `"L2GETH_P2P_PORT"` |  |
+| env[3].value | int | `30303` |  |
+| env[4].name | string | `"L2GETH_ENABLE_CCC"` |  |
+| env[4].value | bool | `false` |  |
+| env[5].name | string | `"L2GETH_CCC_RUST_LOG_LEVEL"` |  |
+| env[5].value | string | `"info"` |  |
+| env[6].name | string | `"L2GETH_MAX_PEERS"` |  |
+| env[6].value | int | `500` |  |
+| env[7].name | string | `"VERBOSITY"` |  |
+| env[7].value | int | `3` |  |
+| env[8].name | string | `"CCC_FLAG"` |  |
+| env[8].value | string | `"--ccc"` |  |
+| env[9].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
+| env[9].value | string | `"1000000"` |  |
 | global.fullnameOverride | string | `"l2-bootnode"` |  |
 | global.nameOverride | string | `"l2-bootnode"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"scroll-v5.7.5"` |  |
+| image.tag | string | `"scroll-v5.7.10"` |  |
 | initContainers.wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |

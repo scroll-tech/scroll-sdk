@@ -11,11 +11,9 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.7.5
+  tag: scroll-v5.7.10
 
 env:
-  - name: L2GETH_ROLE
-    value: bootnode
   - name: L2GETH_NODEKEY
     value: ""
   - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK

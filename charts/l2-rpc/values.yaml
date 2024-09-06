@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.7.5
+  tag: scroll-v5.7.10
 
 service:
   main:
@@ -63,8 +63,6 @@ env:
     value: 500
   - name: VERBOSITY
     value: 3
-  - name: CCC_FLAG
-    value: "--ccc"
   - name: L2GETH_MIN_GAS_PRICE
     value: "1000000"
   - name: L2GETH_EXTRA_PARAMS
@@ -87,7 +85,7 @@ command:
     --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain '*' --http.api \"eth,scroll,net,web3,debug\" \
     --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
     --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" \
-    $CCC_FLAG \
+    --ccc --ccc.numworkers 5 \
     $METRICS_FLAGS \
     --gcmode archive \
     --cache.noprefetch \
