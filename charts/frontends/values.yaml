@@ -10,7 +10,7 @@ controller:
 image:
   repository: scrolltech/frontends
   pullPolicy: Always
-  tag: 2.2.18
+  tag: 2.2.19
 
 command:
   - "/bin/bash"
