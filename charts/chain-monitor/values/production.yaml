@@ -6,9 +6,21 @@ initContainers:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN)
       - --timeout
       - "0"
+    envFrom:
+      - secretRef:
+          name: chain-monitor-secret-env
+  2-migrate-db:
+    image: scrolltech/chain-monitorv2:v1.1.29
+    command:
+      - /bin/sh
+      - -c
+      - chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate
+    volumeMounts:
+      - name: chain-monitor
+        mountPath: /app/config/
     envFrom:
       - secretRef:
           name: chain-monitor-secret-env
