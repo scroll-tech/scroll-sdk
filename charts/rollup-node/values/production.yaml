@@ -42,8 +42,6 @@ configMaps:
       L1_RPC_ENDPOINT: ""
       L2_RPC_ENDPOINT: ""
       L1_SCROLL_CHAIN_PROXY_ADDR: ""
-  migrate-db:
-    enabled: false
 
 externalSecrets:
   rollup-node-secret-env:

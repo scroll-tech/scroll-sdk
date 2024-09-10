@@ -31,7 +31,7 @@ initContainers:
       - secretRef:
           name: bridge-history-fetcher-secret-env
   2-migrate-db:
-    image: scrolltech/bridgehistoryapi-db-cli:v4.4.14
+    image: scrolltech/bridgehistoryapi-db-cli:v4.4.59
     command: ["/bin/sh", "-c", "db_cli --config /config/migrate-db.json migrate"]
     volumeMounts:
       - name: migrate-db
@@ -47,8 +47,6 @@ configMaps:
     data:
       SCROLL_L1_RPC: ""
       SCROLL_L2_RPC: "http://l2-rpc:8545"
-  migrate-db:
-    enabled: false
 
 ingress:
   main:

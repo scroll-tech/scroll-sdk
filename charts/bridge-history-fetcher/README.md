@@ -53,7 +53,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"db_cli --config /config/migrate-db.json migrate"` |  |
 | initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
-| initContainers.2-migrate-db.image | string | `"scrolltech/bridgehistoryapi-db-cli:v4.4.14"` |  |
+| initContainers.2-migrate-db.image | string | `"scrolltech/bridgehistoryapi-db-cli:v4.4.59"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/config/migrate-db.json"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"migrate-db"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].subPath | string | `"migrate-db.json"` |  |
