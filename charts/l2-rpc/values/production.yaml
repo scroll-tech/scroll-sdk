@@ -44,3 +44,12 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
+  websocket:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              port: 8546

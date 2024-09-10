@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.29
+version: 0.0.30
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -70,7 +70,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-bootnode.enabled
   - name: l2-rpc
-    version: 0.0.9
+    version: 0.0.10
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-rpc.enabled
   - name: grafana

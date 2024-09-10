@@ -150,6 +150,16 @@ ingress:
         paths:
           - path: /
             pathType: Prefix
+  websocket:  #  dedicated websocket ingress
+    enabled: true
+    ingressClassName: "nginx"
+    hosts:
+      - host: l2-rpc-ws.scrollsdk
+        paths:
+          - path: /
+            pathType: Prefix
+            service:
+              port: 8546
 
 serviceMonitor:
   main:

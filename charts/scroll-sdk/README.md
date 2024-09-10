@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.29](https://img.shields.io/badge/Version-0.0.29-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.30](https://img.shields.io/badge/Version-0.0.30-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -35,7 +35,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-devnet | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-explorer | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.8 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.9 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.10 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.9 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.8 |

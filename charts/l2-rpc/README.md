@@ -1,6 +1,6 @@
 # l2-rpc
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-rpc helm chart
 
@@ -69,6 +69,12 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.ingressClassName | string | `"nginx"` |  |
 | ingress.main.labels | object | `{}` |  |
 | ingress.main.primary | bool | `true` |  |
+| ingress.websocket.enabled | bool | `true` |  |
+| ingress.websocket.hosts[0].host | string | `"l2-rpc-ws.scrollsdk"` |  |
+| ingress.websocket.hosts[0].paths[0].path | string | `"/"` |  |
+| ingress.websocket.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.websocket.hosts[0].paths[0].service.port | int | `8546` |  |
+| ingress.websocket.ingressClassName | string | `"nginx"` |  |
 | initContainers.1-wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.1-wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.1-wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |
