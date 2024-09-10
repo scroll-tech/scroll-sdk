@@ -1,6 +1,10 @@
 global:
   isStandalone: true
 
+envFrom:
+  - secretRef:
+      name: chain-monitor-secret-env
+
 initContainers:
   1-check-postgres-connection:
     image: atkrad/wait4x:latest
