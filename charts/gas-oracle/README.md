@@ -1,6 +1,6 @@
 # gas-oracle
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 gas-oracle helm charts
 
@@ -26,7 +26,7 @@ Kubernetes: `>=1.22.0-0`
 | command[0] | string | `"/bin/sh"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"gas_oracle --config /app/conf/rollup-config.json --genesis /app/genesis/genesis.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"` |  |
-| configMaps.migrate-db.data."migrate-db.json" | string | `"{\n    \"driver_name\": \"postgres\",\n    \"dsn\": \"postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable\"\n}\n"` |  |
+| configMaps.migrate-db.data."migrate-db.json" | string | `"{\n    \"driver_name\": \"postgres\",\n    \"dsn\": \"\"\n}\n"` |  |
 | configMaps.migrate-db.enabled | bool | `true` |  |
 | defaultProbes.custom | bool | `true` |  |
 | defaultProbes.enabled | bool | `true` |  |
@@ -39,7 +39,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"gas-oracle"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/gas-oracle"` |  |
-| image.tag | string | `"v4.4.59"` |  |
+| image.tag | string | `"v4.4.60"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_ROLLUP_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
@@ -49,7 +49,8 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"db_cli migrate --config /config/migrate-db.json"` |  |
-| initContainers.2-migrate-db.image | string | `"scrolltech/rollup-db-cli"` |  |
+| initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"gas-oracle-env"` |  |
+| initContainers.2-migrate-db.image | string | `"scrolltech/rollup-db-cli:v4.4.60"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/config/migrate-db.json"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"migrate-db"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].subPath | string | `"migrate-db.json"` |  |

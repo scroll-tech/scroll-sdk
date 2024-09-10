@@ -6,7 +6,7 @@ global:
 image:
   repository: scrolltech/gas-oracle
   pullPolicy: Always
-  tag: v4.4.59
+  tag: v4.4.60
 
 command:
   [
@@ -98,12 +98,15 @@ initContainers:
       - configMapRef:
           name: gas-oracle-env
   2-migrate-db:
-    image: scrolltech/rollup-db-cli
+    image: scrolltech/rollup-db-cli:v4.4.60
     command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
     volumeMounts:
       - name: migrate-db
         mountPath: /config/migrate-db.json
         subPath: migrate-db.json
+    envFrom:
+      - configMapRef:
+          name: gas-oracle-env
   3-wait-for-l1:
     image: scrolltech/scroll-alpine:v0.0.1
     command:
@@ -134,7 +137,7 @@ configMaps:
       migrate-db.json: |
         {
             "driver_name": "postgres",
-            "dsn": "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
+            "dsn": ""
         }
 
 serviceMonitor:
