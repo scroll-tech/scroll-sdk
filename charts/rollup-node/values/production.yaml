@@ -12,6 +12,16 @@ initContainers:
     envFrom:
       - secretRef:
           name: rollup-node-secret-env
+  2-migrate-db:
+    image: scrolltech/rollup-db-cli:v4.4.60
+    command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
+    volumeMounts:
+      - name: migrate-db
+        mountPath: /config/migrate-db.json
+        subPath: migrate-db.json
+    envFrom:
+      - secretRef:
+          name: rollup-node-secret-env
 
 envFrom:
   - secretRef:

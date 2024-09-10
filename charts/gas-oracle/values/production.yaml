@@ -30,6 +30,16 @@ initContainers:
     envFrom:
       - secretRef:
           name: gas-oracle-secret-env
+  2-migrate-db:
+    image: scrolltech/rollup-db-cli:v4.4.60
+    command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
+    volumeMounts:
+      - name: migrate-db
+        mountPath: /config/migrate-db.json
+        subPath: migrate-db.json
+    envFrom:
+      - configMapRef:
+          name: gas-oracle-secret-env
   4-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest
     args:

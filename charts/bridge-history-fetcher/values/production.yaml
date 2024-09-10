@@ -30,6 +30,16 @@ initContainers:
     envFrom:
       - secretRef:
           name: bridge-history-fetcher-secret-env
+  2-migrate-db:
+    image: scrolltech/bridgehistoryapi-db-cli:v4.4.14
+    command: ["/bin/sh", "-c", "db_cli --config /config/migrate-db.json migrate"]
+    volumeMounts:
+      - name: migrate-db
+        mountPath: /config/migrate-db.json
+        subPath: migrate-db.json
+    envFrom:
+      - configMapRef:
+          name: bridge-history-fetcher-secret-env
 
 configMaps:
   env:

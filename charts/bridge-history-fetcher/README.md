@@ -1,6 +1,6 @@
 # bridge-history-fetcher
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 bridge-history-fetcher helm charts
 
@@ -26,7 +26,7 @@ Kubernetes: `>=1.22.0-0`
 | command[0] | string | `"/bin/sh"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"bridgehistoryapi-fetcher --config /app/conf/bridge-history-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"` |  |
-| configMaps.migrate-db.data."migrate-db.json" | string | `"{\n  \"l1\": {},\n  \"l2\": {},\n  \"db\": {\n    \"driver_name\": \"postgres\",\n    \"maxOpenNum\": 50,\n    \"maxIdleNume\": 5,\n    \"dsn\": \"postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable\"\n  }\n}\n"` |  |
+| configMaps.migrate-db.data."migrate-db.json" | string | `"{\n  \"l1\": {},\n  \"l2\": {},\n  \"db\": {\n    \"driver_name\": \"postgres\",\n    \"maxOpenNum\": 50,\n    \"maxIdleNume\": 5,\n    \"dsn\": \"\"\n  }\n}\n"` |  |
 | configMaps.migrate-db.enabled | bool | `true` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
@@ -52,6 +52,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"db_cli --config /config/migrate-db.json migrate"` |  |
+| initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
 | initContainers.2-migrate-db.image | string | `"scrolltech/bridgehistoryapi-db-cli:v4.4.14"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/config/migrate-db.json"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"migrate-db"` |  |
