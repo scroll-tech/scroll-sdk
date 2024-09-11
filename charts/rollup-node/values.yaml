@@ -79,7 +79,7 @@ persistence:
     name: wait-for-l1-script
     defaultMode: "0777"
   wait-for-contracts-script:
-    enabled: yes
+    enabled: true
     type: configMap
     name: wait-for-contracts-script
     defaultMode: "0777"

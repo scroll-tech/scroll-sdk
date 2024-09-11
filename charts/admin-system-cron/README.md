@@ -84,16 +84,17 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.4-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.4-migrate-db.command[1] | string | `"-c"` |  |
-| initContainers.4-migrate-db.command[2] | string | `"ENV=fake CHAIN_ID=222222 db_cli migrate --config /app/config/admin-system-backend-config.json"` |  |
+| initContainers.4-migrate-db.command[2] | string | `"ENV=fake CHAIN_ID=222222"` |  |
+| initContainers.4-migrate-db.command[3] | string | `"db_cli migrate --config /app/config/admin-system-backend-config.json"` |  |
 | initContainers.4-migrate-db.image | string | `"scrolltech/scroll-admin-system:v0.1.0"` |  |
 | initContainers.4-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
 | initContainers.4-migrate-db.volumeMounts[0].name | string | `"admin-system-cron"` |  |
-| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"admin-system-backend-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
 | persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | string | `"yes"` |  |
+| persistence.init-db.enabled | bool | `true` |  |
 | persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
 | persistence.init-db.name | string | `"init-db"` |  |
 | persistence.init-db.type | string | `"configMap"` |  |

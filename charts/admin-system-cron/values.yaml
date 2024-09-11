@@ -26,12 +26,12 @@ env:
     value: "release"
 
 command: [
-    "/bin/sh",
-    "-c",
-    "scroll-admin-cron --config /app/config/admin-system-backend-config.json \
-    --http.port ${HTTP_PORT} \
-    --metrics --metrics.port ${METRICS_PORT}",
-  ]
+  "/bin/sh",
+  "-c",
+  "scroll-admin-cron --config /app/config/admin-system-backend-config.json \
+  --http.port ${HTTP_PORT} \
+  --metrics --metrics.port ${METRICS_PORT}",
+]
 
 resources:
   requests:
@@ -66,12 +66,12 @@ probes:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/config/
     name: admin-system-backend-config
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db
@@ -120,7 +120,7 @@ initContainers:
           secretKeyRef:
             name: db-secrets
             key: ADMIN_SYSTEM_PASSWORD
-    command: ["bash","-c","./init-db.sh"]
+    command: ["bash", "-c", "./init-db.sh"]
     volumeMounts:
       - name: init-db
         mountPath: /init-db.sh
@@ -137,7 +137,12 @@ initContainers:
           name: admin-system-backend-env
   4-migrate-db:
     image: scrolltech/scroll-admin-system:v0.1.0
-    command: ["/bin/sh","-c","ENV=fake CHAIN_ID=222222 db_cli migrate --config /app/config/admin-system-backend-config.json"]
+    command: [
+      "/bin/sh",
+      "-c",
+      "ENV=fake CHAIN_ID=222222",
+      "db_cli migrate --config /app/config/admin-system-backend-config.json"
+    ]
     volumeMounts:
       - name: *app_name
         mountPath: /app/config/

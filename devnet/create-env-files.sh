@@ -25,7 +25,7 @@ get_service_configmap_variables() {
     local service_name=$1
     case "$service_name" in
         admin-system-backend)
-            echo "ADMIN_SYSTEM_BACKEND_DB_CONNECTION_STRING:DATABASE_URL"
+            echo "ROLLUP_NODE_DB_CONNECTION_STRING:SCROLL_ADMIN_DB_CONFIG_DSN ROLLUP_NODE_DB_CONNECTION_STRING:SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN ADMIN_SYSTEM_BACKEND_DB_CONNECTION_STRING:SCROLL_ADMIN_AUTH_DB_CONFIG_DSN"
             ;;
         balance-checker)
             echo "CHAIN_ID_L1:SCROLL_L1_RPC CHAIN_ID_L2:SCROLL_L2_RPC"

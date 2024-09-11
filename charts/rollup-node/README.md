@@ -83,7 +83,7 @@ Kubernetes: `>=1.22.0-0`
 | persistence.migrate-db.name | string | `"rollup-node-migrate-db"` |  |
 | persistence.migrate-db.type | string | `"configMap"` |  |
 | persistence.wait-for-contracts-script.defaultMode | string | `"0777"` |  |
-| persistence.wait-for-contracts-script.enabled | string | `"yes"` |  |
+| persistence.wait-for-contracts-script.enabled | bool | `true` |  |
 | persistence.wait-for-contracts-script.name | string | `"wait-for-contracts-script"` |  |
 | persistence.wait-for-contracts-script.type | string | `"configMap"` |  |
 | persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |

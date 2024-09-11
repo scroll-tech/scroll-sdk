@@ -26,13 +26,13 @@ env:
     value: "222222"
 
 command: [
-    "/bin/sh",
-    "-c",
-    "scroll-admin-system --config /app/config/admin-system-backend-config.json \
-    --genesis /app/genesis/genesis.json \
-    --http.port ${HTTP_PORT} \
-    --metrics --metrics.port ${METRICS_PORT}",
-  ]
+  "/bin/sh",
+  "-c",
+  "scroll-admin-system --config /app/config/admin-system-backend-config.json \
+  --genesis /app/genesis/genesis.json \
+  --http.port ${HTTP_PORT} \
+  --metrics --metrics.port ${METRICS_PORT}",
+]
 
 resources:
   requests:
@@ -68,29 +68,29 @@ probes:
 
 persistence:
   *app_name:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/config/
     name: admin-system-backend-config
   genesis:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
   init-db:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /init-db.sh
     name: init-db
     defaultMode: "0777"
   model-conf:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/conf/model.conf
     subPath: model.conf
     name: admin-system-backend-model-conf
   policy-csv:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /app/conf/policy.csv
     subPath: policy.csv
@@ -100,8 +100,8 @@ initContainers:
   1-wait-for-postgres:
     image: atkrad/wait4x:latest
     args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
+      - postgresql
+      - $(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)
       - --timeout
       - "0"
     envFrom:
@@ -139,7 +139,7 @@ initContainers:
           secretKeyRef:
             name: db-secrets
             key: ADMIN_SYSTEM_PASSWORD
-    command: ["bash","-c","./init-db.sh"]
+    command: ["bash", "-c", "./init-db.sh"]
     volumeMounts:
       - name: init-db
         mountPath: /init-db.sh
@@ -156,7 +156,12 @@ initContainers:
           name: admin-system-backend-env
   4-migrate-db:
     image: scrolltech/scroll-admin-system:v0.1.0
-    command: ["/bin/sh","-c","ENV=fake CHAIN_ID=222222 db_cli migrate --config /app/config/admin-system-backend-config.json"]
+    command: [
+      "/bin/sh",
+      "-c",
+      "ENV=fake CHAIN_ID=222222",
+      "db_cli migrate --config /app/config/admin-system-backend-config.json"
+    ]
     volumeMounts:
       - name: *app_name
         mountPath: /app/config/

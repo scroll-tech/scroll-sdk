@@ -46,7 +46,7 @@ Kubernetes: `>=1.22.0-0`
 | ingress.main.ingressClassName | string | `"nginx"` |  |
 | ingress.main.labels | object | `{}` |  |
 | ingress.main.primary | bool | `true` |  |
-| persistence.nginx.enabled | string | `"yes"` |  |
+| persistence.nginx.enabled | bool | `true` |  |
 | persistence.nginx.mountPath | string | `"/etc/nginx/conf.d"` |  |
 | persistence.nginx.name | string | `"admin-system-dashboard-nginx"` |  |
 | persistence.nginx.type | string | `"configMap"` |  |

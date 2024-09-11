@@ -45,7 +45,7 @@ probes:
 
 persistence:
   nginx:
-    enabled: yes
+    enabled: true
     type: configMap
     mountPath: /etc/nginx/conf.d
     name: admin-system-dashboard-nginx

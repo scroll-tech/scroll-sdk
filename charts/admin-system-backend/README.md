@@ -48,8 +48,8 @@ Kubernetes: `>=1.22.0-0`
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/scroll-admin-system"` |  |
 | image.tag | string | `"v0.1.0"` |  |
-| initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
-| initContainers.1-wait-for-postgres.args[1] | string | `"$(DATABASE_HOST):$(DATABASE_PORT)"` |  |
+| initContainers.1-wait-for-postgres.args[0] | string | `"postgresql"` |  |
+| initContainers.1-wait-for-postgres.args[1] | string | `"$(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)"` |  |
 | initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
 | initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
 | initContainers.1-wait-for-postgres.envFrom[0].configMapRef.name | string | `"admin-system-backend-env"` |  |
@@ -88,29 +88,30 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.4-migrate-db.command[0] | string | `"/bin/sh"` |  |
 | initContainers.4-migrate-db.command[1] | string | `"-c"` |  |
-| initContainers.4-migrate-db.command[2] | string | `"ENV=fake CHAIN_ID=222222 db_cli migrate --config /app/config/admin-system-backend-config.json"` |  |
+| initContainers.4-migrate-db.command[2] | string | `"ENV=fake CHAIN_ID=222222"` |  |
+| initContainers.4-migrate-db.command[3] | string | `"db_cli migrate --config /app/config/admin-system-backend-config.json"` |  |
 | initContainers.4-migrate-db.image | string | `"scrolltech/scroll-admin-system:v0.1.0"` |  |
 | initContainers.4-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
 | initContainers.4-migrate-db.volumeMounts[0].name | string | `"admin-system-backend"` |  |
-| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"admin-system-backend-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
-| persistence.genesis.enabled | string | `"yes"` |  |
+| persistence.genesis.enabled | bool | `true` |  |
 | persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
 | persistence.genesis.name | string | `"genesis-config"` |  |
 | persistence.genesis.type | string | `"configMap"` |  |
 | persistence.init-db.defaultMode | string | `"0777"` |  |
-| persistence.init-db.enabled | string | `"yes"` |  |
+| persistence.init-db.enabled | bool | `true` |  |
 | persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
 | persistence.init-db.name | string | `"init-db"` |  |
 | persistence.init-db.type | string | `"configMap"` |  |
-| persistence.model-conf.enabled | string | `"yes"` |  |
+| persistence.model-conf.enabled | bool | `true` |  |
 | persistence.model-conf.mountPath | string | `"/app/conf/model.conf"` |  |
 | persistence.model-conf.name | string | `"admin-system-backend-model-conf"` |  |
 | persistence.model-conf.subPath | string | `"model.conf"` |  |
 | persistence.model-conf.type | string | `"configMap"` |  |
-| persistence.policy-csv.enabled | string | `"yes"` |  |
+| persistence.policy-csv.enabled | bool | `true` |  |
 | persistence.policy-csv.mountPath | string | `"/app/conf/policy.csv"` |  |
 | persistence.policy-csv.name | string | `"admin-system-backend-policy-csv"` |  |
 | persistence.policy-csv.subPath | string | `"policy.csv"` |  |
