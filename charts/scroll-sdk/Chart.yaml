@@ -98,7 +98,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-explorer-backend.enabled
   - name: rollup-node
-    version: 0.0.9
+    version: 0.0.10
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-node.enabled
   - name: rpc-gateway
