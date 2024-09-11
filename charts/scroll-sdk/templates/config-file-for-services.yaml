@@ -237,6 +237,26 @@ data:
 {{ .Files.Get "configs/rollup-node.env" | indent 2 }}
 ---
 {{- end }}
+{{- if index .Values "admin-system-backend" "enabled" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+  name: admin-system-backend-config
+data:
+{{ (.Files.Glob "admin-system-backend-config.json").AsConfig | indent 2 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
+  name: admin-system-backend-env
+data:
+{{ .Files.Get "configs/admin-system-backend.env" | indent 2 }}
+---
+{{- end }}
 {{- if index .Values "rollup-explorer-backend" "enabled" }}
 apiVersion: v1
 kind: ConfigMap

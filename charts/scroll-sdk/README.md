@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.31](https://img.shields.io/badge/Version-0.0.31-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.32](https://img.shields.io/badge/Version-0.0.32-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -18,6 +18,9 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
+|  | admin-system-backend | 0.0.1 |
+|  | admin-system-cron | 0.0.1 |
+|  | admin-system-dashboard | 0.0.1 |
 | https://grafana.github.io/helm-charts | grafana | 7.3.11 |
 | https://grafana.github.io/helm-charts | loki-stack | 2.10.2 |
 | https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 59.0.0 |
@@ -46,6 +49,13 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| admin-system-backend.enabled | bool | `true` |  |
+| admin-system-cron.enabled | bool | `true` |  |
+| admin-system-dashboard.enabled | bool | `true` |  |
+| admin-system-dashboard.ingress.main.enabled | bool | `true` |  |
+| admin-system-dashboard.ingress.main.hosts[0].host | string | `"admin-system-dashboard.scrollsdk"` |  |
+| admin-system-dashboard.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
+| admin-system-dashboard.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | balance-checker.enabled | bool | `false` |  |
 | blockscout-sc-verifier.enabled | bool | `false` |  |
 | blockscout.enabled | bool | `true` |  |
@@ -63,7 +73,7 @@ Kubernetes: `>=1.22.0-0`
 | contracts.enabled | bool | `true` |  |
 | coordinator-api.enabled | bool | `false` |  |
 | coordinator-cron.enabled | bool | `false` |  |
-| db | object | `{"bridge_history_password":"test1234","chain_monitor_password":"test1234","event_watcher_password":"test1234","gas_oracle_password":"test1234","pg_host":"postgresql","pg_password":"qwerty12345","pg_port":"5432","pg_user":"postgres","rollup_node_password":"test1234","rpc_gateway_password":"test1234"}` | each services. A user with admin privilege is required. |
+| db | object | `{"pg_host":"postgresql","pg_password":"qwerty12345","pg_port":"5432","pg_user":"postgres"}` | each services. A user with admin privilege is required. |
 | frontends.enabled | bool | `true` |  |
 | frontends.ingress.main.enabled | bool | `true` |  |
 | frontends.ingress.main.hosts[0].host | string | `"frontends.scrollsdk"` |  |

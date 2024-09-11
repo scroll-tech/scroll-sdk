@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.31
+version: 0.0.32
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -105,3 +105,12 @@ dependencies:
     version: 0.0.2
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rpc-gateway.enabled
+  - name: admin-system-backend
+    version: 0.0.1
+    condition: admin-system-backend.enabled
+  - name: admin-system-cron
+    version: 0.0.1
+    condition: admin-system-cron.enabled
+  - name: admin-system-dashboard
+    version: 0.0.1
+    condition: admin-system-dashboard.enabled

@@ -1,0 +1,124 @@
+# admin-system-cron
+
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+
+admin-system-cron helm charts
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| scroll-sre | <sebastien@scroll.io> |  |
+
+## Requirements
+
+Kubernetes: `>=1.22.0-0`
+
+| Repository | Name | Version |
+|------------|------|---------|
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | common | 1.5.1 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.3 |
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| command[0] | string | `"/bin/sh"` |  |
+| command[1] | string | `"-c"` |  |
+| command[2] | string | `"scroll-admin-cron --config /app/config/admin-system-backend-config.json --http.port ${HTTP_PORT} --metrics --metrics.port ${METRICS_PORT}"` |  |
+| controller.replicas | int | `1` |  |
+| controller.strategy | string | `"Recreate"` |  |
+| controller.type | string | `"deployment"` |  |
+| env[0].name | string | `"ENV"` |  |
+| env[0].value | string | `"fake"` |  |
+| env[1].name | string | `"CHAIN_ID"` |  |
+| env[1].value | string | `"222222"` |  |
+| env[2].name | string | `"HTTP_PORT"` |  |
+| env[2].value | string | `"8080"` |  |
+| env[3].name | string | `"METRICS_PORT"` |  |
+| env[3].value | string | `"8090"` |  |
+| env[4].name | string | `"GIN_MODE"` |  |
+| env[4].value | string | `"release"` |  |
+| global.fullnameOverride | string | `"admin-system-cron"` |  |
+| global.nameOverride | string | `"admin-system-cron"` |  |
+| image.pullPolicy | string | `"Always"` |  |
+| image.repository | string | `"scrolltech/scroll-admin-cron"` |  |
+| image.tag | string | `"v0.1.0"` |  |
+| initContainers.1-wait-for-postgres.args[0] | string | `"tcp"` |  |
+| initContainers.1-wait-for-postgres.args[1] | string | `"$(DATABASE_HOST):$(DATABASE_PORT)"` |  |
+| initContainers.1-wait-for-postgres.args[2] | string | `"--timeout"` |  |
+| initContainers.1-wait-for-postgres.args[3] | string | `"0"` |  |
+| initContainers.1-wait-for-postgres.envFrom[0].configMapRef.name | string | `"admin-system-backend-env"` |  |
+| initContainers.1-wait-for-postgres.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.2-init-db.command[0] | string | `"bash"` |  |
+| initContainers.2-init-db.command[1] | string | `"-c"` |  |
+| initContainers.2-init-db.command[2] | string | `"./init-db.sh"` |  |
+| initContainers.2-init-db.env[0].name | string | `"POSTGRES_DB"` |  |
+| initContainers.2-init-db.env[0].value | string | `"scroll_admin_system"` |  |
+| initContainers.2-init-db.env[1].name | string | `"PG_USER"` |  |
+| initContainers.2-init-db.env[1].valueFrom.secretKeyRef.key | string | `"PG_USER"` |  |
+| initContainers.2-init-db.env[1].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[2].name | string | `"PGPASSWORD"` |  |
+| initContainers.2-init-db.env[2].valueFrom.secretKeyRef.key | string | `"PGPASSWORD"` |  |
+| initContainers.2-init-db.env[2].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[3].name | string | `"PG_HOST"` |  |
+| initContainers.2-init-db.env[3].valueFrom.secretKeyRef.key | string | `"PG_HOST"` |  |
+| initContainers.2-init-db.env[3].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[4].name | string | `"PG_PORT"` |  |
+| initContainers.2-init-db.env[4].valueFrom.secretKeyRef.key | string | `"PG_PORT"` |  |
+| initContainers.2-init-db.env[4].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.env[5].name | string | `"DB_USER"` |  |
+| initContainers.2-init-db.env[5].value | string | `"scroll_admin_system"` |  |
+| initContainers.2-init-db.env[6].name | string | `"DB_PASSWORD"` |  |
+| initContainers.2-init-db.env[6].valueFrom.secretKeyRef.key | string | `"ADMIN_SYSTEM_PASSWORD"` |  |
+| initContainers.2-init-db.env[6].valueFrom.secretKeyRef.name | string | `"db-secrets"` |  |
+| initContainers.2-init-db.image | string | `"postgres:latest"` |  |
+| initContainers.2-init-db.volumeMounts[0].mountPath | string | `"/init-db.sh"` |  |
+| initContainers.2-init-db.volumeMounts[0].name | string | `"init-db"` |  |
+| initContainers.2-init-db.volumeMounts[0].subPath | string | `"init-db.sh"` |  |
+| initContainers.3-check-postgres-connection.args[0] | string | `"postgresql"` |  |
+| initContainers.3-check-postgres-connection.args[1] | string | `"$(DATABASE_URL)"` |  |
+| initContainers.3-check-postgres-connection.args[2] | string | `"--timeout"` |  |
+| initContainers.3-check-postgres-connection.args[3] | string | `"0"` |  |
+| initContainers.3-check-postgres-connection.envFrom[0].configMapRef.name | string | `"admin-system-backend-env"` |  |
+| initContainers.3-check-postgres-connection.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.4-migrate-db.command[0] | string | `"/bin/sh"` |  |
+| initContainers.4-migrate-db.command[1] | string | `"-c"` |  |
+| initContainers.4-migrate-db.command[2] | string | `"ENV=fake CHAIN_ID=222222 db_cli migrate --config /app/config/admin-system-backend-config.json"` |  |
+| initContainers.4-migrate-db.image | string | `"scrolltech/scroll-admin-system:v0.1.0"` |  |
+| initContainers.4-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
+| initContainers.4-migrate-db.volumeMounts[0].name | string | `"admin-system-cron"` |  |
+| persistence.app_name.enabled | string | `"yes"` |  |
+| persistence.app_name.mountPath | string | `"/app/config/"` |  |
+| persistence.app_name.name | string | `"admin-system-backend-config"` |  |
+| persistence.app_name.type | string | `"configMap"` |  |
+| persistence.init-db.defaultMode | string | `"0777"` |  |
+| persistence.init-db.enabled | string | `"yes"` |  |
+| persistence.init-db.mountPath | string | `"/init-db.sh"` |  |
+| persistence.init-db.name | string | `"init-db"` |  |
+| persistence.init-db.type | string | `"configMap"` |  |
+| probes.liveness.enabled | bool | `false` |  |
+| probes.readiness.enabled | bool | `false` |  |
+| probes.startup.enabled | bool | `false` |  |
+| resources.limits.cpu | string | `"1"` |  |
+| resources.limits.memory | string | `"1Gi"` |  |
+| resources.requests.cpu | string | `"500m"` |  |
+| resources.requests.memory | string | `"500Mi"` |  |
+| service.main.enabled | bool | `true` |  |
+| service.main.ports.http.enabled | bool | `true` |  |
+| service.main.ports.http.port | int | `8080` |  |
+| service.main.ports.http.primary | bool | `true` |  |
+| service.main.ports.http.protocol | string | `"HTTP"` |  |
+| service.main.ports.metrics.enabled | bool | `true` |  |
+| service.main.ports.metrics.port | int | `8090` |  |
+| service.main.ports.metrics.targetPort | int | `8090` |  |
+| service.main.primary | bool | `true` |  |
+| serviceMonitor.main.enabled | bool | `true` |  |
+| serviceMonitor.main.endpoints[0].interval | string | `"1m"` |  |
+| serviceMonitor.main.endpoints[0].port | string | `"http"` |  |
+| serviceMonitor.main.endpoints[0].scrapeTimeout | string | `"10s"` |  |
+| serviceMonitor.main.labels.release | string | `"scroll-stack"` |  |
+| serviceMonitor.main.serviceName | string | `"{{ include \"scroll.common.lib.chart.names.fullname\" $ }}"` |  |
+
+----------------------------------------------
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
