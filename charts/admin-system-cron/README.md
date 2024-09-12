@@ -8,7 +8,7 @@ admin-system-cron helm charts
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| scroll-sre | <sebastien@scroll.io> |  |
+| scroll-tech | <weichi@scroll.io> |  |
 
 ## Requirements
 

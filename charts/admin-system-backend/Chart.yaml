@@ -6,8 +6,8 @@ version: 0.0.1
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
-  - name: scroll-sre
-    email: sebastien@scroll.io
+  - name: scroll-tech
+    email: weichi@scroll.io
 dependencies:
   - name: common
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
