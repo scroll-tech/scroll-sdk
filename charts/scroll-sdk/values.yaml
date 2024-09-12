@@ -255,3 +255,8 @@ db:
   pg_user: "postgres"
   pg_password: "qwerty12345"
   pg_port: "5432"
+  bridge_history_password: "test1234"
+  chain_monitor_password: "test1234"
+  gas_oracle_password: "test1234"
+  rollup_node_password: "test1234"
+  rpc_gateway_password: "test1234"

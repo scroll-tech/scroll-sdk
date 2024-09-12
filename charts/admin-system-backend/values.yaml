@@ -9,9 +9,9 @@ controller:
   type: deployment
 
 image:
-  repository: scrolltech/scroll-admin-system
+  repository: jayjayjayjay/scroll-admin-system
   pullPolicy: Always
-  tag: v0.1.0
+  tag: v0.0.2
 
 env:
   - name: HTTP_PORT
@@ -23,7 +23,11 @@ env:
   - name: ENV
     value: "fake"
   - name: CHAIN_ID
-    value: "222222"
+    value: "123456"
+
+envFrom:
+  - configMapRef:
+      name: admin-system-backend-env
 
 command: [
   "/bin/sh",
@@ -77,12 +81,6 @@ persistence:
     type: configMap
     mountPath: /app/genesis/
     name: genesis-config
-  init-db:
-    enabled: true
-    type: configMap
-    mountPath: /init-db.sh
-    name: init-db
-    defaultMode: "0777"
   model-conf:
     enabled: true
     type: configMap
@@ -95,9 +93,16 @@ persistence:
     mountPath: /app/conf/policy.csv
     subPath: policy.csv
     name: admin-system-backend-policy-csv
+  add-user:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/add-user.sh
+    subPath: add-user.sh
+    name: admin-system-backend-add-user
+    defaultMode: "0777"
 
 initContainers:
-  1-wait-for-postgres:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
@@ -107,64 +112,32 @@ initContainers:
     envFrom:
       - configMapRef:
           name: admin-system-backend-env
-  2-init-db:
-    image: postgres:latest
-    env:
-      - name: POSTGRES_DB
-        value: scroll_admin_system
-      - name: PG_USER
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_USER
-      - name: PGPASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PGPASSWORD
-      - name: PG_HOST
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_HOST
-      - name: PG_PORT
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_PORT
-      - name: DB_USER
-        value: scroll_admin_system
-      - name: DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: ADMIN_SYSTEM_PASSWORD
-    command: ["bash", "-c", "./init-db.sh"]
-    volumeMounts:
-      - name: init-db
-        mountPath: /init-db.sh
-        subPath: init-db.sh
-  3-check-postgres-connection:
-    image: atkrad/wait4x:latest
-    args:
-      - postgresql
-      - $(DATABASE_URL)
-      - --timeout
-      - "0"
-    envFrom:
-      - configMapRef:
-          name: admin-system-backend-env
-  4-migrate-db:
+  2-migrate-db:
     image: scrolltech/scroll-admin-system:v0.1.0
     command: [
       "/bin/sh",
       "-c",
-      "ENV=fake CHAIN_ID=222222",
       "db_cli migrate --config /app/config/admin-system-backend-config.json"
     ]
     volumeMounts:
       - name: *app_name
         mountPath: /app/config/
+    env:
+      - name: ENV
+        value: "fake"
+    envFrom:
+      - configMapRef:
+          name: admin-system-backend-env
+  3-add-user:
+    image: postgres:latest
+    command: ["bash", "-c", "/add-user.sh"]
+    volumeMounts:
+      - name: add-user
+        mountPath: /add-user.sh
+        subPath: add-user.sh
+    envFrom:
+      - configMapRef:
+          name: admin-system-backend-env
 
 configMaps:
   model-conf:
@@ -197,6 +170,15 @@ configMaps:
         g, read, undefined
         g, readwrite, read
         g, admin, readwrite
+  add-user:
+    enabled: true
+    data:
+      add-user.sh: |
+        #!/bin/bash
+        echo "Adding user..."
+        psql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c "INSERT INTO users (username, role) VALUES ('admin', 1);"
+        echo "User added."
+
 serviceMonitor:
   main:
     enabled: true

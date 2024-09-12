@@ -32,7 +32,7 @@ L2_GAS_ORACLE_SENDER_ADDR = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
 
 [db]
 
-ADMIN_SYSTEM_BACKEND_DB_CONNECTION_STRING = "postgresql://postgres:qwerty12345@postgresql:5432/scroll_admin_system?sslmode=disable"
+ADMIN_SYSTEM_BACKEND_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
 BLOCKSCOUT_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/blockscout"
 BRIDGE_HISTORY_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"
 CHAIN_MONITOR_DB_CONNECTION_STRING = "postgres://postgres:qwerty12345@postgresql:5432/scroll?sslmode=disable"

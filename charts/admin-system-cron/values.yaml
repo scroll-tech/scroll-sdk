@@ -25,6 +25,10 @@ env:
   - name: GIN_MODE
     value: "release"
 
+envFrom:
+  - configMapRef:
+      name: admin-system-backend-env
+
 command: [
   "/bin/sh",
   "-c",
@@ -78,74 +82,16 @@ persistence:
     defaultMode: "0777"
 
 initContainers:
-  1-wait-for-postgres:
-    image: atkrad/wait4x:latest
-    args:
-      - tcp
-      - $(DATABASE_HOST):$(DATABASE_PORT)
-      - --timeout
-      - "0"
-    envFrom:
-      - configMapRef:
-          name: admin-system-backend-env
-  2-init-db:
-    image: postgres:latest
-    env:
-      - name: POSTGRES_DB
-        value: scroll_admin_system
-      - name: PG_USER
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_USER
-      - name: PGPASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PGPASSWORD
-      - name: PG_HOST
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_HOST
-      - name: PG_PORT
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: PG_PORT
-      - name: DB_USER
-        value: scroll_admin_system
-      - name: DB_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: db-secrets
-            key: ADMIN_SYSTEM_PASSWORD
-    command: ["bash", "-c", "./init-db.sh"]
-    volumeMounts:
-      - name: init-db
-        mountPath: /init-db.sh
-        subPath: init-db.sh
-  3-check-postgres-connection:
+  1-check-postgres-connection:
     image: atkrad/wait4x:latest
     args:
       - postgresql
-      - $(DATABASE_URL)
+      - $(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)
       - --timeout
       - "0"
     envFrom:
       - configMapRef:
           name: admin-system-backend-env
-  4-migrate-db:
-    image: scrolltech/scroll-admin-system:v0.1.0
-    command: [
-      "/bin/sh",
-      "-c",
-      "ENV=fake CHAIN_ID=222222",
-      "db_cli migrate --config /app/config/admin-system-backend-config.json"
-    ]
-    volumeMounts:
-      - name: *app_name
-        mountPath: /app/config/
 
 serviceMonitor:
   main:

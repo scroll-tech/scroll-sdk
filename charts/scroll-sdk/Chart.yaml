@@ -42,7 +42,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: chain-monitor.enabled
   - name: contracts
-    version: 0.0.6
+    version: 0.0.7
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: contracts.enabled
   - name: coordinator-api
@@ -107,10 +107,13 @@ dependencies:
     condition: rpc-gateway.enabled
   - name: admin-system-backend
     version: 0.0.1
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: admin-system-backend.enabled
   - name: admin-system-cron
     version: 0.0.1
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: admin-system-cron.enabled
   - name: admin-system-dashboard
     version: 0.0.1
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: admin-system-dashboard.enabled

@@ -1,6 +1,6 @@
 ---
 global:
-  nameOverride: &app_name admin-system-dashboard
+  nameOverride: &app_name admin-system-backend
   fullnameOverride: *app_name
 
 controller:
@@ -9,15 +9,32 @@ controller:
   type: deployment
 
 image:
-  repository: scrolltech/admin-dashboard
+  repository: scrolltech/scroll-admin-system
   pullPolicy: Always
-  tag: v0.0.16
+  tag: v0.1.0
 
 env:
-  - name: VITE_BASE_REST_URL
-    value: "http://admin-system-backend:8080/api/v1"
-  - name: VITE_SCROLL_ENVIRONMENT
-    value: "scroll-sdk"
+  - name: HTTP_PORT
+    value: "8080"
+  - name: METRICS_PORT
+    value: "8090"
+  - name: GIN_MODE
+    value: "release"
+  - name: ENV
+    value: "fake"
+
+envFrom:
+  - configMapRef:
+      name: admin-system-backend-env
+
+command: [
+  "/bin/sh",
+  "-c",
+  "scroll-admin-system --config /app/config/admin-system-backend-config.json \
+  --genesis /app/genesis/genesis.json \
+  --http.port ${HTTP_PORT} \
+  --metrics --metrics.port ${METRICS_PORT}",
+]
 
 resources:
   requests:
@@ -30,10 +47,17 @@ resources:
 service:
   main:
     enabled: true
+    primary: true
     ports:
       http:
+        primary: true
         enabled: true
-        port: 80
+        port: 8080
+        protocol: HTTP
+      metrics:
+        enabled: true
+        port: 8090
+        targetPort: 8090
 
 probes:
   liveness:
@@ -43,37 +67,112 @@ probes:
   startup:
     enabled: false
 
+
 persistence:
-  nginx:
+  *app_name:
     enabled: true
     type: configMap
-    mountPath: /etc/nginx/conf.d
-    name: admin-system-dashboard-nginx
+    mountPath: /app/config/
+    name: admin-system-backend-config
+  genesis:
+    enabled: true
+    type: configMap
+    mountPath: /app/genesis/
+    name: genesis-config
+  model-conf:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/model.conf
+    subPath: model.conf
+    name: admin-system-backend-model-conf
+  policy-csv:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/policy.csv
+    subPath: policy.csv
+    name: admin-system-backend-policy-csv
+  add-user:
+    enabled: true
+    type: configMap
+    mountPath: /add-user.sh
+    subPath: add-user.sh
+    name: admin-system-backend-add-user
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)
+      - --timeout
+      - "0"
+    envFrom:
+      - configMapRef:
+          name: admin-system-backend-env
+  2-migrate-db:
+    image: scrolltech/scroll-admin-system:v0.1.0
+    command: [
+      "/bin/sh",
+      "-c",
+      "db_cli migrate --config /app/config/admin-system-backend-config.json"
+    ]
+    volumeMounts:
+      - name: *app_name
+        mountPath: /app/config/
+    envFrom:
+      - configMapRef:
+          name: admin-system-backend-env
+  3-add-user:
+    image: postgres:latest
+    command: ["bash", "-c", "./add-user.sh"]
+    volumeMounts:
+      - name: add-user
+        mountPath: /add-user.sh
+        subPath: add-user.sh
+    envFrom:
+      - configMapRef:
+          name: admin-system-backend-env
 
 configMaps:
-  nginx:
-    name: nginx
+  model-conf:
     enabled: true
     data:
-      default.conf: |
-        server {
-          listen       80;
-          listen  [::]:80;
-          server_name  localhost;
-          #access_log  /var/log/nginx/host.access.log  main;
-          location / {
-            root   /usr/share/nginx/html;
-            index  index.html index.htm;
-            try_files $uri /index.html;
-          }
-          location /api {
-            proxy_pass http://admin-system-backend:8080;
-          }
-          error_page   500 502 503 504  /50x.html;
-          location = /50x.html {
-            root   /usr/share/nginx/html;
-          }
-        }
+      model.conf: |
+        [request_definition]
+        r = sub, obj, act
+        [policy_definition]
+        p = sub, obj, act
+        [role_definition]
+        g = _, _
+        [policy_effect]
+        e = some(where (p.eft == allow))
+        [matchers]
+        m = g(r.sub, p.sub) && regexMatch(r.obj, p.obj) && regexMatch(r.act, p.act)
+  policy-csv:
+    enabled: true
+    data:
+      policy.csv: |
+        p, undefined, ^\/api\/v1\/login$, POST
+        p, undefined, ^\/api\/v1\/otp\/.*$, (GET)|(POST)
+        p, read, ^\/api\/v1\/(chunk|batch|bundle|provertask|l2_block|prover|job)\/.*$, GET
+        p, read, ^\/api\/v1\/(chunk|batch|bundle|provertask|l2_block|prover)\/search$, POST
+        p, readwrite, ^\/api\/v1\/(chunk|batch|bundle|l2_block)\/.*$, (POST)|(DELETE)
+        p, readwrite, ^\/api\/v1\/provertask\/(update|delete)$, (POST)|(DELETE)
+        p, admin, ^\/api\/v1\/provertask\/reassign$, POST
+        p, admin, ^\/api\/v1\/(policy|user|prover_block|partner)\/.*$,(GET)|(POST)|(DELETE)
+        p, admin, ^\/api\/v1\/job\/.*$, POST
+        g, read, undefined
+        g, readwrite, read
+        g, admin, readwrite
+  add-user:
+    enabled: true
+    data:
+      add-user.sh: |
+        #!/bin/bash
+        echo "Adding user..."
+        psql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c "INSERT INTO users (username, role) VALUES ('admin', 1);"
+        echo "User added."
+
 serviceMonitor:
   main:
     enabled: true
@@ -84,16 +183,3 @@ serviceMonitor:
       - port: http
         interval: 1m
         scrapeTimeout: 10s
-
-ingress:
-  main:
-    enabled: true
-    primary: true
-    annotations: {}
-    labels: {}
-    ingressClassName: "nginx"
-    hosts:
-      - host: admin-system-dashboard.scrollsdk
-        paths:
-          - path: /
-            pathType: Prefix
