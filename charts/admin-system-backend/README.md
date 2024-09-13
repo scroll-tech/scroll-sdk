@@ -49,8 +49,8 @@ Kubernetes: `>=1.22.0-0`
 | global.fullnameOverride | string | `"admin-system-backend"` |  |
 | global.nameOverride | string | `"admin-system-backend"` |  |
 | image.pullPolicy | string | `"Always"` |  |
-| image.repository | string | `"jayjayjayjay/scroll-admin-system"` |  |
-| image.tag | string | `"v0.0.2"` |  |
+| image.repository | string | `"scrolltech/scroll-admin-system"` |  |
+| image.tag | string | `"v0.1.1"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
