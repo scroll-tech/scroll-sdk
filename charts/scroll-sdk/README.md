@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.31](https://img.shields.io/badge/Version-0.0.31-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.32](https://img.shields.io/badge/Version-0.0.32-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -28,7 +28,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-fetcher | 0.0.8 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | chain-monitor | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | contracts | 0.0.6 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-api | 0.0.6 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-api | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-cron | 0.0.6 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | frontends | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | gas-oracle | 0.0.7 |

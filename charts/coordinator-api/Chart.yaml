@@ -2,7 +2,7 @@
 apiVersion: v2
 description: coordinator-api helm charts
 name: coordinator-api
-version: 0.0.6
+version: 0.0.7
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
