@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/scroll-admin-system
   pullPolicy: Always
-  tag: v0.1.1
+  tag: v0.1.2
 
 env:
   - name: HTTP_PORT
@@ -113,7 +113,7 @@ initContainers:
       - configMapRef:
           name: admin-system-backend-env
   2-migrate-db:
-    image: scrolltech/scroll-admin-system:v0.1.0
+    image: scrolltech/scroll-admin-system:v0.1.2
     command: [
       "/bin/sh",
       "-c",
@@ -122,9 +122,6 @@ initContainers:
     volumeMounts:
       - name: *app_name
         mountPath: /app/config/
-    env:
-      - name: ENV
-        value: "fake"
     envFrom:
       - configMapRef:
           name: admin-system-backend-env

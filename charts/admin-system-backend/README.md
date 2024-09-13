@@ -50,7 +50,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"admin-system-backend"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/scroll-admin-system"` |  |
-| image.tag | string | `"v0.1.1"` |  |
+| image.tag | string | `"v0.1.2"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
@@ -61,9 +61,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"db_cli migrate --config /app/config/admin-system-backend-config.json"` |  |
 | initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"admin-system-backend-env"` |  |
-| initContainers.2-migrate-db.env[0].name | string | `"ENV"` |  |
-| initContainers.2-migrate-db.env[0].value | string | `"fake"` |  |
-| initContainers.2-migrate-db.image | string | `"scrolltech/scroll-admin-system:v0.1.0"` |  |
+| initContainers.2-migrate-db.image | string | `"scrolltech/scroll-admin-system:v0.1.2"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/app/config/"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"admin-system-backend"` |  |
 | initContainers.3-add-user.command[0] | string | `"bash"` |  |

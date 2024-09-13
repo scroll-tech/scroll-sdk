@@ -1,0 +1,11 @@
+global:
+  isStandalone: true
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
