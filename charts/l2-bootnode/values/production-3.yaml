@@ -33,5 +33,6 @@ configMaps:
     data:
       CHAIN_ID: ""
       L2GETH_NODEKEY: ""
+      L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK: ""
       L2GETH_L1_ENDPOINT: ""
       L2GETH_PEER_LIST: '[]'
