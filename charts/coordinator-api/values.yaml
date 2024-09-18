@@ -11,7 +11,7 @@ global:
 image:
   repository: scrolltech/coordinator-api
   pullPolicy: Always
-  tag: v4.4.58
+  tag: v4.4.59
 
 env:
   - name: HTTP_PORT
@@ -97,7 +97,7 @@ probes:
 initContainers:
   parameter-download:
     image: ubuntu
-    command: ["sh", "-c", "/download-params.sh"]
+    command: ["sh", "-c", "/download-params.sh params"]
     volumeMounts:
       - name: verifier
         mountPath: /verifier
@@ -111,6 +111,15 @@ initContainers:
       limits:
         memory: "8Gi"
         cpu: "2"
+  assets-download:
+    image: ubuntu
+    command: ["sh", "-c", "/download-params.sh assets"]
+    volumeMounts:
+      - name: verifier
+        mountPath: /verifier
+      - name: download-params
+        mountPath: /download-params.sh
+        subPath: download-params.sh
 
 configMaps:
   download-params:
@@ -220,30 +229,45 @@ configMaps:
 
 
         main(){
-          # download params
-          check_file "/verifier/params/params20" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params20" "$PARAMS20_SHASUM"
-          check_file "/verifier/params/params21" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params21" "$PARAMS21_SHASUM"
-          check_file "/verifier/params/params24" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24" "$PARAMS24_SHASUM"
-          check_file "/verifier/params/params25" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25" "$PARAMS25_SHASUM"
-          check_file "/verifier/params/params26" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params26" "$PARAMS26_SHASUM"
+          case $1 in
+            "params")
+              # download params
+              # check_file "/verifier/params/params20" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params20" "$PARAMS20_SHASUM"
+              # check_file "/verifier/params/params21" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params21" "$PARAMS21_SHASUM"
+              # check_file "/verifier/params/params24" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24" "$PARAMS24_SHASUM"
+              # check_file "/verifier/params/params25" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25" "$PARAMS25_SHASUM"
+              check_file "/verifier/params/params26" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params26" "$PARAMS26_SHASUM"
+              ;;
+            "assets")
+              check_file "/verifier/params/params20" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params20" "$PARAMS20_SHASUM"
+              check_file "/verifier/params/params21" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params21" "$PARAMS21_SHASUM"
+              check_file "/verifier/params/params24" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params24" "$PARAMS24_SHASUM"
+              check_file "/verifier/params/params25" "https://circuit-release.s3.us-west-2.amazonaws.com/setup/params25" "$PARAMS25_SHASUM"
 
-          # download assets_hi v0.12.0
-          check_file "/verifier/assets/hi/vk_chunk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_chunk.vkey" "$VK_CHUNK_SHASUM_HI"
-          check_file "/verifier/assets/hi/vk_batch.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_batch.vkey" "$VK_BATCH_SHASUM_HI"
-          check_file "/verifier/assets/hi/vk_bundle.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_bundle.vkey" "$VK_BUNDLE_SHASUM_HI"
-          check_file "/verifier/assets/hi/evm_verifier.bin" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/evm_verifier.bin" "$VRFR_SHASUM_HI"
-          check_file "/verifier/assets/hi/layer2.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/layer2.config" "$CFG2_SHASUM_HI"
-          check_file "/verifier/assets/hi/layer4.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/layer4.config" "$CFG4_SHASUM_HI"
-          # download assets_low v0.11.4
-          check_file "/verifier/assets/lo/vk_chunk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/vk_chunk.vkey" "$VK_CHUNK_SHASUM_LO"
-          check_file "/verifier/assets/lo/vk_batch.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/vk_batch.vkey" "$VK_BATCH_SHASUM_LO"
-          check_file "/verifier/assets/lo/vk_bundle.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/vk_bundle.vkey" "$VK_BUNDLE_SHASUM_LO"
-          check_file "/verifier/assets/lo/evm_verifier.bin" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/evm_verifier.bin" "$VRFR_SHASUM_LO"
-          check_file "/verifier/assets/lo/layer2.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/layer2.config" "$CFG2_SHASUM_LO"
-          check_file "/verifier/assets/lo/layer4.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/layer4.config" "$CFG4_SHASUM_LO"
+              # download assets_hi
+              check_file "/verifier/assets/hi/vk_chunk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_chunk.vkey" "$VK_CHUNK_SHASUM_HI"
+              check_file "/verifier/assets/hi/vk_batch.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_batch.vkey" "$VK_BATCH_SHASUM_HI"
+              check_file "/verifier/assets/hi/vk_bundle.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/vk_bundle.vkey" "$VK_BUNDLE_SHASUM_HI"
+              check_file "/verifier/assets/hi/evm_verifier.bin" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/evm_verifier.bin" "$VRFR_SHASUM_HI"
+              check_file "/verifier/assets/hi/layer2.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/layer2.config" "$CFG2_SHASUM_HI"
+              check_file "/verifier/assets/hi/layer4.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_HI/layer4.config" "$CFG4_SHASUM_HI"
+              # download assets_low
+              check_file "/verifier/assets/lo/vk_chunk.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/vk_chunk.vkey" "$VK_CHUNK_SHASUM_LO"
+              check_file "/verifier/assets/lo/vk_batch.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/vk_batch.vkey" "$VK_BATCH_SHASUM_LO"
+              check_file "/verifier/assets/lo/vk_bundle.vkey" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/vk_bundle.vkey" "$VK_BUNDLE_SHASUM_LO"
+              check_file "/verifier/assets/lo/evm_verifier.bin" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/evm_verifier.bin" "$VRFR_SHASUM_LO"
+              check_file "/verifier/assets/lo/layer2.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/layer2.config" "$CFG2_SHASUM_LO"
+              check_file "/verifier/assets/lo/layer4.config" "https://circuit-release.s3.us-west-2.amazonaws.com/release-$RELEASE_VERSION_LO/layer4.config" "$CFG4_SHASUM_LO"
+              ;;
+              *)
+                echo "only supports params or assets"
+                exit 1
+                ;;
+          esac
         }
 
-        main
+        main $1
+        ls -R /verifier/assets
 
 serviceMonitor:
   main:

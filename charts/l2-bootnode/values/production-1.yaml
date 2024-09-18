@@ -32,5 +32,6 @@ configMaps:
     enabled: true
     data:
       CHAIN_ID: ""
+      L2GETH_NODEKEY: ""
       L2GETH_L1_ENDPOINT: ""
-      L2GETH_PEER_LIST: ""
+      L2GETH_PEER_LIST: '[]'
