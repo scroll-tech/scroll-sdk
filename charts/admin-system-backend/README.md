@@ -26,7 +26,7 @@ Kubernetes: `>=1.22.0-0`
 | command[0] | string | `"/bin/sh"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"scroll-admin-system --config /app/config/admin-system-backend-config.json --genesis /app/genesis/genesis.json --http.port ${HTTP_PORT} --metrics --metrics.port ${METRICS_PORT}"` |  |
-| configMaps.add-user.data."add-user.sh" | string | `"#!/bin/bash\necho \"Adding user...\"\npsql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c \"INSERT INTO users (username, role) VALUES ('admin', 1);\"\necho \"User added.\"\n"` |  |
+| configMaps.add-user.data."add-user.sh" | string | `"#!/bin/bash\necho \"Adding users...\"\npsql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c \"INSERT INTO users (username, role) VALUES ('admin', 1);\"\npsql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c \"INSERT INTO users (username, role) VALUES ('normal', 3);\"\necho \"Users added.\"\n"` |  |
 | configMaps.add-user.enabled | bool | `true` |  |
 | configMaps.model-conf.data."model.conf" | string | `"[request_definition]\nr = sub, obj, act\n[policy_definition]\np = sub, obj, act\n[role_definition]\ng = _, _\n[policy_effect]\ne = some(where (p.eft == allow))\n[matchers]\nm = g(r.sub, p.sub) && regexMatch(r.obj, p.obj) && regexMatch(r.act, p.act)\n"` |  |
 | configMaps.model-conf.enabled | bool | `true` |  |
