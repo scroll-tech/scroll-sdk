@@ -46,6 +46,14 @@ externalSecrets:
     data:
       - remoteRef:
           key: scroll/admin-system-backend-secret-env
+          property: SCROLL_ADMIN_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/admin-system-backend-secret-env
+          property: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/admin-system-backend-secret-env
           property: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
         secretKey: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
     refreshInterval: 2m

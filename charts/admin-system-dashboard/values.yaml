@@ -74,6 +74,7 @@ configMaps:
             root   /usr/share/nginx/html;
           }
         }
+
 serviceMonitor:
   main:
     enabled: true
