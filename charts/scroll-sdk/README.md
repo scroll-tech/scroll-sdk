@@ -37,7 +37,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | gas-oracle | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-devnet | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-explorer | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.9 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.10 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.10 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.9 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.0.3 |
