@@ -7,6 +7,14 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+      - name: 1-wait-for-postgres
+        image: atkrad/wait4x:latest
+        args:
+          - tcp
+          - postgresql:5432
+          - --timeout
+          - "0"
       containers:
         - name: init-db
           image: postgres:latest
