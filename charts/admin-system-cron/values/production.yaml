@@ -10,27 +10,27 @@ initContainers:
       - --timeout
       - "0"
     envFrom:
-      - configMapRef:
-          name: admin-system-backend-secret-env
+      - secretRef:
+          name: admin-system-cron-secret-env
 
 envFrom:
   - secretRef:
-      name: admin-system-backend-secret-env
+      name: admin-system-cron-secret-env
 
 externalSecrets:
-  admin-system-backend-secret-env:
+  admin-system-cron-secret-env:
     provider: aws
     data:
       - remoteRef:
-          key: scroll/admin-system-backend-secret-env
+          key: scroll/admin-system-cron-secret-env
           property: SCROLL_ADMIN_DB_CONFIG_DSN
         secretKey: SCROLL_ADMIN_DB_CONFIG_DSN
       - remoteRef:
-          key: scroll/admin-system-backend-secret-env
+          key: scroll/admin-system-cron-secret-env
           property: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
         secretKey: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
       - remoteRef:
-          key: scroll/admin-system-backend-secret-env
+          key: scroll/admin-system-cron-secret-env
           property: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
         secretKey: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
     refreshInterval: 2m

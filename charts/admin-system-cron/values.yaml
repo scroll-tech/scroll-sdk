@@ -27,7 +27,7 @@ env:
 
 envFrom:
   - configMapRef:
-      name: admin-system-backend-env
+      name: admin-system-cron-env
 
 command: [
   "/bin/sh",
@@ -73,13 +73,7 @@ persistence:
     enabled: true
     type: configMap
     mountPath: /app/config/
-    name: admin-system-backend-config
-  init-db:
-    enabled: true
-    type: configMap
-    mountPath: /init-db.sh
-    name: init-db
-    defaultMode: "0777"
+    name: admin-system-cron-config
 
 initContainers:
   1-check-postgres-connection:
@@ -91,7 +85,7 @@ initContainers:
       - "0"
     envFrom:
       - configMapRef:
-          name: admin-system-backend-env
+          name: admin-system-cron-env
 
 serviceMonitor:
   main:

@@ -10,7 +10,7 @@ initContainers:
       - --timeout
       - "0"
     envFrom:
-      - configMapRef:
+      - secretRef:
           name: admin-system-backend-secret-env
   2-migrate-db:
     image: scrolltech/scroll-admin-system:v0.1.1
@@ -23,7 +23,7 @@ initContainers:
       - name: admin-system-backend
         mountPath: /app/config/
     envFrom:
-      - configMapRef:
+      - secretRef:
           name: admin-system-backend-secret-env
   3-add-user:
     image: postgres:latest
@@ -33,7 +33,7 @@ initContainers:
         mountPath: /add-user.sh
         subPath: add-user.sh
     envFrom:
-      - configMapRef:
+      - secretRef:
           name: admin-system-backend-secret-env
 
 envFrom:
