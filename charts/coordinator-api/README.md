@@ -1,6 +1,6 @@
 # coordinator-api
 
-![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 coordinator-api helm charts
 
@@ -35,6 +35,7 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `false` |  |
 | defaultProbes.spec.httpGet.path | string | `"/"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
+| envFrom[0].configMapRef.name | string | `"coordinator-api-env"` |  |
 | env[0].name | string | `"HTTP_PORT"` |  |
 | env[0].value | int | `8080` |  |
 | env[1].name | string | `"METRICS_PORT"` |  |

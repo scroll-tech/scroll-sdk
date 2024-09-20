@@ -23,6 +23,10 @@ env:
   - name: SCROLL_PROVER_ASSETS_DIR
     value: "/data/assets/"
 
+envFrom:
+  - configMapRef:
+      name: coordinator-api-env
+
 command: [
   "/bin/sh",
   "-c",

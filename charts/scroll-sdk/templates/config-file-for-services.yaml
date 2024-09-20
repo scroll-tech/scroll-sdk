@@ -95,7 +95,7 @@ kind: ConfigMap
 metadata:
   labels:
     {{- include "scroll-sdk.labels" $ | nindent 4 }}
-  name: coordinator-env
+  name: coordinator-api-env
 data:
 {{ .Files.Get "configs/coordinator.env" | indent 2 }}
 ---
