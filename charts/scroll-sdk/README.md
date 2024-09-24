@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.36](https://img.shields.io/badge/Version-0.0.36-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.37](https://img.shields.io/badge/Version-0.0.37-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -86,11 +86,19 @@ Kubernetes: `>=1.22.0-0`
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[0].disableDeletion | bool | `false` |  |
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[0].editable | bool | `true` |  |
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[0].folder | string | `"scroll"` |  |
-| grafana.dashboardProviders."dashboardproviders.yaml".providers[0].name | string | `"default"` |  |
-| grafana.dashboardProviders."dashboardproviders.yaml".providers[0].options.path | string | `"/var/lib/grafana/dashboards/default/"` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[0].name | string | `"scroll"` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[0].options.path | string | `"/var/lib/grafana/dashboards/scroll/"` |  |
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[0].orgId | int | `1` |  |
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[0].type | string | `"file"` |  |
-| grafana.dashboardsConfigMaps.default | string | `"grafana-dashboards"` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].disableDeletion | bool | `false` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].editable | bool | `true` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].folder | string | `"kubernetes"` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].name | string | `"kubernetes"` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].options.path | string | `"/var/lib/grafana/dashboards/kubernetes/"` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].orgId | int | `1` |  |
+| grafana.dashboardProviders."dashboardproviders.yaml".providers[1].type | string | `"file"` |  |
+| grafana.dashboardsConfigMaps.kubernetes | string | `"kubernetes-grafana-dashboards"` |  |
+| grafana.dashboardsConfigMaps.scroll | string | `"scroll-grafana-dashboards"` |  |
 | grafana.datasources."datasources.yaml".apiVersion | int | `1` |  |
 | grafana.datasources."datasources.yaml".datasources[0].access | string | `"proxy"` |  |
 | grafana.datasources."datasources.yaml".datasources[0].isDefault | bool | `true` |  |

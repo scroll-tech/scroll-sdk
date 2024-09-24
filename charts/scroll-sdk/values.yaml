@@ -89,16 +89,25 @@ grafana:
     dashboardproviders.yaml:
       apiVersion: 1
       providers:
-        - name: 'default'
+        - name: 'scroll'
           orgId: 1
           folder: 'scroll'
           type: file
           disableDeletion: false
           editable: true
           options:
-            path: /var/lib/grafana/dashboards/default/
+            path: /var/lib/grafana/dashboards/scroll/
+        - name: 'kubernetes'
+          orgId: 1
+          folder: 'kubernetes'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/kubernetes/
   dashboardsConfigMaps:
-    default: grafana-dashboards
+    scroll: scroll-grafana-dashboards
+    kubernetes: kubernetes-grafana-dashboards
   ingress:
     enabled: true
     hosts: ["grafana.scrollsdk"]
