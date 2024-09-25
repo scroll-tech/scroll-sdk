@@ -34,7 +34,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-api | 0.0.9 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-cron | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | frontends | 0.0.9 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | gas-oracle | 0.0.7 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | gas-oracle | 0.0.8 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-devnet | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-explorer | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.10 |
