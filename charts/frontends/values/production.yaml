@@ -1,6 +1,3 @@
-global:
-  isStandalone: true
-
 persistence:
   frontends:
     enabled: true

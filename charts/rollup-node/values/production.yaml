@@ -1,6 +1,3 @@
-global:
-  isStandalone: true
-
 initContainers:
   1-check-postgres-connection:
     image: atkrad/wait4x:latest

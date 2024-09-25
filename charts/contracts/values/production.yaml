@@ -1,6 +1,3 @@
-global:
-  isStandalone: true
-
 configMaps:
   contracts-deployment-env:
     enabled: true
