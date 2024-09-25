@@ -14,9 +14,10 @@ bootstrap:
 
 config:
 		echo "Creating configuration files..."
-		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.23
+		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.24
 		echo "Creating env files..."
 		./create-env-files.sh scroll-sdk
+		./prepare-config-files.sh
 
 install:
 		helm upgrade -i scroll-sdk scroll-sdk -n $(NAMESPACE) \
