@@ -3,6 +3,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: frontends-config
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
 data:
   frontend-config: |
 {{ .Values.scrollConfig | indent 4 }}

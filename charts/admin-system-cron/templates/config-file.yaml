@@ -3,6 +3,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: admin-system-cron-config
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
 data:
   admin-system-backend-config.json: |
 {{ .Values.scrollConfig | indent 4 }}

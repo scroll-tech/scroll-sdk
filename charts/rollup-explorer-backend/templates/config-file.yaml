@@ -3,6 +3,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: rollup-explorer-backend-config
+  labels:
+    {{- include "scroll-sdk.labels" $ | nindent 4 }}
 data:
   config.json: |
 {{ .Values.scrollConfig | indent 4 }}
