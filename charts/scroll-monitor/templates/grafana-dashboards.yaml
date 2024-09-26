@@ -1,0 +1,49 @@
+{{- if .Values.grafana.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scroll-grafana-dashboards
+  labels:
+    grafana_dashboard: "1"
+data:
+{{- if index .Values "bridge-history-api" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/bridge-history-api.json").AsConfig | indent 2 }}
+{{- end }}
+{{- if index .Values "bridge-history-fetcher" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/bridge-history-fetcher.json").AsConfig | indent 2 }}
+{{- end }}
+{{- if index .Values "chain-monitor" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/chain-monitor.json").AsConfig | indent 2 }}
+{{- end }}
+{{- if index .Values "coordinator-api" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/coordinator-api.json").AsConfig | indent 2 }}
+{{- end }}
+{{- if index .Values "coordinator-cron" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/coordinator-cron.json").AsConfig | indent 2 }}
+{{- end }}
+{{- if index .Values "gas-oracle" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/gas-oracle.json").AsConfig | indent 2 }}
+{{- end }}
+{{ (.Files.Glob "grafana/scroll-dashboards/geth.json").AsConfig | indent 2 }}
+{{- if index .Values "rollup-node" "enabled" }}
+{{ (.Files.Glob "grafana/scroll-dashboards/rollup-node.json").AsConfig | indent 2 }}
+{{- end }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubernetes-grafana-dashboards
+  labels:
+    grafana_dashboard: "2"
+data:
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-views-pods.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-views-nodes.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-views-namespaces.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-views-global.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-system-coredns.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-system-api-server.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-addons-trivy-operator.json").AsConfig | indent 2 }}
+{{ (.Files.Glob "grafana/kubernetes-dashboards/k8s-addons-prometheus.json").AsConfig | indent 2 }}
+
+{{- end }}

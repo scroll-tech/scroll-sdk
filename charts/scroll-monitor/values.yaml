@@ -1,0 +1,101 @@
+grafana:
+  enabled: true
+  fullnameOverride: grafana
+  nameOverride: grafana
+  adminUser: admin
+  adminPassword: scroll-sdk
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-prometheus:9090
+          access: proxy
+          isDefault: true
+          jsonData:
+            timeInterval: 30s
+        - name: Loki
+          type: loki
+          url: http://scroll-grafana-loki:3100
+          access: proxy
+          jsonData:
+            httpHeaderName1: 'X-Scope-OrgID'
+          secureJsonData:
+            httpHeaderValue1: '1'
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: 'scroll'
+          orgId: 1
+          folder: 'scroll'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/scroll/
+        - name: 'kubernetes'
+          orgId: 1
+          folder: 'kubernetes'
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/kubernetes/
+  dashboardsConfigMaps:
+    scroll: scroll-grafana-dashboards
+    kubernetes: kubernetes-grafana-dashboards
+  ingress:
+    enabled: true
+    hosts: ["grafana.scrollsdk"]
+
+loki:
+  enabled: true
+  deploymentMode: SingleBinary
+  loki:
+    commonConfig:
+      replication_factor: 1
+    storage:
+      type: 'filesystem'
+    schemaConfig:
+      configs:
+        - from: "2024-01-01"
+          store: tsdb
+          index:
+            prefix: loki_index_
+            period: 24h
+          object_store: filesystem # we're storing on filesystem so there's no real persistence here.
+          schema: v13
+  singleBinary:
+    replicas: 1
+  read:
+    replicas: 0
+  backend:
+    replicas: 0
+  write:
+    replicas: 0
+
+promtail:
+  enabled: true
+  config:
+    clients:
+      - url: http://scroll-grafana-loki:3100/loki/api/v1/push
+        tenant_id: 1
+
+kube-prometheus-stack:
+  enabled: true
+  nameOverride: prometheus
+  fullnameOverride: prometheus
+  prometheus:
+    enabled: true
+  alertmanager:
+    enabled: false
+  grafana:
+    enabled: false
+  prometheus-node-exporter:
+    nameOverride: node-exporter
+    fullnameOverride: node-exporter
+  kube-state-metrics:
+    nameOverride: kube-state-metrics
+    fullnameOverride: kube-state-metrics
