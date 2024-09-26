@@ -1,9 +1,9 @@
 global:
-  fullnameOverride: l2-bootnode-3
+  fullnameOverride: l2-bootnode-0
 
 envFrom:
   - configMapRef:
-      name: l2-bootnode-3-env
+      name: l2-bootnode-0-env
 
 initContainers:
   wait-for-l1:
@@ -14,7 +14,7 @@ initContainers:
       - /wait-for-l1.sh $L2GETH_L1_ENDPOINT
     envFrom:
       - configMapRef:
-          name: l2-bootnode-3-env
+          name: l2-bootnode-0-env
     volumeMounts:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
@@ -25,7 +25,7 @@ persistence:
     enabled: true
     type: configMap
     mountPath: /config/
-    name: l2-bootnode-3-env
+    name: l2-bootnode-0-env
 
 configMaps:
   env:

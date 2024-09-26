@@ -41,6 +41,7 @@ persistence:
 
 externalSecrets:
   l2-sequencer-secret-2-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/l2-sequencer-secret-env

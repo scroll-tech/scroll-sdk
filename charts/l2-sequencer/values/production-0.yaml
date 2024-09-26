@@ -1,11 +1,11 @@
 global:
-  fullnameOverride: l2-sequencer-3
+  fullnameOverride: l2-sequencer-0
 
 envFrom:
   - configMapRef:
-      name: l2-sequencer-3-env
+      name: l2-sequencer-0-env
   - secretRef:
-      name: l2-sequencer-secret-3-env
+      name: l2-sequencer-secret-0-env
 
 initContainers:
   wait-for-l1:
@@ -16,7 +16,7 @@ initContainers:
       - /wait-for-l1.sh $L2GETH_L1_ENDPOINT
     envFrom:
       - configMapRef:
-          name: l2-sequencer-3-env
+          name: l2-sequencer-0-env
     volumeMounts:
       - name: wait-for-l1-script
         mountPath: /wait-for-l1.sh
@@ -25,7 +25,6 @@ initContainers:
 configMaps:
   env:
     enabled: true
-    provider: aws
     data:
       CHAIN_ID: ""
       L2GETH_L1_ENDPOINT: ""
@@ -37,22 +36,23 @@ persistence:
   env:
     enabled: true
     type: configMap
-    name: l2-sequencer-3-env
+    name: l2-sequencer-0-env
 
 externalSecrets:
-  l2-sequencer-secret-3-env:
+  l2-sequencer-secret-0-env:
+    provider: aws
     data:
       - remoteRef:
           key: scroll/l2-sequencer-secret-env
-          property: L2GETH_KEYSTORE_3
+          property: L2GETH_KEYSTORE_0
         secretKey: L2GETH_KEYSTORE
       - remoteRef:
           key: scroll/l2-sequencer-secret-env
-          property: L2GETH_PASSWORD_3
+          property: L2GETH_PASSWORD_0
         secretKey: L2GETH_PASSWORD
       - remoteRef:
           key: scroll/l2-sequencer-secret-env
-          property: L2GETH_NODEKEY_3
+          property: L2GETH_NODEKEY_0
         secretKey: L2GETH_NODEKEY
     refreshInterval: 2m
     serviceAccount: external-secrets
