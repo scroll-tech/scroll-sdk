@@ -11,11 +11,9 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.7.11
+  tag: scroll-v5.7.21
 
 env:
-  - name: L2GETH_PEER_LIST
-    value: [""]
   - name: L2GETH_L1_WATCHER_CONFIRMATIONS
     value: "0x6"
   - name: L2GETH_LOCALS
@@ -45,12 +43,14 @@ command:
     "-c",
     "mkdir -p /l2geth/data/keystore && \
     mkdir -p /l2geth/data/geth && \
+    echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && \
     echo ${L2GETH_PASSWORD} > /l2geth/password && \
     echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && \
     echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && \
     geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
     geth --datadir \"/l2geth/data\" \
     --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" \
+    --config \"/l2geth/config.toml\" \
     --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" \
     --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
     --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" \
@@ -152,13 +152,6 @@ persistence:
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"
-
-configMaps:
-  config:
-    enabled: true
-    data:
-      config.toml: |
-        [Node.P2P] StaticNodes = "[]"
 
 serviceMonitor:
   main:

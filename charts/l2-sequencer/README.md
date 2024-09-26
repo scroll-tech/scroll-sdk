@@ -1,6 +1,6 @@
 # l2-sequencer
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-sequencer helm charts
 
@@ -25,9 +25,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth && echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine --ccc --ccc.numworkers 5 --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
-| configMaps.config.data."config.toml" | string | `"[Node.P2P] StaticNodes = \"[]\"\n"` |  |
-| configMaps.config.enabled | bool | `true` |  |
+| command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --config \"/l2geth/config.toml\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine --ccc --ccc.numworkers 5 --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"statefulset"` |  |
@@ -36,31 +34,29 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.spec.httpGet.path | string | `"/"` |  |
 | defaultProbes.spec.httpGet.port | int | `8545` |  |
 | envFrom[0].configMapRef.name | string | `"l2-sequencer-env"` |  |
-| env[0].name | string | `"L2GETH_PEER_LIST"` |  |
-| env[0].value[0] | string | `""` |  |
-| env[1].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
-| env[1].value | string | `"0x6"` |  |
-| env[2].name | string | `"L2GETH_LOCALS"` |  |
-| env[2].value | string | `""` |  |
-| env[3].name | string | `"L2GETH_ENABLE_CCC"` |  |
-| env[3].value | string | `"true"` |  |
-| env[4].name | string | `"L2GETH_MINER_GASLIMIT"` |  |
-| env[4].value | string | `"10000000"` |  |
-| env[5].name | string | `"L2GETH_RPC_HTTP_PORT"` |  |
-| env[5].value | int | `8545` |  |
-| env[6].name | string | `"L2GETH_RPC_WS_PORT"` |  |
-| env[6].value | int | `8546` |  |
-| env[7].name | string | `"L2GETH_P2P_PORT"` |  |
-| env[7].value | string | `"30303"` |  |
-| env[8].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
-| env[8].value | string | `"1000000"` |  |
-| env[9].name | string | `"VERBOSITY"` |  |
-| env[9].value | string | `"3"` |  |
+| env[0].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
+| env[0].value | string | `"0x6"` |  |
+| env[1].name | string | `"L2GETH_LOCALS"` |  |
+| env[1].value | string | `""` |  |
+| env[2].name | string | `"L2GETH_ENABLE_CCC"` |  |
+| env[2].value | string | `"true"` |  |
+| env[3].name | string | `"L2GETH_MINER_GASLIMIT"` |  |
+| env[3].value | string | `"10000000"` |  |
+| env[4].name | string | `"L2GETH_RPC_HTTP_PORT"` |  |
+| env[4].value | int | `8545` |  |
+| env[5].name | string | `"L2GETH_RPC_WS_PORT"` |  |
+| env[5].value | int | `8546` |  |
+| env[6].name | string | `"L2GETH_P2P_PORT"` |  |
+| env[6].value | string | `"30303"` |  |
+| env[7].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
+| env[7].value | string | `"1000000"` |  |
+| env[8].name | string | `"VERBOSITY"` |  |
+| env[8].value | string | `"3"` |  |
 | global.fullnameOverride | string | `"l2-sequencer"` |  |
 | global.nameOverride | string | `"l2-sequencer"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/l2geth"` |  |
-| image.tag | string | `"scroll-v5.7.11"` |  |
+| image.tag | string | `"scroll-v5.7.21"` |  |
 | initContainers.wait-for-l1.command[0] | string | `"/bin/sh"` |  |
 | initContainers.wait-for-l1.command[1] | string | `"-c"` |  |
 | initContainers.wait-for-l1.command[2] | string | `"/wait-for-l1.sh $L2GETH_L1_ENDPOINT"` |  |
