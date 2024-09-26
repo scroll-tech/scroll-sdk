@@ -1304,8 +1304,8 @@
       {
         "current": {
           "selected": false,
-          "text": "bridge-history-v2-api",
-          "value": "bridge-history-v2-api"
+          "text": "bridge-history-api",
+          "value": "bridge-history-api"
         },
         "datasource": "Prometheus",
         "definition": "label_values(service)",
@@ -1319,7 +1319,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
-        "regex": "/.*bridge-history-v2-api.*/",
+        "regex": "/.*bridge-history-api.*/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
@@ -1406,7 +1406,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "bridge-history-v2-api",
+  "title": "bridge-history-api",
   "uid": "edQepdFIz",
   "version": 7,
   "weekStart": ""

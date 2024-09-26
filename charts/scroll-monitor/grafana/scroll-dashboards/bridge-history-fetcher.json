@@ -787,8 +787,8 @@
       {
         "current": {
           "selected": false,
-          "text": "bridge-historyv2-fetcher",
-          "value": "bridge-historyv2-fetcher"
+          "text": "bridge-history-fetcher",
+          "value": "bridge-history-fetcher"
         },
         "datasource": "Prometheus",
         "definition": "label_values(service)",
@@ -802,7 +802,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/.*bridge-historyv2-fetcher.*/",
+        "regex": "/.*bridge-history-fetcher.*/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
@@ -885,7 +885,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "bridge-history-v2-fetcher",
+  "title": "bridge-history-fetcher",
   "uid": "_ArRmKKSz",
   "version": 9,
   "weekStart": ""

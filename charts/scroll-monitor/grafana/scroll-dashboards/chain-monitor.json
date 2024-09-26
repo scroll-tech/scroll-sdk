@@ -2371,8 +2371,8 @@
       {
         "current": {
           "selected": false,
-          "text": "chain-monitorv2",
-          "value": "chain-monitorv2"
+          "text": "chain-monitor",
+          "value": "chain-monitor"
         },
         "datasource": "Prometheus",
         "definition": "label_values(service)",
@@ -2386,7 +2386,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/.*chain-monitorv2.*/",
+        "regex": "/.*chain-monitor.*/",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
@@ -2466,7 +2466,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "chain-monitor-v2",
+  "title": "chain-monitor",
   "uid": "2V_zKbHSz",
   "version": 23,
   "weekStart": ""

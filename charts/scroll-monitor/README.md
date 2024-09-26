@@ -42,8 +42,8 @@ Kubernetes: `>=1.22.0-0`
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[1].options.path | string | `"/var/lib/grafana/dashboards/kubernetes/"` |  |
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[1].orgId | int | `1` |  |
 | grafana.dashboardProviders."dashboardproviders.yaml".providers[1].type | string | `"file"` |  |
-| grafana.dashboardsConfigMaps.kubernetes | string | `"kubernetes-grafana-dashboards"` |  |
-| grafana.dashboardsConfigMaps.scroll | string | `"scroll-grafana-dashboards"` |  |
+| grafana.dashboardsConfigMaps.kubernetes | string | `"grafana-kubernetes-dashboards"` |  |
+| grafana.dashboardsConfigMaps.scroll | string | `"grafana-scroll-dashboards"` |  |
 | grafana.datasources."datasources.yaml".apiVersion | int | `1` |  |
 | grafana.datasources."datasources.yaml".datasources[0].access | string | `"proxy"` |  |
 | grafana.datasources."datasources.yaml".datasources[0].isDefault | bool | `true` |  |

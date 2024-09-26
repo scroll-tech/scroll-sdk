@@ -44,8 +44,8 @@ grafana:
           options:
             path: /var/lib/grafana/dashboards/kubernetes/
   dashboardsConfigMaps:
-    scroll: scroll-grafana-dashboards
-    kubernetes: kubernetes-grafana-dashboards
+    scroll: grafana-scroll-dashboards
+    kubernetes: grafana-kubernetes-dashboards
   ingress:
     enabled: true
     hosts: ["grafana.scrollsdk"]
