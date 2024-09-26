@@ -43,7 +43,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.0.4 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.11 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-common | 0.0.4 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-common | 0.0.5 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 15.5.0 |
 
 ## Values

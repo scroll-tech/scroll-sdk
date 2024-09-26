@@ -6,4 +6,4 @@ metadata:
   name: genesis-config
 data:
   genesis.json: |
-{{ .Values.genesisConfig | indent 4 }}
+{{ .Values.scrollConfig | indent 4 }}

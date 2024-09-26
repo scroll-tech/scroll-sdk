@@ -47,7 +47,7 @@ cp scroll-sdk/config-contracts.toml scroll-sdk/scroll-common-config-contracts.ya
 { echo "contracts:"; echo "  scrollConfigContracts: |"; sed 's/^/    /' scroll-sdk/scroll-common-config-contracts.yaml; } > temp_file && mv temp_file scroll-sdk/scroll-common-config-contracts.yaml
 
 # scroll-common
-indent_file_and_add_first_line "scroll-sdk/genesis.yaml" "genesisConfig:"
+indent_file_and_add_first_line "scroll-sdk/genesis.yaml" "scroll-common:"
 
 # rollup
 cp scroll-sdk/rollup-config.yaml scroll-sdk/gas-oracle-config.yaml
