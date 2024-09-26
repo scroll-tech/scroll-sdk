@@ -4,7 +4,7 @@ global:
 
 image:
   repository: scrolltech/scroll-stack-contracts
-  tag: deploy-v0.0.24
+  tag: deploy-v0.0.25
 
 envFrom:
   - configMapRef:
