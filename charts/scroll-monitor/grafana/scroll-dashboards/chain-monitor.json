@@ -2403,7 +2403,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values({service=\"$service\"}, instance)",
+          "query": "label_values({service=\"$service\",job=\"$service\"}, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
