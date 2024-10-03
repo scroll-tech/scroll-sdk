@@ -7,7 +7,7 @@ L1_RPC_HOST := l1-devnet.scrollsdk
 
 bootstrap:
 		echo "Pulling helm chart..."
-		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.0.41
+		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.0.42
 		echo "Extracting helm chart..."
 		tar -xvf *.tgz
 		$(MAKE) config
@@ -38,7 +38,7 @@ install:
 			--values scroll-sdk/gas-oracle-config.yaml \
 			--values scroll-sdk/genesis.yaml \
 			--values scroll-sdk/rollup-explorer-backend-config.yaml \
-			--values scroll-sdk/rollup-node.yaml \
+			--values scroll-sdk/rollup-node-config.yaml \
 			--values scroll-sdk/scroll-common-config.yaml \
 			--values scroll-sdk/scroll-common-config-contracts.yaml
 

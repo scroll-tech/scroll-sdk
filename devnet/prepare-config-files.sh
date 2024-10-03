@@ -51,9 +51,9 @@ indent_file_and_add_first_line "scroll-sdk/genesis.yaml" "scroll-common:"
 
 # rollup
 cp scroll-sdk/rollup-config.yaml scroll-sdk/gas-oracle-config.yaml
-mv scroll-sdk/rollup-config.yaml scroll-sdk/rollup-node.yaml
+mv scroll-sdk/rollup-config.yaml scroll-sdk/rollup-node-config.yaml
 indent_file_and_add_first_line "scroll-sdk/gas-oracle-config.yaml" "gas-oracle:"
-indent_file_and_add_first_line "scroll-sdk/rollup-node.yaml" "rollup-node:"
+indent_file_and_add_first_line "scroll-sdk/rollup-node-config.yaml" "rollup-node:"
 
 # rollup-explorer-backend
 indent_file_and_add_first_line "scroll-sdk/rollup-explorer-backend-config.yaml" "rollup-explorer-backend:"
