@@ -3,7 +3,6 @@ envFrom:
       name: bridge-history-fetcher-secret-env
 
 persistence:
-  # TODO make this consistent with devnet, we should use bridge-history-fetcher-config instead of bridge-history-config
   bridge-history-fetcher:
     enabled: true
     type: configMap

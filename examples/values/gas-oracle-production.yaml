@@ -1,5 +1,4 @@
 persistence:
-  #TODO is it still needed or can I use the default value ?
   gas-oracle:
     enabled: true
     type: configMap

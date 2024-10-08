@@ -5,7 +5,6 @@ envFrom:
   - secretRef:
       name: bridge-history-api-secret-env
 
-# TODO make this consistent with devnet, we should use bridge-history-api-config instead of bridge-history-config
 persistence:
   bridge-history-api:
     enabled: true
