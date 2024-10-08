@@ -51,7 +51,7 @@ externalSecrets:
     data:
       - remoteRef:
           key: scroll/chain-monitor-secret-env
-          property: DATABASE_URL
-        secretKey: DATABASE_URL
+          property: SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN
+        secretKey: SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN
     refreshInterval: 2m
     serviceAccount: external-secrets
