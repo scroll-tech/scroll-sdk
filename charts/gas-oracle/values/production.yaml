@@ -35,7 +35,7 @@ initContainers:
         mountPath: /config/migrate-db.json
         subPath: migrate-db.json
     envFrom:
-      - configMapRef:
+      - secretRef:
           name: gas-oracle-secret-env
   4-wait-for-l2-sequencer:
     image: atkrad/wait4x:latest

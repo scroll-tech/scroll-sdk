@@ -35,7 +35,7 @@ initContainers:
         mountPath: /config/migrate-db.json
         subPath: migrate-db.json
     envFrom:
-      - configMapRef:
+      - secretRef:
           name: bridge-history-fetcher-secret-env
 
 configMaps:

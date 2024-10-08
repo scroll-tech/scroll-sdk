@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.44
+version: 0.0.45
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -30,7 +30,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: bridge-history-api.enabled
   - name: bridge-history-fetcher
-    version: 0.0.10
+    version: 0.0.11
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: bridge-history-fetcher.enabled
   - name: blockscout-sc-verifier
@@ -58,7 +58,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: frontends.enabled
   - name: gas-oracle
-    version: 0.0.8
+    version: 0.0.9
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: gas-oracle.enabled
   - name: l1-explorer
