@@ -1,0 +1,11 @@
+controller:
+  replicas: 2
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix

@@ -30,6 +30,7 @@ L2_GAS_ORACLE_SENDER_ADDR = ""
 
 [db]
 
+ADMIN_SYSTEM_DB_CONNECTION_STRING = ""
 BLOCKSCOUT_DB_CONNECTION_STRING = ""
 BRIDGE_HISTORY_DB_CONNECTION_STRING = ""
 CHAIN_MONITOR_DB_CONNECTION_STRING = ""
@@ -47,11 +48,15 @@ ALTERNATIVE_GAS_TOKEN_ENABLED = false
 
 [sequencer]
 
+L2_GETH_STATIC_PEERS = ''
+
 L2GETH_SIGNER_ADDRESS = ""
 L2GETH_KEYSTORE = ''
 L2GETH_PASSWORD = ""
 L2GETH_NODEKEY = ""
-L2_GETH_STATIC_PEERS = ''
+
+[bootnode.bootnode-0]
+L2GETH_NODEKEY=""
 
 [rollup]
 
@@ -71,6 +76,8 @@ BRIDGE_API_URI = "http://bridge-history-api.scrollsdk/api"
 ROLLUPSCAN_API_URI = "http://rollup-explorer-backend.scrollsdk/api"
 EXTERNAL_EXPLORER_URI_L1 = "http://l1-explorer.scrollsdk"
 EXTERNAL_EXPLORER_URI_L2 = "http://blockscout.scrollsdk"
+ADMIN_SYSTEM_DASHBOARD_URI = "http://admin-system-dashboard.scrollsdk"
+GRAFANA_URI = "http://grafana.scrollsdk"
 
 [genesis]
 
@@ -107,3 +114,6 @@ ROLLUP_EXPLORER_API_HOST = "rollup-explorer-backend.scrollsdk"
 COORDINATOR_API_HOST = "coordinator-api.scrollsdk"
 RPC_GATEWAY_HOST = "l2-rpc.scrollsdk"
 BLOCKSCOUT_HOST = "blockscout.scrollsdk"
+ADMIN_SYSTEM_DASHBOARD_HOST = "admin-system-dashboard.scrollsdk"
+L1_DEVNET_HOST = "l1-devnet.scrollsdk"
+L1_EXPLORER_HOST = "l1-explorer.scrollsdk"

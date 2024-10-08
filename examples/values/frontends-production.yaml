@@ -1,0 +1,15 @@
+persistence:
+  frontends:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: frontends-config
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix

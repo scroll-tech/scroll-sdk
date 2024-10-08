@@ -1,0 +1,59 @@
+global:
+  fullnameOverride: l2-sequencer-2
+
+envFrom:
+  - configMapRef:
+      name: l2-sequencer-2-env
+  - secretRef:
+      name: l2-sequencer-secret-2-env
+
+initContainers:
+  wait-for-l1:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-l1.sh $L2GETH_L1_ENDPOINT
+    envFrom:
+      - configMapRef:
+          name: l2-sequencer-2-env
+    volumeMounts:
+      - name: wait-for-l1-script
+        mountPath: /wait-for-l1.sh
+        subPath: wait-for-l1.sh
+
+configMaps:
+  env:
+    enabled: true
+    provider: aws
+    data:
+      CHAIN_ID: ""
+      L2GETH_L1_ENDPOINT: ""
+      L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK: ""
+      L2GETH_SIGNER_ADDRESS: ""
+      L2GETH_PEER_LIST: '[""]'
+
+persistence:
+  env:
+    enabled: true
+    type: configMap
+    name: l2-sequencer-2-env
+
+externalSecrets:
+  l2-sequencer-secret-2-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/l2-sequencer-secret-env
+          property: L2GETH_KEYSTORE_2
+        secretKey: L2GETH_KEYSTORE
+      - remoteRef:
+          key: scroll/l2-sequencer-secret-env
+          property: L2GETH_PASSWORD_2
+        secretKey: L2GETH_PASSWORD
+      - remoteRef:
+          key: scroll/l2-sequencer-secret-env
+          property: L2GETH_NODEKEY_2
+        secretKey: L2GETH_NODEKEY
+    refreshInterval: 2m
+    serviceAccount: external-secrets

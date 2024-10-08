@@ -1,0 +1,57 @@
+envFrom:
+  - secretRef:
+      name: chain-monitor-secret-env
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: chain-monitor-secret-env
+  2-migrate-db:
+    image: scrolltech/chain-monitorv2:v1.1.29
+    command:
+      - /bin/sh
+      - -c
+      - chain-monitor --config /app/config/chain-monitor-config.json --db --db.migrate
+    volumeMounts:
+      - name: chain-monitor
+        mountPath: /app/config/
+    envFrom:
+      - secretRef:
+          name: chain-monitor-secret-env
+  4-wait-for-l2-sequencer:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - $(SCROLL_L2_RPC)
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
+    envFrom:
+      - configMapRef:
+          name: chain-monitor-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: ""
+
+externalSecrets:
+  chain-monitor-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/chain-monitor-secret-env
+          property: "SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN"
+        secretKey: "SCROLL_CHAIN_MONITOR_DB_CONFIG_DSN"
+    refreshInterval: 2m
+    serviceAccount: external-secrets

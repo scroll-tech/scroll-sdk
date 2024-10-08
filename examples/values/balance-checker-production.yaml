@@ -1,0 +1,8 @@
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+
+scrollConfig: |
+  {}
