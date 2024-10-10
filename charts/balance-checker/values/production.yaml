@@ -3,6 +3,7 @@ configMaps:
     enabled: true
     data:
       SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: ""
 
 scrollConfig: |
   {}

@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.46
+version: 0.0.47
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -18,7 +18,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-devnet.enabled
   - name: balance-checker
-    version: 0.0.3
+    version: 0.0.4
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: balance-checker.enabled
   - name: blockscout

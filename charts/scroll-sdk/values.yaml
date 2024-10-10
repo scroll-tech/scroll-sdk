@@ -32,7 +32,7 @@ bridge-history-fetcher:
   enabled: true
 
 balance-checker:
-  enabled: false
+  enabled: true
 
 chain-monitor:
   enabled: true

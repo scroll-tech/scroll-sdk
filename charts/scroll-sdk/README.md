@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.46](https://img.shields.io/badge/Version-0.0.46-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.47](https://img.shields.io/badge/Version-0.0.47-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -24,7 +24,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-backend | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-cron | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-dashboard | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.3 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.4 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout-sc-verifier | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.0.7 |
@@ -57,7 +57,7 @@ Kubernetes: `>=1.22.0-0`
 | admin-system-dashboard.ingress.main.hosts[0].host | string | `"admin-system-dashboard.scrollsdk"` |  |
 | admin-system-dashboard.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | admin-system-dashboard.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| balance-checker.enabled | bool | `false` |  |
+| balance-checker.enabled | bool | `true` |  |
 | blockscout-sc-verifier.enabled | bool | `false` |  |
 | blockscout.enabled | bool | `true` |  |
 | bridge-history-api.enabled | bool | `true` |  |
