@@ -39,6 +39,7 @@ configMaps:
       L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK: ""
       L2GETH_SIGNER_ADDRESS: ""
       L2GETH_PEER_LIST: '[""]'
+      L2GETH_CCC_NUMWORKERS: ""
 
 persistence:
   env:
