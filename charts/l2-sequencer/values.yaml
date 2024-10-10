@@ -18,8 +18,8 @@ env:
     value: "0x6"
   - name: L2GETH_LOCALS
     value: ""
-  - name: L2GETH_ENABLE_CCC
-    value: "true"
+  - name: L2GETH_CCC_FLAG
+    value: "--ccc"
   - name: L2GETH_MINER_GASLIMIT
     value: "10000000"
   - name: L2GETH_RPC_HTTP_PORT
@@ -55,7 +55,7 @@ command:
     --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
     --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" \
     --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine \
-    --ccc --ccc.numworkers 5 \
+    $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" \
     --gcmode archive \
     --cache.noprefetch \
     --verbosity ${VERBOSITY} \

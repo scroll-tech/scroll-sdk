@@ -1,6 +1,6 @@
 # l2-rpc
 
-![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.13](https://img.shields.io/badge/Version-0.0.13-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-rpc helm chart
 
@@ -25,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --config \"/l2geth/config.toml\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain '*' --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --ccc --ccc.numworkers 5 $METRICS_FLAGS --gcmode archive --cache.noprefetch --verbosity 3 --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
+| command[2] | string | `"geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --config \"/l2geth/config.toml\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain '*' --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" $METRICS_FLAGS --gcmode archive --cache.noprefetch --verbosity 3 --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"statefulset"` |  |
@@ -36,8 +36,6 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l2-rpc-env"` |  |
 | env[0].name | string | `"L2GETH_NODEKEY"` |  |
 | env[0].value | string | `""` |  |
-| env[10].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
-| env[10].value | string | `""` |  |
 | env[1].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
 | env[1].value | string | `"0x6"` |  |
 | env[2].name | string | `"L2GETH_RPC_HTTP_PORT"` |  |
@@ -46,16 +44,16 @@ Kubernetes: `>=1.22.0-0`
 | env[3].value | int | `8546` |  |
 | env[4].name | string | `"L2GETH_P2P_PORT"` |  |
 | env[4].value | int | `30303` |  |
-| env[5].name | string | `"L2GETH_ENABLE_CCC"` |  |
-| env[5].value | bool | `false` |  |
-| env[6].name | string | `"L2GETH_CCC_RUST_LOG_LEVEL"` |  |
-| env[6].value | string | `"info"` |  |
-| env[7].name | string | `"L2GETH_MAX_PEERS"` |  |
-| env[7].value | int | `500` |  |
-| env[8].name | string | `"VERBOSITY"` |  |
-| env[8].value | int | `3` |  |
-| env[9].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
-| env[9].value | string | `"1000000"` |  |
+| env[5].name | string | `"L2GETH_CCC_FLAG"` |  |
+| env[5].value | string | `"--ccc"` |  |
+| env[6].name | string | `"L2GETH_MAX_PEERS"` |  |
+| env[6].value | int | `500` |  |
+| env[7].name | string | `"VERBOSITY"` |  |
+| env[7].value | int | `3` |  |
+| env[8].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
+| env[8].value | string | `"1000000"` |  |
+| env[9].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
+| env[9].value | string | `""` |  |
 | global.fullnameOverride | string | `"l2-rpc"` |  |
 | global.nameOverride | string | `"l2-rpc"` |  |
 | image.pullPolicy | string | `"Always"` |  |

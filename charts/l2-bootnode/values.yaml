@@ -20,16 +20,12 @@ env:
     value: "0x6"
   - name: L2GETH_P2P_PORT
     value: 30303
-  - name: L2GETH_ENABLE_CCC
-    value: false
-  - name: L2GETH_CCC_RUST_LOG_LEVEL
-    value: info
+  - name: L2GETH_CCC_FLAG
+    value: "--ccc"
   - name: L2GETH_MAX_PEERS
     value: 500
   - name: VERBOSITY
     value: 3
-  - name: CCC_FLAG
-    value: "--ccc"
   - name: L2GETH_MIN_GAS_PRICE
     value: "1000000"
   - name: L2GETH_EXTRA_PARAMS
@@ -54,7 +50,7 @@ command:
     --cache.noprefetch \
     --verbosity 3 \
     --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
-    $CCC_FLAG \
+    $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" \
     $METRICS_FLAGS \
     --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG \
     --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" \

@@ -55,10 +55,8 @@ env:
     value: 8546
   - name: L2GETH_P2P_PORT
     value: 30303
-  - name: L2GETH_ENABLE_CCC
-    value: false
-  - name: L2GETH_CCC_RUST_LOG_LEVEL
-    value: info
+  - name: L2GETH_CCC_FLAG
+    value: "--ccc"
   - name: L2GETH_MAX_PEERS
     value: 500
   - name: VERBOSITY
@@ -85,7 +83,7 @@ command:
     --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain '*' --http.api \"eth,scroll,net,web3,debug\" \
     --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 \
     --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" \
-    --ccc --ccc.numworkers 5 \
+    $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" \
     $METRICS_FLAGS \
     --gcmode archive \
     --cache.noprefetch \
