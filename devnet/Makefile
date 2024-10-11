@@ -7,14 +7,14 @@ L1_RPC_HOST := l1-devnet.scrollsdk
 
 bootstrap:
 		echo "Pulling helm chart..."
-		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.0.46
+		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.0.47
 		echo "Extracting helm chart..."
 		tar -xvf *.tgz
 		$(MAKE) config
 
 config:
 		echo "Creating configuration files..."
-		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.25
+		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-v0.0.26
 		echo "Creating env files..."
 		./create-env-files.sh scroll-sdk
 		./prepare-config-files.sh
