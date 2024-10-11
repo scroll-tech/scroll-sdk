@@ -6,7 +6,7 @@ metadata:
     {{- include "scroll-sdk.labels" $ | nindent 4 }}
   name: balance-checker-env
 data:
-{{ (.Files.Glob "configs/balance-checker.env").AsConfig | indent 2 }}
+{{ .Files.Get "configs/balance-checker.env" | indent 2 }}
 ---
 {{- end }}
 {{- if index .Values "blockscout" "enabled" }}
