@@ -6,5 +6,5 @@ metadata:
   labels:
     {{- include "scroll-sdk.labels" $ | nindent 4 }}
 data:
-  balance-checker-config.json : |
+  config.json : |
 {{ .Values.scrollConfig | nindent 4 }}
