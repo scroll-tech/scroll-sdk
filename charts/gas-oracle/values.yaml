@@ -6,7 +6,7 @@ global:
 image:
   repository: scrolltech/gas-oracle
   pullPolicy: Always
-  tag: v4.4.60
+  tag: v4.4.66
 
 command:
   [
