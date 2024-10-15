@@ -1,0 +1,57 @@
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: admin-system-backend-secret-env
+  2-migrate-db:
+    image: scrolltech/scroll-admin-system:v0.1.1
+    command: [
+      "/bin/sh",
+      "-c",
+      "db_cli migrate --config /app/config/admin-system-backend-config.json"
+    ]
+    volumeMounts:
+      - name: admin-system-backend
+        mountPath: /app/config/
+    envFrom:
+      - secretRef:
+          name: admin-system-backend-secret-env
+  3-add-user:
+    image: postgres:latest
+    command: ["bash", "-c", "/add-user.sh"]
+    volumeMounts:
+      - name: add-user
+        mountPath: /add-user.sh
+        subPath: add-user.sh
+    envFrom:
+      - secretRef:
+          name: admin-system-backend-secret-env
+
+envFrom:
+  - secretRef:
+      name: admin-system-backend-secret-env
+
+externalSecrets:
+  admin-system-backend-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/admin-system-backend-secret-env
+          property: SCROLL_ADMIN_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/admin-system-backend-secret-env
+          property: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/admin-system-backend-secret-env
+          property: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
+    refreshInterval: 2m
+    serviceAccount: external-secrets

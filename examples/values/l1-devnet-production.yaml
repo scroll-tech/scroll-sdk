@@ -1,0 +1,28 @@
+global:
+  fullnameOverride: l1-devnet
+
+envFrom:
+  - configMapRef:
+      name: l1-devnet-env
+
+persistence:
+  env:
+    enabled: true
+    type: configMap
+    mountPath: /config/
+    name: l1-devnet-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      CHAIN_ID: ""
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix

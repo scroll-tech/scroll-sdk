@@ -1,6 +1,6 @@
 # l2-sequencer
 
-![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.12](https://img.shields.io/badge/Version-0.0.12-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-sequencer helm charts
 
@@ -25,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --config \"/l2geth/config.toml\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine --ccc --ccc.numworkers 5 --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
+| command[2] | string | `"mkdir -p /l2geth/data/keystore && mkdir -p /l2geth/data/geth && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && echo ${L2GETH_PASSWORD} > /l2geth/password && echo ${L2GETH_KEYSTORE}  > /l2geth/data/keystore/keystore.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --nodiscover --syncmode full --networkid \"$CHAIN_ID\" --config \"/l2geth/config.toml\" --http --http.port \"$L2GETH_RPC_HTTP_PORT\" --http.addr \"0.0.0.0\" --http.vhosts=\"*\" --http.corsdomain \"*\" --http.api \"eth,scroll,net,web3,debug\" --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 --ws --ws.port \"$L2GETH_RPC_WS_PORT\" --ws.addr \"0.0.0.0\" --ws.api \"eth,scroll,net,web3,debug\" --unlock \"$L2GETH_SIGNER_ADDRESS\" --password \"/l2geth/password\" --allow-insecure-unlock --mine $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" --gcmode archive --cache.noprefetch --verbosity ${VERBOSITY} --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --rollup.verify --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"statefulset"` |  |
@@ -38,8 +38,8 @@ Kubernetes: `>=1.22.0-0`
 | env[0].value | string | `"0x6"` |  |
 | env[1].name | string | `"L2GETH_LOCALS"` |  |
 | env[1].value | string | `""` |  |
-| env[2].name | string | `"L2GETH_ENABLE_CCC"` |  |
-| env[2].value | string | `"true"` |  |
+| env[2].name | string | `"L2GETH_CCC_FLAG"` |  |
+| env[2].value | string | `"--ccc"` |  |
 | env[3].name | string | `"L2GETH_MINER_GASLIMIT"` |  |
 | env[3].value | string | `"10000000"` |  |
 | env[4].name | string | `"L2GETH_RPC_HTTP_PORT"` |  |

@@ -1,0 +1,84 @@
+persistence:
+  gas-oracle:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: gas-oracle-config
+  migrate-db:
+    enabled: true
+    type: secret
+    mountPath: /config/migrate-db.json
+    name: gas-oracle-migrate-db
+    defaultMode: "0777"
+
+envFrom:
+  - secretRef:
+      name: gas-oracle-secret-env
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(SCROLL_ROLLUP_DB_CONFIG_DSN)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: gas-oracle-secret-env
+  2-migrate-db:
+    image: scrolltech/rollup-db-cli:v4.4.60
+    command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
+    volumeMounts:
+      - name: migrate-db
+        mountPath: /config/migrate-db.json
+        subPath: migrate-db.json
+    envFrom:
+      - secretRef:
+          name: gas-oracle-secret-env
+  4-wait-for-l2-sequencer:
+    image: atkrad/wait4x:latest
+    args:
+      - http
+      - $(SCROLL_L2_RPC)
+      - --expect-status-code
+      - "200"
+      - --timeout
+      - "0"
+    envFrom:
+      - configMapRef:
+          name: gas-oracle-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: ""
+
+externalSecrets:
+  gas-oracle-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_DB_CONFIG_DSN
+        secretKey: SCROLL_ROLLUP_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_L1_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+        secretKey: SCROLL_ROLLUP_L1_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+      - remoteRef:
+          key: scroll/gas-oracle-secret-env
+          property: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+        secretKey: SCROLL_ROLLUP_L2_CONFIG_RELAYER_CONFIG_GAS_ORACLE_SENDER_PRIVATE_KEY
+    refreshInterval: 2m
+    serviceAccount: external-secrets
+  gas-oracle-migrate-db:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/gas-oracle-migrate-db
+        secretKey: migrate-db.json
+    refreshInterval: 2m
+    serviceAccount: external-secrets

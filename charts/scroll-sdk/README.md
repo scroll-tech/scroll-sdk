@@ -24,22 +24,22 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-backend | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-cron | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-dashboard | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.3 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.4 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout-sc-verifier | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-fetcher | 0.0.11 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | chain-monitor | 0.0.9 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | contracts | 0.0.12 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | contracts | 0.0.14 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-api | 0.0.9 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-cron | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | frontends | 0.0.9 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | gas-oracle | 0.0.10 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-devnet | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-explorer | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.13 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.12 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.11 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.14 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.13 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.12 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.0.4 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.12 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.0.2 |
@@ -57,7 +57,7 @@ Kubernetes: `>=1.22.0-0`
 | admin-system-dashboard.ingress.main.hosts[0].host | string | `"admin-system-dashboard.scrollsdk"` |  |
 | admin-system-dashboard.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | admin-system-dashboard.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| balance-checker.enabled | bool | `false` |  |
+| balance-checker.enabled | bool | `true` |  |
 | blockscout-sc-verifier.enabled | bool | `false` |  |
 | blockscout.enabled | bool | `true` |  |
 | bridge-history-api.enabled | bool | `true` |  |

@@ -1,0 +1,31 @@
+controller:
+  replicas: 2
+
+envFrom:
+  - secretRef:
+      name: bridge-history-api-secret-env
+
+persistence:
+  bridge-history-api:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: bridge-history-api-config
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: "http://l2-rpc:8545"
+
+externalSecrets:
+  bridge-history-api-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-api-secret-env
+          property: SCROLL_BRIDGE_HISTORY_DB_DSN
+        secretKey: SCROLL_BRIDGE_HISTORY_DB_DSN
+    refreshInterval: 2m
+    serviceAccount: external-secrets

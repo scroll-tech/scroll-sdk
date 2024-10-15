@@ -1,0 +1,30 @@
+controller:
+  replicas: 2
+
+envFrom:
+  - secretRef:
+      name: coordinator-api-secret-env
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  coordinator-api-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/coordinator-api-secret-env
+          property: SCROLL_COORDINATOR_DB_DSN
+        secretKey: SCROLL_COORDINATOR_DB_DSN
+      - remoteRef:
+          key: scroll/coordinator-api-secret-env
+          property: SCROLL_COORDINATOR_AUTH_SECRET
+        secretKey: SCROLL_COORDINATOR_AUTH_SECRET
+    refreshInterval: 2m
+    serviceAccount: external-secrets

@@ -1,0 +1,34 @@
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(SCROLL_ADMIN_AUTH_DB_CONFIG_DSN)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: admin-system-cron-secret-env
+
+envFrom:
+  - secretRef:
+      name: admin-system-cron-secret-env
+
+externalSecrets:
+  admin-system-cron-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/admin-system-cron-secret-env
+          property: SCROLL_ADMIN_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/admin-system-cron-secret-env
+          property: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_READ_ONLY_DB_CONFIG_DSN
+      - remoteRef:
+          key: scroll/admin-system-cron-secret-env
+          property: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
+        secretKey: SCROLL_ADMIN_AUTH_DB_CONFIG_DSN
+    refreshInterval: 2m
+    serviceAccount: external-secrets

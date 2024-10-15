@@ -15,7 +15,7 @@ spec:
       volumeMounts:
         - mountPath: /contracts/volume
           name: config
-  restartPolicy: Always
+  restartPolicy: OnFailure
   initContainers:
     - name: 1-wait-for-l1
       image: scrolltech/scroll-alpine:v0.0.1

@@ -1,0 +1,8 @@
+configMaps:
+  contracts-deployment-env:
+    enabled: true
+    data:
+      L1_RPC_ENDPOINT: ""
+      L2_RPC_ENDPOINT: "http://l2-rpc:8545"
+      CHAIN_ID_L1: ""
+      CHAIN_ID_L2: ""

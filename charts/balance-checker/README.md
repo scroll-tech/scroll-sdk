@@ -1,6 +1,6 @@
 # balance-checker
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 balance-checker helm charts
 
@@ -27,16 +27,14 @@ Kubernetes: `>=1.22.0-0`
 | defaultProbes.enabled | bool | `true` |  |
 | defaultProbes.spec.httpGet.path | string | `"/"` |  |
 | defaultProbes.spec.httpGet.port | int | `8090` |  |
-| env[0].name | string | `"CONFIG_PATH"` |  |
-| env[0].value | string | `"app/config/balance-checker-config.json"` |  |
-| env[1].name | string | `"BIND_PORT"` |  |
-| env[1].value | string | `"8080"` |  |
-| env[2].name | string | `"METRICS_PORT"` |  |
-| env[2].value | string | `"8090"` |  |
-| env[3].name | string | `"METRICS_URL"` |  |
-| env[3].value | string | `"0.0.0.0"` |  |
-| env[4].name | string | `"SLACK_NOTIFY_URL"` |  |
-| env[4].value | string | `""` |  |
+| env[0].name | string | `"BIND_PORT"` |  |
+| env[0].value | string | `"8080"` |  |
+| env[1].name | string | `"METRICS_PORT"` |  |
+| env[1].value | string | `"8090"` |  |
+| env[2].name | string | `"METRICS_URL"` |  |
+| env[2].value | string | `"0.0.0.0"` |  |
+| env[3].name | string | `"SLACK_NOTIFY_URL"` |  |
+| env[3].value | string | `""` |  |
 | global.fullnameOverride | string | `"balance-checker"` |  |
 | global.nameOverride | string | `"balance-checker"` |  |
 | image.pullPolicy | string | `"Always"` |  |

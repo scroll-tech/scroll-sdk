@@ -9,8 +9,6 @@ image:
   tag: 0.0.2
 
 env:
-  - name: CONFIG_PATH
-    value: "app/config/balance-checker-config.json"
   - name: BIND_PORT
     value: "8080"
   - name: METRICS_PORT

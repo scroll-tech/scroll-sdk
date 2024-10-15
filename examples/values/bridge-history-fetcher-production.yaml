@@ -1,0 +1,73 @@
+envFrom:
+  - secretRef:
+      name: bridge-history-fetcher-secret-env
+
+persistence:
+  bridge-history-fetcher:
+    enabled: true
+    type: configMap
+    mountPath: /app/conf/
+    name: bridge-history-fetcher-config
+  migrate-db:
+    enabled: true
+    type: secret
+    mountPath: /config/migrate-db.json
+    name: bridge-history-fetcher-migrate-db
+    defaultMode: "0777"
+
+initContainers:
+  1-check-postgres-connection:
+    image: atkrad/wait4x:latest
+    args:
+      - postgresql
+      - $(SCROLL_BRIDGE_HISTORY_DB_DSN)
+      - --timeout
+      - "0"
+    envFrom:
+      - secretRef:
+          name: bridge-history-fetcher-secret-env
+  2-migrate-db:
+    image: scrolltech/bridgehistoryapi-db-cli:v4.4.59
+    command: ["/bin/sh", "-c", "db_cli --config /config/migrate-db.json migrate"]
+    volumeMounts:
+      - name: migrate-db
+        mountPath: /config/migrate-db.json
+        subPath: migrate-db.json
+    envFrom:
+      - secretRef:
+          name: bridge-history-fetcher-secret-env
+
+configMaps:
+  env:
+    enabled: true
+    data:
+      SCROLL_L1_RPC: ""
+      SCROLL_L2_RPC: "http://l2-rpc:8545"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
+
+externalSecrets:
+  bridge-history-fetcher-secret-env:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-fetcher-secret-env
+          property: SCROLL_BRIDGE_HISTORY_DB_DSN
+        secretKey: SCROLL_BRIDGE_HISTORY_DB_DSN
+    refreshInterval: 2m
+    serviceAccount: external-secrets
+  bridge-history-fetcher-migrate-db:
+    provider: aws
+    data:
+      - remoteRef:
+          key: scroll/bridge-history-fetcher-migrate-db
+        secretKey: migrate-db.json
+    refreshInterval: 2m
+    serviceAccount: external-secrets
