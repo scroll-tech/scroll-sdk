@@ -29,8 +29,8 @@ install:
 			--set l1-devnet.ingress.main.hosts[0].paths[0].pathType=Prefix \
 			--values scroll-sdk/admin-system-backend-config.yaml \
 			--values scroll-sdk/admin-system-cron-config.yaml \
-			--values scroll-sdk/bridge-history-api-config.yaml \
 			--values scroll-sdk/balance-checker-config.yaml \
+			--values scroll-sdk/bridge-history-api-config.yaml \
 			--values scroll-sdk/bridge-history-fetcher-config.yaml \
 			--values scroll-sdk/chain-monitor-config.yaml \
 			--values scroll-sdk/coordinator-api-config.yaml \
