@@ -78,7 +78,7 @@ dependencies:
     version: 7.3.11
     condition: grafana.enabled
   - name: l2-sequencer
-    version: 0.0.13
+    version: 0.0.12
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-sequencer.enabled
   - name: loki-stack
