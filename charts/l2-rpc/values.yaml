@@ -92,6 +92,7 @@ command:
     --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
     --gpo.percentile 20 \
     --gpo.blocks 100 \
+    --gpo.congestionthreshold 500 \
     --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" \
     --rollup.verify \
     --metrics --metrics.expensive \
