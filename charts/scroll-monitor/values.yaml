@@ -17,7 +17,7 @@ grafana:
             timeInterval: 30s
         - name: Loki
           type: loki
-          url: http://scroll-grafana-loki:3100
+          url: http://scroll-monitor-loki:3100
           access: proxy
           jsonData:
             httpHeaderName1: 'X-Scope-OrgID'
@@ -53,6 +53,13 @@ grafana:
 loki:
   enabled: true
   deploymentMode: SingleBinary
+  persistence:
+    enabled: true
+    # storageClassName: 
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+    name: loki-pvc
   loki:
     commonConfig:
       replication_factor: 1
@@ -80,7 +87,7 @@ promtail:
   enabled: true
   config:
     clients:
-      - url: http://scroll-grafana-loki:3100/loki/api/v1/push
+      - url: http://scroll-monitor-loki:3100/loki/api/v1/push
         tenant_id: 1
 
 kube-prometheus-stack:
@@ -89,8 +96,14 @@ kube-prometheus-stack:
   fullnameOverride: prometheus
   prometheus:
     enabled: true
+    prometheusSpec:
+      alerting:
+        alertmanagers:
+          - name: alertmanager-main
+            namespace: default
+            port: web
   alertmanager:
-    enabled: false
+    enabled: true
   grafana:
     enabled: false
   prometheus-node-exporter:
