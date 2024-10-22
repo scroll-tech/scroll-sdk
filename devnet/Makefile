@@ -51,3 +51,4 @@ delete:
 
 upgrade:
 		$(MAKE) install
+		
