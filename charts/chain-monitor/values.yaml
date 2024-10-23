@@ -46,6 +46,11 @@ persistence:
     type: configMap
     name: wait-for-l1-script
     defaultMode: "0777"
+  wait-for-contracts-script:
+    enabled: true
+    type: configMap
+    name: wait-for-contracts-script
+    defaultMode: "0777"
 
 service:
   main:
@@ -115,6 +120,19 @@ initContainers:
       - "200"
       - --timeout
       - "0"
+  5-wait-for-contract:
+    image: scrolltech/scroll-alpine:v0.0.1
+    command:
+      - /bin/sh
+      - -c
+      - /wait-for-contract.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR
+    envFrom:
+      - configMapRef:
+          name: chain-monitor-env
+    volumeMounts:
+      - name: wait-for-contracts-script
+        mountPath: /wait-for-contract.sh
+        subPath: wait-for-contract.sh
 
 serviceMonitor:
   main:

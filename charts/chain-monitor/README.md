@@ -1,6 +1,6 @@
 # chain-monitor
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 chain-monitor helm charts
 
@@ -65,10 +65,22 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.4-wait-for-l2-sequencer.args[4] | string | `"--timeout"` |  |
 | initContainers.4-wait-for-l2-sequencer.args[5] | string | `"0"` |  |
 | initContainers.4-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
+| initContainers.5-wait-for-contract.command[0] | string | `"/bin/sh"` |  |
+| initContainers.5-wait-for-contract.command[1] | string | `"-c"` |  |
+| initContainers.5-wait-for-contract.command[2] | string | `"/wait-for-contract.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR"` |  |
+| initContainers.5-wait-for-contract.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
+| initContainers.5-wait-for-contract.image | string | `"scrolltech/scroll-alpine:v0.0.1"` |  |
+| initContainers.5-wait-for-contract.volumeMounts[0].mountPath | string | `"/wait-for-contract.sh"` |  |
+| initContainers.5-wait-for-contract.volumeMounts[0].name | string | `"wait-for-contracts-script"` |  |
+| initContainers.5-wait-for-contract.volumeMounts[0].subPath | string | `"wait-for-contract.sh"` |  |
 | persistence.app_name.enabled | bool | `true` |  |
 | persistence.app_name.mountPath | string | `"/app/config/"` |  |
 | persistence.app_name.name | string | `"chain-monitor-config"` |  |
 | persistence.app_name.type | string | `"configMap"` |  |
+| persistence.wait-for-contracts-script.defaultMode | string | `"0777"` |  |
+| persistence.wait-for-contracts-script.enabled | bool | `true` |  |
+| persistence.wait-for-contracts-script.name | string | `"wait-for-contracts-script"` |  |
+| persistence.wait-for-contracts-script.type | string | `"configMap"` |  |
 | persistence.wait-for-l1-script.defaultMode | string | `"0777"` |  |
 | persistence.wait-for-l1-script.enabled | bool | `true` |  |
 | persistence.wait-for-l1-script.name | string | `"wait-for-l1-script"` |  |
