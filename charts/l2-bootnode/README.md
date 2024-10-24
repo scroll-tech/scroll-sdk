@@ -36,6 +36,10 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l2-bootnode-env"` |  |
 | env[0].name | string | `"L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"` |  |
 | env[0].value | string | `"0"` |  |
+| env[10].name | string | `"L2GETH_ACCOUNT_SLOTS"` |  |
+| env[10].value | string | `"128"` |  |
+| env[11].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
+| env[11].value | string | `""` |  |
 | env[1].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
 | env[1].value | string | `"0x6"` |  |
 | env[2].name | string | `"L2GETH_P2P_PORT"` |  |
@@ -48,8 +52,12 @@ Kubernetes: `>=1.22.0-0`
 | env[5].value | int | `3` |  |
 | env[6].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
 | env[6].value | string | `"1000000"` |  |
-| env[7].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
-| env[7].value | string | `""` |  |
+| env[7].name | string | `"L2GETH_GLOBAL_QUEUE"` |  |
+| env[7].value | string | `"4096"` |  |
+| env[8].name | string | `"L2GETH_ACCOUNT_QUEUE"` |  |
+| env[8].value | string | `"256"` |  |
+| env[9].name | string | `"L2GETH_GLOBAL_SLOTS"` |  |
+| env[9].value | string | `"40960"` |  |
 | global.fullnameOverride | string | `"l2-bootnode"` |  |
 | global.nameOverride | string | `"l2-bootnode"` |  |
 | image.pullPolicy | string | `"Always"` |  |

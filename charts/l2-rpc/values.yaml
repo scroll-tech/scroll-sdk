@@ -63,6 +63,14 @@ env:
     value: 3
   - name: L2GETH_MIN_GAS_PRICE
     value: "1000000"
+  - name: L2GETH_GLOBAL_QUEUE
+    value: "4096"
+  - name: L2GETH_ACCOUNT_QUEUE
+    value: "256"
+  - name: L2GETH_GLOBAL_SLOTS
+    value: "40960"
+  - name: L2GETH_ACCOUNT_SLOTS
+    value: "128"
   - name: L2GETH_EXTRA_PARAMS
     value: ""
 

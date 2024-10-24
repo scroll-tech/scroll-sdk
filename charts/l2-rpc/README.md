@@ -36,6 +36,14 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l2-rpc-env"` |  |
 | env[0].name | string | `"L2GETH_NODEKEY"` |  |
 | env[0].value | string | `""` |  |
+| env[10].name | string | `"L2GETH_ACCOUNT_QUEUE"` |  |
+| env[10].value | string | `"256"` |  |
+| env[11].name | string | `"L2GETH_GLOBAL_SLOTS"` |  |
+| env[11].value | string | `"40960"` |  |
+| env[12].name | string | `"L2GETH_ACCOUNT_SLOTS"` |  |
+| env[12].value | string | `"128"` |  |
+| env[13].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
+| env[13].value | string | `""` |  |
 | env[1].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
 | env[1].value | string | `"0x6"` |  |
 | env[2].name | string | `"L2GETH_RPC_HTTP_PORT"` |  |
@@ -52,8 +60,8 @@ Kubernetes: `>=1.22.0-0`
 | env[7].value | int | `3` |  |
 | env[8].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
 | env[8].value | string | `"1000000"` |  |
-| env[9].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
-| env[9].value | string | `""` |  |
+| env[9].name | string | `"L2GETH_GLOBAL_QUEUE"` |  |
+| env[9].value | string | `"4096"` |  |
 | global.fullnameOverride | string | `"l2-rpc"` |  |
 | global.nameOverride | string | `"l2-rpc"` |  |
 | image.pullPolicy | string | `"Always"` |  |

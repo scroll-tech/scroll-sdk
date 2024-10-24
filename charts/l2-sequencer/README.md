@@ -36,6 +36,12 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l2-sequencer-env"` |  |
 | env[0].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
 | env[0].value | string | `"0x6"` |  |
+| env[10].name | string | `"L2GETH_GLOBAL_SLOTS"` |  |
+| env[10].value | string | `"40960"` |  |
+| env[11].name | string | `"L2GETH_ACCOUNT_SLOTS"` |  |
+| env[11].value | string | `"128"` |  |
+| env[12].name | string | `"VERBOSITY"` |  |
+| env[12].value | string | `"3"` |  |
 | env[1].name | string | `"L2GETH_LOCALS"` |  |
 | env[1].value | string | `""` |  |
 | env[2].name | string | `"L2GETH_CCC_FLAG"` |  |
@@ -50,8 +56,10 @@ Kubernetes: `>=1.22.0-0`
 | env[6].value | string | `"30303"` |  |
 | env[7].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
 | env[7].value | string | `"1000000"` |  |
-| env[8].name | string | `"VERBOSITY"` |  |
-| env[8].value | string | `"3"` |  |
+| env[8].name | string | `"L2GETH_GLOBAL_QUEUE"` |  |
+| env[8].value | string | `"4096"` |  |
+| env[9].name | string | `"L2GETH_ACCOUNT_QUEUE"` |  |
+| env[9].value | string | `"256"` |  |
 | global.fullnameOverride | string | `"l2-sequencer"` |  |
 | global.nameOverride | string | `"l2-sequencer"` |  |
 | image.pullPolicy | string | `"Always"` |  |
