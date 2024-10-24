@@ -20,6 +20,8 @@ env:
     value: ""
   - name: L2GETH_CCC_FLAG
     value: "--ccc"
+  - name: L2GETH_CCC_NUMWORKERS
+    value: "5"
   - name: L2GETH_MINER_GASLIMIT
     value: "10000000"
   - name: L2GETH_RPC_HTTP_PORT
@@ -30,6 +32,14 @@ env:
     value: "30303"
   - name: L2GETH_MIN_GAS_PRICE
     value: "1000000"
+  - name: L2GETH_GLOBAL_QUEUE
+    value: "4096"
+  - name: L2GETH_ACCOUNT_QUEUE
+    value: "256"
+  - name: L2GETH_GLOBAL_SLOTS
+    value: "40960"
+  - name: L2GETH_ACCOUNT_SLOTS
+    value: "128"
   - name: VERBOSITY
     value: "3"
 
@@ -59,10 +69,11 @@ command:
     --gcmode archive \
     --cache.noprefetch \
     --verbosity ${VERBOSITY} \
-    --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG \
-    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
-    --gpo.percentile 20 \
-    --gpo.blocks 100 \
+    --txpool.globalqueue \"$L2GETH_GLOBAL_QUEUE\" --txpool.accountqueue \"$L2GETH_ACCOUNT_QUEUE\" \
+    --txpool.globalslots \"$L2GETH_GLOBAL_SLOTS\" --txpool.accountslots \"$L2GETH_ACCOUNT_SLOTS\" \
+    --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG \
+    --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --miner.gaslimit \"$L2GETH_MINER_GASLIMIT\" --rpc.gascap 0 \
+    --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --gpo.percentile 20 --gpo.blocks 100 \
     --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" \
     --rollup.verify \
     --metrics --metrics.expensive \

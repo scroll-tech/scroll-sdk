@@ -1,6 +1,6 @@
 # l2-bootnode
 
-![Version: 0.0.14](https://img.shields.io/badge/Version-0.0.14-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.15](https://img.shields.io/badge/Version-0.0.15-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l2-bootnode helm chart
 
@@ -25,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
-| command[2] | string | `"geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --syncmode full --networkid \"$CHAIN_ID\" --maxpeers \"$L2GETH_MAX_PEERS\" --netrestrict \"$L2GETH_NETRESTRICT\" --nat \"$L2GETH_NAT\" --bootnodes \"\" --gcmode archive --config \"/l2geth/config.toml\" --cache.noprefetch --verbosity 3 --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" $METRICS_FLAGS --txpool.globalqueue 4096 --txpool.globalslots 40960 --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
+| command[2] | string | `"geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && geth --datadir \"/l2geth/data\" --port \"$L2GETH_P2P_PORT\" --syncmode full --networkid \"$CHAIN_ID\" --maxpeers \"$L2GETH_MAX_PEERS\" --netrestrict \"$L2GETH_NETRESTRICT\" --nat \"$L2GETH_NAT\" --bootnodes \"\" --gcmode archive --config \"/l2geth/config.toml\" --cache.noprefetch --verbosity 3 --pprof --pprof.addr \"0.0.0.0\" --pprof.port 6060 $L2GETH_CCC_FLAG --ccc.numworkers \"$L2GETH_CCC_NUMWORKERS\" $METRICS_FLAGS --txpool.globalqueue \"$L2GETH_GLOBAL_QUEUE\" --txpool.accountqueue \"$L2GETH_ACCOUNT_QUEUE\" --txpool.globalslots \"$L2GETH_GLOBAL_SLOTS\" --txpool.accountslots \"$L2GETH_ACCOUNT_SLOTS\" --txpool.pricelimit \"$L2GETH_MIN_GAS_PRICE\" $LOCALS_FLAG --l1.endpoint \"$L2GETH_L1_ENDPOINT\" --l1.confirmations \"$L2GETH_L1_WATCHER_CONFIRMATIONS\" --l1.sync.startblock \"$L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK\" --miner.gasprice \"$L2GETH_MIN_GAS_PRICE\" --rpc.gascap 0 --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" --metrics --metrics.expensive $L2GETH_EXTRA_PARAMS"` |  |
 | controller.replicas | int | `1` |  |
 | controller.strategy | string | `"RollingUpdate"` |  |
 | controller.type | string | `"statefulset"` |  |
@@ -36,20 +36,30 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l2-bootnode-env"` |  |
 | env[0].name | string | `"L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK"` |  |
 | env[0].value | string | `"0"` |  |
+| env[10].name | string | `"L2GETH_GLOBAL_SLOTS"` |  |
+| env[10].value | string | `"40960"` |  |
+| env[11].name | string | `"L2GETH_ACCOUNT_SLOTS"` |  |
+| env[11].value | string | `"128"` |  |
+| env[12].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
+| env[12].value | string | `""` |  |
 | env[1].name | string | `"L2GETH_L1_WATCHER_CONFIRMATIONS"` |  |
 | env[1].value | string | `"0x6"` |  |
 | env[2].name | string | `"L2GETH_P2P_PORT"` |  |
 | env[2].value | int | `30303` |  |
 | env[3].name | string | `"L2GETH_CCC_FLAG"` |  |
 | env[3].value | string | `"--ccc"` |  |
-| env[4].name | string | `"L2GETH_MAX_PEERS"` |  |
-| env[4].value | int | `500` |  |
-| env[5].name | string | `"VERBOSITY"` |  |
-| env[5].value | int | `3` |  |
-| env[6].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
-| env[6].value | string | `"1000000"` |  |
-| env[7].name | string | `"L2GETH_EXTRA_PARAMS"` |  |
-| env[7].value | string | `""` |  |
+| env[4].name | string | `"L2GETH_CCC_NUMWORKERS"` |  |
+| env[4].value | string | `"5"` |  |
+| env[5].name | string | `"L2GETH_MAX_PEERS"` |  |
+| env[5].value | int | `500` |  |
+| env[6].name | string | `"VERBOSITY"` |  |
+| env[6].value | int | `3` |  |
+| env[7].name | string | `"L2GETH_MIN_GAS_PRICE"` |  |
+| env[7].value | string | `"1000000"` |  |
+| env[8].name | string | `"L2GETH_GLOBAL_QUEUE"` |  |
+| env[8].value | string | `"4096"` |  |
+| env[9].name | string | `"L2GETH_ACCOUNT_QUEUE"` |  |
+| env[9].value | string | `"256"` |  |
 | global.fullnameOverride | string | `"l2-bootnode"` |  |
 | global.nameOverride | string | `"l2-bootnode"` |  |
 | image.pullPolicy | string | `"Always"` |  |
