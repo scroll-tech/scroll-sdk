@@ -57,6 +57,8 @@ env:
     value: 30303
   - name: L2GETH_CCC_FLAG
     value: "--ccc"
+  - name: L2GETH_CCC_NUMWORKERS
+    value: "5"
   - name: L2GETH_MAX_PEERS
     value: 500
   - name: VERBOSITY
