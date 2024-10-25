@@ -102,6 +102,11 @@ kube-prometheus-stack:
           - name: alertmanager-main
             namespace: default
             port: web
+      serviceMonitorSelector:
+        matchExpressions:
+          - key: app.kubernetes.io/instance
+            operator: Exists
+
   alertmanager:
     enabled: true
   grafana:
