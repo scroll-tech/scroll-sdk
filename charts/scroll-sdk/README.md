@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.53](https://img.shields.io/badge/Version-0.0.53-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.54](https://img.shields.io/badge/Version-0.0.54-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -25,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-cron | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-dashboard | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.4 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.0.3 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.0.4 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout-sc-verifier | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.0.7 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-fetcher | 0.0.11 |
