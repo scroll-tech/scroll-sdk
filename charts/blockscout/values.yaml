@@ -39,7 +39,6 @@ blockscout-stack:
       enabled: true
       className: "nginx"
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/enable-cors: "true"
         nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
@@ -50,10 +49,6 @@ blockscout-stack:
   frontend:
     image:
       tag: v1.35.2
-
-    envFrom:
-      - configMapRef:
-          name: blockscout-frontend-env
 
     env:
       NEXT_PUBLIC_NETWORK_LOGO: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll.svg"
@@ -69,7 +64,6 @@ blockscout-stack:
     ingress:
       enabled: true
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
         nginx.ingress.kubernetes.io/enable-cors: "true"
         nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"

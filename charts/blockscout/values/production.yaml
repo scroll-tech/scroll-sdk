@@ -9,13 +9,13 @@ blockscout-stack:
       BLOCK_TRANSFORMER: clique
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       CHAIN_TYPE: scroll
-      INDEXER_SCROLL_L1_RPC: ""
       INDEXER_SCROLL_L1_CHAIN_CONTRACT: ""  # value of L1_SCROLL_CHAIN_PROXY_ADDR on config-contracts.toml
       INDEXER_SCROLL_L1_BATCH_START_BLOCK: ""  # value of L1_CONTRACT_DEPLOYMENT_BLOCK on config.toml
       INDEXER_SCROLL_L1_MESSENGER_CONTRACT: ""  # value of L1_SCROLL_MESSENGER_PROXY_ADDR on config-contracts.toml
       INDEXER_SCROLL_L1_MESSENGER_START_BLOCK: ""  # value of L1_CONTRACT_DEPLOYMENT_BLOCK on config.toml
       INDEXER_SCROLL_L2_MESSENGER_CONTRACT: ""  # value of L2_SCROLL_MESSENGER_PROXY_ADDR on config-contracts.toml
       INDEXER_SCROLL_L2_GAS_ORACLE_CONTRACT: ""  # value of L1_GAS_PRICE_ORACLE_PROXY_ADDR on config-contracts.toml
+      INDEXER_SCROLL_L1_RPC: ""
       INDEXER_SCROLL_L2_MESSENGER_START_BLOCK: 0
       INDEXER_SCROLL_L1_ETH_GET_LOGS_RANGE_SIZE: 500
       INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE: 500
@@ -25,30 +25,43 @@ blockscout-stack:
       - secretRef:
           name: blockscout-secret-env
 
+    extraEnv:
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            name: blockscout-secret-env
+            key: DATABASE_URL
+
     ingress:
       enabled: true
-      className: "nginx"
-      annotations: {} # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
-        # cert-manager.io/cluster-issuer: letsencrypt-prod
-        # nginx.ingress.kubernetes.io/enable-cors: "true"
-        # nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
-        # nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-        # nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-        # nginx.ingress.kubernetes.io/cors-max-age: "86400"
-      hostname: "" # Set here the hostname for the ingress. Example : blockscout-backend.scrollsdk
+      className: ""
+      annotations:  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
+#        cert-manager.io/cluster-issuer: letsencrypt-prod
+#        nginx.ingress.kubernetes.io/enable-cors: "true"
+#        nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
+#        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+#        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+#        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: "blockscout-backend.hsk.scroll.systems"
+      tls:
+        enabled: true
+        secretName: blockscout-tls  # Set here the hostname for the ingress. Example : blockscout-backend.scrollsdk
 
   frontend:
     ingress:
       enabled: true
       ingressClassName: ""  # Set here your ingressClassName
-      annotations: {}  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
-        # cert-manager.io/cluster-issuer: letsencrypt-prod
-        # nginx.ingress.kubernetes.io/enable-cors: "true"
-        # nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
-        # nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-        # nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-        # nginx.ingress.kubernetes.io/cors-max-age: "86400"
-      hostname: "" # Set here the hostname for the ingress. Example : blockscout-backend.scrollsdk
+      annotations:  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
+#         cert-manager.io/cluster-issuer: letsencrypt-prod
+#         nginx.ingress.kubernetes.io/enable-cors: "true"
+#         nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
+#         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+#         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+#         nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: ""  # Set the hostname for the frontend. Example : blockscout.scrollsdk
+      tls:
+        enabled: true
+        secretName: blockscout-front-tls  # Set here the hostname for the ingress. Example : blockscout.scrollsdk
 
 externalSecrets:
   blockscout-secret-env:

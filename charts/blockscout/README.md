@@ -38,7 +38,6 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.image.pullPolicy | string | `"IfNotPresent"` |  |
 | blockscout-stack.blockscout.image.repository | string | `"blockscout/blockscout-scroll"` |  |
 | blockscout-stack.blockscout.image.tag | string | `"6.9.0-alpha.1"` |  |
-| blockscout-stack.blockscout.ingress.annotations."cert-manager.io/cluster-issuer" | string | `"letsencrypt-prod"` |  |
 | blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
 | blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
 | blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"https://blockscout.scrollsdk"` |  |
@@ -56,9 +55,7 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.frontend.env.NEXT_PUBLIC_NETWORK_LOGO | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll.svg"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_NETWORK_LOGO_DARK | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll-dark.svg"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_OG_IMAGE_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/og-images/scroll-sepolia.png"` |  |
-| blockscout-stack.frontend.envFrom[0].configMapRef.name | string | `"blockscout-frontend-env"` |  |
 | blockscout-stack.frontend.image.tag | string | `"v1.35.2"` |  |
-| blockscout-stack.frontend.ingress.annotations."cert-manager.io/cluster-issuer" | string | `"letsencrypt-prod"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"https://blockscout.scrollsdk"` |  |
