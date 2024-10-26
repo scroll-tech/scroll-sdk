@@ -17,7 +17,7 @@ grafana:
             timeInterval: 30s
         - name: Loki
           type: loki
-          url: http://scroll-monitor-loki:3100
+          url: http://loki:3100
           access: proxy
           jsonData:
             httpHeaderName1: 'X-Scope-OrgID'
@@ -52,6 +52,7 @@ grafana:
 
 loki:
   enabled: true
+  fullnameOverride: loki
   deploymentMode: SingleBinary
   persistence:
     enabled: true
@@ -87,7 +88,7 @@ promtail:
   enabled: true
   config:
     clients:
-      - url: http://scroll-monitor-loki:3100/loki/api/v1/push
+      - url: http://loki:3100/loki/api/v1/push
         tenant_id: 1
 
 kube-prometheus-stack:
