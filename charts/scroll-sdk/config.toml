@@ -4,8 +4,8 @@ L1_RPC_ENDPOINT = "http://l1-devnet:8545"
 L1_RPC_ENDPOINT_WEBSOCKET = "ws://l1-devnet:8546"
 L2_RPC_ENDPOINT = "http://l2-sequencer:8545"
 
-CHAIN_NAME_L1="Ethereum"
-CHAIN_NAME_L2="Scroll SDK"
+CHAIN_NAME_L1 = "Ethereum"
+CHAIN_NAME_L2 = "Scroll SDK"
 CHAIN_ID_L1 = 111111
 CHAIN_ID_L2 = 221122
 
@@ -120,5 +120,6 @@ ROLLUP_EXPLORER_API_HOST = "rollup-explorer-backend.scrollsdk"
 COORDINATOR_API_HOST = "coordinator-api.scrollsdk"
 RPC_GATEWAY_HOST = "l2-rpc.scrollsdk"
 BLOCKSCOUT_HOST = "blockscout.scrollsdk"
-ADMIN_SYSTEM_DASHBOARD_HOST= "admin-system-dashboard.scrollsdk"
+BLOCKSCOUT_BACKEND_HOST = "blockscout-backend.scrollsdk"
+ADMIN_SYSTEM_DASHBOARD_HOST = "admin-system-dashboard.scrollsdk"
 GRAFANA_HOST = "http://grafana.scrollsdk"
