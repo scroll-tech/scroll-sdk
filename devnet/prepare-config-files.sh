@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Give the current user the appropriate permissions
+sudo chown -R $(whoami):$(whoami) scroll-sdk
+sudo chmod -R u+rw scroll-sdk
+
 indent_file_and_add_first_line () {
   echo $1
   temp_file="tmp_file"
