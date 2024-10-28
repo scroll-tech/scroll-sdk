@@ -86,7 +86,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-explorer-backend.enabled
   - name: rollup-node
-    version: 0.0.12
+    version: 0.0.13
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-node.enabled
   - name: rpc-gateway
@@ -94,7 +94,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rpc-gateway.enabled
   - name: scroll-common
-    version: 0.0.4
+    version: 0.0.5
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: scroll-common.enabled
   - name: scroll-monitor

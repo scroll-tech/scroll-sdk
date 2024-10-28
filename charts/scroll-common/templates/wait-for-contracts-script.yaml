@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wait-for-contracts-script
+data:
+  wait-for-contract.sh: |
+    #!/bin/sh
+
+    # Get L1 endpoint and Scroll chain proxy address
+    L1_ENDPOINT=$1
+    L1_SCROLL_CHAIN_PROXY_ADDR=$2
+
+    # Function to check the Geth node
+    check_contract() {
+      RESPONSE=$(curl $L1_ENDPOINT -X POST -H "Content-Type: application/json" --data "{\"method\":\"eth_getStorageAt\",\"params\":[\"$L1_SCROLL_CHAIN_PROXY_ADDR\", \"0x0\", \"latest\"],\"id\":1,\"jsonrpc\":\"2.0\"}")
+      INIT_STATUS=$(echo "$RESPONSE" | sed -E 's/^.*"result":"([^"]+)".*$/\1/')
+
+      echo "init status is $INIT_STATUS"
+      if [ "$INIT_STATUS" = 0x0000000000000000000000000000000000000000000000000000000000000001 ]; then
+        echo "Contracts is ready!"
+        exit 0
+      else
+        echo "Contracts is not ready, init status: $INIT_STATUS. Retrying in 5 seconds..."
+        sleep 5
+      fi
+    }
+
+    # Loop until the contract initialized
+    while true; do
+      check_contract
+    done

@@ -4,7 +4,7 @@ L1_RPC_ENDPOINT = "http://l1-devnet:8545"
 L1_RPC_ENDPOINT_WEBSOCKET = "ws://l1-devnet:8546"
 L2_RPC_ENDPOINT = "http://l2-sequencer:8545"
 
-CHAIN_NAME_L1="Ethereum"
+CHAIN_NAME_L1="Anvil L1"
 CHAIN_NAME_L2="Scroll SDK"
 CHAIN_ID_L1 = 111111
 CHAIN_ID_L2 = 221122
