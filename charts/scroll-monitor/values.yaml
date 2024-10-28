@@ -56,7 +56,7 @@ loki:
   deploymentMode: SingleBinary
   persistence:
     enabled: true
-    # storageClassName: 
+    # storageClassName:
     accessModes:
       - ReadWriteOnce
     size: 10Gi
