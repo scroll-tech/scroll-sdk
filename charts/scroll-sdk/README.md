@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.53](https://img.shields.io/badge/Version-0.0.53-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.54](https://img.shields.io/badge/Version-0.0.54-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -18,9 +18,6 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://grafana.github.io/helm-charts | grafana | 7.3.11 |
-| https://grafana.github.io/helm-charts | loki-stack | 2.10.2 |
-| https://prometheus-community.github.io/helm-charts | kube-prometheus-stack | 59.0.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-backend | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-cron | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-dashboard | 0.0.2 |

@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.53
+version: 0.0.54
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -73,26 +73,14 @@ dependencies:
     version: 0.0.15
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-rpc.enabled
-  - name: grafana
-    repository: "https://grafana.github.io/helm-charts"
-    version: 7.3.11
-    condition: grafana.enabled
   - name: l2-sequencer
     version: 0.0.13
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-sequencer.enabled
-  - name: loki-stack
-    repository: "https://grafana.github.io/helm-charts"
-    version: 2.10.2
-    condition: loki-stack.enabled
   - name: postgresql
     repository: "oci://registry-1.docker.io/bitnamicharts"
     version: 15.5.0
     condition: postgresql.enabled
-  - name: kube-prometheus-stack
-    repository: "https://prometheus-community.github.io/helm-charts"
-    version: 59.0.0
-    condition: kube-prometheus-stack.enabled
   - name: rollup-explorer-backend
     version: 0.0.4
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
