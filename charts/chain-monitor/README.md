@@ -1,6 +1,6 @@
 # chain-monitor
 
-![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.11](https://img.shields.io/badge/Version-0.0.11-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 chain-monitor helm charts
 
@@ -67,7 +67,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.4-wait-for-l2-sequencer.image | string | `"atkrad/wait4x:latest"` |  |
 | initContainers.5-wait-for-contract.command[0] | string | `"/bin/sh"` |  |
 | initContainers.5-wait-for-contract.command[1] | string | `"-c"` |  |
-| initContainers.5-wait-for-contract.command[2] | string | `"/wait-for-contract.sh $L1_RPC_ENDPOINT $L1_SCROLL_CHAIN_PROXY_ADDR"` |  |
+| initContainers.5-wait-for-contract.command[2] | string | `"/wait-for-contract.sh $SCROLL_L1_RPC $L1_SCROLL_CHAIN_PROXY_ADDR"` |  |
 | initContainers.5-wait-for-contract.envFrom[0].configMapRef.name | string | `"chain-monitor-env"` |  |
 | initContainers.5-wait-for-contract.image | string | `"scrolltech/scroll-alpine:v0.0.1"` |  |
 | initContainers.5-wait-for-contract.volumeMounts[0].mountPath | string | `"/wait-for-contract.sh"` |  |
