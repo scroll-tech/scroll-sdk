@@ -1,6 +1,6 @@
 # scroll-monitor
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 helm chart to deploy grafana, prometheus and loki to monitor scroll-sdk
 
@@ -56,13 +56,13 @@ Kubernetes: `>=1.22.0-0`
 | grafana.datasources."datasources.yaml".datasources[1].name | string | `"Loki"` |  |
 | grafana.datasources."datasources.yaml".datasources[1].secureJsonData.httpHeaderValue1 | string | `"1"` |  |
 | grafana.datasources."datasources.yaml".datasources[1].type | string | `"loki"` |  |
-| grafana.datasources."datasources.yaml".datasources[1].url | string | `"http://scroll-grafana-loki:3100"` |  |
+| grafana.datasources."datasources.yaml".datasources[1].url | string | `"http://loki:3100"` |  |
 | grafana.enabled | bool | `true` |  |
 | grafana.fullnameOverride | string | `"grafana"` |  |
 | grafana.ingress.enabled | bool | `true` |  |
 | grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
 | grafana.nameOverride | string | `"grafana"` |  |
-| kube-prometheus-stack.alertmanager.enabled | bool | `false` |  |
+| kube-prometheus-stack.alertmanager.enabled | bool | `true` |  |
 | kube-prometheus-stack.enabled | bool | `true` |  |
 | kube-prometheus-stack.fullnameOverride | string | `"prometheus"` |  |
 | kube-prometheus-stack.grafana.enabled | bool | `false` |  |
@@ -72,9 +72,15 @@ Kubernetes: `>=1.22.0-0`
 | kube-prometheus-stack.prometheus-node-exporter.fullnameOverride | string | `"node-exporter"` |  |
 | kube-prometheus-stack.prometheus-node-exporter.nameOverride | string | `"node-exporter"` |  |
 | kube-prometheus-stack.prometheus.enabled | bool | `true` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.alerting.alertmanagers[0].name | string | `"alertmanager-main"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.alerting.alertmanagers[0].namespace | string | `"default"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.alerting.alertmanagers[0].port | string | `"web"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].key | string | `"app.kubernetes.io/instance"` |  |
+| kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].operator | string | `"Exists"` |  |
 | loki.backend.replicas | int | `0` |  |
 | loki.deploymentMode | string | `"SingleBinary"` |  |
 | loki.enabled | bool | `true` |  |
+| loki.fullnameOverride | string | `"loki"` |  |
 | loki.loki.commonConfig.replication_factor | int | `1` |  |
 | loki.loki.schemaConfig.configs[0].from | string | `"2024-01-01"` |  |
 | loki.loki.schemaConfig.configs[0].index.period | string | `"24h"` |  |
@@ -83,11 +89,15 @@ Kubernetes: `>=1.22.0-0`
 | loki.loki.schemaConfig.configs[0].schema | string | `"v13"` |  |
 | loki.loki.schemaConfig.configs[0].store | string | `"tsdb"` |  |
 | loki.loki.storage.type | string | `"filesystem"` |  |
+| loki.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| loki.persistence.enabled | bool | `true` |  |
+| loki.persistence.name | string | `"loki-pvc"` |  |
+| loki.persistence.size | string | `"10Gi"` |  |
 | loki.read.replicas | int | `0` |  |
 | loki.singleBinary.replicas | int | `1` |  |
 | loki.write.replicas | int | `0` |  |
 | promtail.config.clients[0].tenant_id | int | `1` |  |
-| promtail.config.clients[0].url | string | `"http://scroll-grafana-loki:3100/loki/api/v1/push"` |  |
+| promtail.config.clients[0].url | string | `"http://loki:3100/loki/api/v1/push"` |  |
 | promtail.enabled | bool | `true` |  |
 
 ----------------------------------------------
