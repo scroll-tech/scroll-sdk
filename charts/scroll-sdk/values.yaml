@@ -127,6 +127,7 @@ scroll-common:
   enabled: true
 
 scroll-monitor:
+  enabled: true
   grafana:
     enabled: true
     ingress:

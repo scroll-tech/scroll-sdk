@@ -134,6 +134,7 @@ Kubernetes: `>=1.22.0-0`
 | rpc-gateway.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | rpc-gateway.ingress.main.ingressClassName | string | `"nginx"` |  |
 | scroll-common.enabled | bool | `true` |  |
+| scroll-monitor.enabled | bool | `true` |  |
 | scroll-monitor.grafana.enabled | bool | `true` |  |
 | scroll-monitor.grafana.ingress.enabled | bool | `true` |  |
 | scroll-monitor.grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
