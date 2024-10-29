@@ -20,6 +20,7 @@ blockscout-stack:
       INDEXER_SCROLL_L1_ETH_GET_LOGS_RANGE_SIZE: 500
       INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE: 500
       SCROLL_L2_CURIE_UPGRADE_BLOCK: 0
+      ECTO_USE_SSL: true
 
     envFrom:
       - secretRef:

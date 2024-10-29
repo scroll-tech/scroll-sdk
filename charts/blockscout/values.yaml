@@ -60,6 +60,8 @@ blockscout-stack:
       FAVICON_MASTER_URL: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"
       NEXT_PUBLIC_HOMEPAGE_CHARTS: '["daily_txs"]'
       NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
+      ECTO_USE_SSL: false
+      ETHEREUM_JSONRPC_HTTP_INSECURE: true
 
     ingress:
       enabled: true
