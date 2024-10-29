@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.54
+version: 0.0.55
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -58,7 +58,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: frontends.enabled
   - name: gas-oracle
-    version: 0.0.10
+    version: 0.0.11
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: gas-oracle.enabled
   - name: l1-explorer
@@ -66,15 +66,15 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-explorer.enabled
   - name: l2-bootnode
-    version: 0.0.15
+    version: 0.0.16
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-bootnode.enabled
   - name: l2-rpc
-    version: 0.0.15
+    version: 0.0.16
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-rpc.enabled
   - name: l2-sequencer
-    version: 0.0.13
+    version: 0.0.14
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-sequencer.enabled
   - name: postgresql
@@ -86,7 +86,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-explorer-backend.enabled
   - name: rollup-node
-    version: 0.0.13
+    version: 0.0.14
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-node.enabled
   - name: rpc-gateway
