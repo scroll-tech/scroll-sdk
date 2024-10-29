@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.56](https://img.shields.io/badge/Version-0.0.56-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.57](https://img.shields.io/badge/Version-0.0.57-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -41,7 +41,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.14 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-common | 0.0.5 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-monitor | 0.0.5 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-monitor | 0.0.6 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 15.5.0 |
 
 ## Values
@@ -138,6 +138,7 @@ Kubernetes: `>=1.22.0-0`
 | scroll-monitor.grafana.enabled | bool | `true` |  |
 | scroll-monitor.grafana.ingress.enabled | bool | `true` |  |
 | scroll-monitor.grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
+| scroll-monitor.grafana.ingress.ingressClassName | string | `"nginx"` |  |
 | scroll-monitor.kube-prometheus-stack.enabled | bool | `true` |  |
 | scroll-monitor.loki.enabled | bool | `true` |  |
 | scroll-monitor.promtail.enabled | bool | `true` |  |

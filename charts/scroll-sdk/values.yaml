@@ -132,7 +132,9 @@ scroll-monitor:
     enabled: true
     ingress:
       enabled: true
-      hosts: ["grafana.scrollsdk"]
+      ingressClassName: nginx
+      hosts:
+        - grafana.scrollsdk
   loki:
     enabled: true
   promtail:

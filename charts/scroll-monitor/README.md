@@ -1,6 +1,6 @@
 # scroll-monitor
 
-![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 helm chart to deploy grafana, prometheus and loki to monitor scroll-sdk
 
@@ -61,6 +61,7 @@ Kubernetes: `>=1.22.0-0`
 | grafana.fullnameOverride | string | `"grafana"` |  |
 | grafana.ingress.enabled | bool | `true` |  |
 | grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
+| grafana.ingress.ingressClassName | string | `"nginx"` |  |
 | grafana.nameOverride | string | `"grafana"` |  |
 | kube-prometheus-stack.alertmanager.enabled | bool | `true` |  |
 | kube-prometheus-stack.enabled | bool | `true` |  |
