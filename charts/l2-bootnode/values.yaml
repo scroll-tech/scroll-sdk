@@ -11,7 +11,7 @@ controller:
 image:
   repository: scrolltech/l2geth
   pullPolicy: Always
-  tag: scroll-v5.7.21
+  tag: scroll-v5.7.25
 
 env:
   - name: L2GETH_L1_CONTRACT_DEPLOYMENT_BLOCK
