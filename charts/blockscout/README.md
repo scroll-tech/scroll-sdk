@@ -25,6 +25,8 @@ Kubernetes: `>=1.22.0-0`
 |-----|------|---------|-------------|
 | blockscout-stack.blockscout.env.BLOCK_TRANSFORMER | string | `"clique"` |  |
 | blockscout-stack.blockscout.env.CHAIN_TYPE | string | `"scroll"` |  |
+| blockscout-stack.blockscout.env.ECTO_USE_SSL | bool | `false` |  |
+| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_INSECURE | bool | `true` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_URL | string | `"http://l2-rpc:8545"` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_TRACE_URL | string | `"http://l2-rpc:8545"` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_VARIANT | string | `"geth"` |  |
@@ -46,8 +48,6 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"blockscout-backend.scrollsdk"` |  |
-| blockscout-stack.frontend.env.ECTO_USE_SSL | bool | `false` |  |
-| blockscout-stack.frontend.env.ETHEREUM_JSONRPC_HTTP_INSECURE | bool | `true` |  |
 | blockscout-stack.frontend.env.FAVICON_MASTER_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_CHARTS | string | `"[\"daily_txs\"]"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_HERO_BANNER_CONFIG | string | `"{'background':['rgba(255, 238, 218, 1)'],'text_color':['rgba(25, 6, 2, 1)']}"` |  |

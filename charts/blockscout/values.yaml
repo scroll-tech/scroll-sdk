@@ -23,6 +23,8 @@ blockscout-stack:
       INDEXER_SCROLL_L1_ETH_GET_LOGS_RANGE_SIZE: 500
       INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE: 500
       SCROLL_L2_CURIE_UPGRADE_BLOCK: 0
+      ECTO_USE_SSL: false
+      ETHEREUM_JSONRPC_HTTP_INSECURE: true
       # Not sure what these values are for
       #      SCROLL_L1_SCALAR_INIT:
       #      SCROLL_L1_OVERHEAD_INIT:
@@ -60,8 +62,6 @@ blockscout-stack:
       FAVICON_MASTER_URL: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"
       NEXT_PUBLIC_HOMEPAGE_CHARTS: '["daily_txs"]'
       NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
-      ECTO_USE_SSL: false
-      ETHEREUM_JSONRPC_HTTP_INSECURE: true
 
     ingress:
       enabled: true

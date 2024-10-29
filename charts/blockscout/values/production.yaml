@@ -21,6 +21,7 @@ blockscout-stack:
       INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE: 500
       SCROLL_L2_CURIE_UPGRADE_BLOCK: 0
       ECTO_USE_SSL: true
+      ETHEREUM_JSONRPC_HTTP_INSECURE: false
 
     envFrom:
       - secretRef:
