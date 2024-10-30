@@ -61,6 +61,8 @@ blockscout-stack:
       NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: ws
       NEXT_PUBLIC_API_HOST: "blockscout-backend.scrollsdk"
       NEXT_PUBLIC_APP_PROTOCOL: http
+      NEXT_PUBLIC_AD_BANNER_PROVIDER: none
+      NEXT_PUBLIC_AD_TEXT_PROVIDER: none
 
     ingress:
       enabled: true
