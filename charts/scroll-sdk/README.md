@@ -21,7 +21,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-backend | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-cron | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-dashboard | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.4 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.5 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout-sc-verifier | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.0.8 |
