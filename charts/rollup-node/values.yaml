@@ -95,7 +95,7 @@ initContainers:
       - configMapRef:
           name: rollup-node-env
   2-migrate-db:
-    image: scrolltech/rollup-db-cli:v4.4.60
+    image: scrolltech/rollup-db-cli:v4.4.71
     command: ["/bin/sh", "-c", "db_cli migrate --config /config/migrate-db.json"]
     volumeMounts:
       - name: migrate-db
