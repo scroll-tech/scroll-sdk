@@ -40,7 +40,11 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.image.pullPolicy | string | `"IfNotPresent"` |  |
 | blockscout-stack.blockscout.image.repository | string | `"blockscout/blockscout-scroll"` |  |
 | blockscout-stack.blockscout.image.tag | string | `"6.9.0-alpha.1"` |  |
-| blockscout-stack.blockscout.ingress.annotations | object | `{}` |  |
+| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
+| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
+| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"http://blockscout.scrollsdk"` |  |
+| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-max-age" | string | `"86400"` |  |
+| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/enable-cors" | string | `"true"` |  |
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"blockscout-backend.scrollsdk"` |  |

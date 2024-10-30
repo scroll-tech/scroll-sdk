@@ -40,7 +40,12 @@ blockscout-stack:
     ingress:
       enabled: true
       className: "nginx"
-      annotations: {}
+      annotations:
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://blockscout.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
       hostname: blockscout-backend.scrollsdk
 
   frontend:

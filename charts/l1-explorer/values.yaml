@@ -22,8 +22,13 @@ blockscout-stack:
     ingress:
       enabled: true
       className: "nginx"
-      annotations: {}
-      hostname: l1-explorer.scrollsdk
+      annotations:
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://l1-explorer.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: l1-explorer-backend.scrollsdk
 
   frontend:
     image:
@@ -41,7 +46,7 @@ blockscout-stack:
       NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
       NEXT_PUBLIC_API_PROTOCOL: http
       NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: ws
-      NEXT_PUBLIC_API_HOST: "l1-explorer.scrollsdk"
+      NEXT_PUBLIC_API_HOST: "l1-explorer-backend.scrollsdk"
       NEXT_PUBLIC_APP_PROTOCOL: http
       NEXT_PUBLIC_AD_BANNER_PROVIDER: none
       NEXT_PUBLIC_AD_TEXT_PROVIDER: none
