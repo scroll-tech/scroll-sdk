@@ -5,7 +5,6 @@ envFrom:
   - secretRef:
       name: bridge-history-api-secret-env
 
-# TODO make this consistent with devnet, we should use bridge-history-api-config instead of bridge-history-config
 persistence:
   bridge-history-api:
     enabled: true
@@ -19,15 +18,6 @@ configMaps:
     data:
       SCROLL_L1_RPC: ""
       SCROLL_L2_RPC: "http://l2-rpc:8545"
-
-ingress:
-  main:
-    ingressClassName: "nginx"
-    hosts:
-      - host: ""
-        paths:
-          - path: /
-            pathType: Prefix
 
 externalSecrets:
   bridge-history-api-secret-env:

@@ -1,6 +1,14 @@
 global:
   fullnameOverride: l2-sequencer-0
 
+resources:
+  requests:
+    memory: "150Mi"
+    cpu: "50m"
+  limits:
+    memory: "8Gi"
+    cpu: "4"
+
 envFrom:
   - configMapRef:
       name: l2-sequencer-0-env

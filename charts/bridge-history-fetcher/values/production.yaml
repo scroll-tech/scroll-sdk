@@ -3,7 +3,6 @@ envFrom:
       name: bridge-history-fetcher-secret-env
 
 persistence:
-  # TODO make this consistent with devnet, we should use bridge-history-fetcher-config instead of bridge-history-config
   bridge-history-fetcher:
     enabled: true
     type: configMap
@@ -44,6 +43,15 @@ configMaps:
     data:
       SCROLL_L1_RPC: ""
       SCROLL_L2_RPC: "http://l2-rpc:8545"
+
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
 
 externalSecrets:
   bridge-history-fetcher-secret-env:

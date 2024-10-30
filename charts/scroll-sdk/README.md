@@ -24,8 +24,8 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.0.4 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.0.3 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout-sc-verifier | 0.0.2 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.0.7 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-fetcher | 0.0.11 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.0.8 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-fetcher | 0.0.12 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | chain-monitor | 0.0.11 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | contracts | 0.0.16 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | coordinator-api | 0.0.9 |
@@ -36,9 +36,9 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l1-explorer | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.0.16 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.0.16 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.14 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.0.15 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.0.4 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.14 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.15 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-common | 0.0.5 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-monitor | 0.0.6 |

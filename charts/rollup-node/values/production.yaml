@@ -20,6 +20,14 @@ initContainers:
       - secretRef:
           name: rollup-node-secret-env
 
+resources:
+  requests:
+    memory: "50Mi"
+    cpu: "100m"
+  limits:
+    memory: "200Mi"
+    cpu: "500m"
+
 envFrom:
   - secretRef:
       name: rollup-node-secret-env
