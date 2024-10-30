@@ -10,7 +10,7 @@ controller:
 image:
   repository: scrolltech/bridgehistoryapi-fetcher
   pullPolicy: Always
-  tag: v4.4.59
+  tag: v4.4.71
 
 command:
   [
@@ -93,7 +93,7 @@ initContainers:
       - configMapRef:
           name: bridge-history-fetcher-env
   2-migrate-db:
-    image: scrolltech/bridgehistoryapi-db-cli:v4.4.59
+    image: scrolltech/bridgehistoryapi-db-cli:v4.4.71
     command: ["/bin/sh", "-c", "db_cli --config /config/migrate-db.json migrate"]
     volumeMounts:
       - name: migrate-db

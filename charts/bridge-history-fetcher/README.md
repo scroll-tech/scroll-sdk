@@ -42,7 +42,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"bridge-history-fetcher"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/bridgehistoryapi-fetcher"` |  |
-| image.tag | string | `"v4.4.59"` |  |
+| image.tag | string | `"v4.4.71"` |  |
 | initContainers.1-check-postgres-connection.args[0] | string | `"postgresql"` |  |
 | initContainers.1-check-postgres-connection.args[1] | string | `"$(SCROLL_BRIDGE_HISTORY_DB_DSN)"` |  |
 | initContainers.1-check-postgres-connection.args[2] | string | `"--timeout"` |  |
@@ -53,7 +53,7 @@ Kubernetes: `>=1.22.0-0`
 | initContainers.2-migrate-db.command[1] | string | `"-c"` |  |
 | initContainers.2-migrate-db.command[2] | string | `"db_cli --config /config/migrate-db.json migrate"` |  |
 | initContainers.2-migrate-db.envFrom[0].configMapRef.name | string | `"bridge-history-fetcher-env"` |  |
-| initContainers.2-migrate-db.image | string | `"scrolltech/bridgehistoryapi-db-cli:v4.4.59"` |  |
+| initContainers.2-migrate-db.image | string | `"scrolltech/bridgehistoryapi-db-cli:v4.4.71"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].mountPath | string | `"/config/migrate-db.json"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].name | string | `"migrate-db"` |  |
 | initContainers.2-migrate-db.volumeMounts[0].subPath | string | `"migrate-db.json"` |  |
