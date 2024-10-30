@@ -62,7 +62,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: gas-oracle.enabled
   - name: l1-explorer
-    version: 0.0.2
+    version: 0.0.3
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-explorer.enabled
   - name: l2-bootnode
