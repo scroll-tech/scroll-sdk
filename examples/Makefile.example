@@ -95,6 +95,11 @@ install:
 		--values values/scroll-monitor-production.yaml \
 		--values values/alert-manager.yaml
 
+	helm upgrade -i balance-checker oci://ghcr.io/scroll-tech/scroll-sdk/helm/balance-checker -n $(NAMESPACE) \
+		--version=0.0.4 \
+		--values values/balance-checker-production.yaml \
+		--values values/balance-checker-config.yaml
+
 install-l1-devnet:
 	helm upgrade -i l1-devnet oci://ghcr.io/scroll-tech/scroll-sdk/helm/l1-devnet -n $(NAMESPACE) \
 		--version=0.0.3 \
@@ -121,6 +126,7 @@ delete:
 	helm delete -n $(NAMESPACE) admin-system-dashboard
 	helm delete -n $(NAMESPACE) contracts
 	helm delete -n $(NAMESPACE) scroll-monitor
+	helm delete -n $(NAMESPACE) balance-checker
 
 delete-l1-devnet:
 	helm delete -n $(NAMESPACE) l1-devnet
