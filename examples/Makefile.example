@@ -24,7 +24,7 @@ install:
 		--values values/bridge-history-api-config.yaml
 
 	helm upgrade -i bridge-history-fetcher oci://ghcr.io/scroll-tech/scroll-sdk/helm/bridge-history-fetcher -n $(NAMESPACE) \
-		--version=0.0.11 \
+		--version=0.0.12 \
 		--values values/bridge-history-fetcher-production.yaml \
 		--values values/bridge-history-fetcher-config.yaml
 
