@@ -97,7 +97,7 @@ install:
 
 install-l1-devnet:
 	helm upgrade -i l1-devnet oci://ghcr.io/scroll-tech/scroll-sdk/helm/l1-devnet -n $(NAMESPACE) \
-		--version=0.0.3 \
+		--version=0.0.2 \
 		--values values/l1-devnet-production.yaml
 
 delete:

@@ -1,12 +1,18 @@
 name: Chart Sync Validation
 
 on:
+  push:
+    paths:
+      - "charts/**/values/production.yaml"
+      - "examples/values/*-production.yaml"
+      - "charts/**/Chart.yaml"
+      - "examples/Makefile.example"
   pull_request:
     paths:
       - "charts/**/values/production.yaml"
       - "examples/values/*-production.yaml"
       - "charts/**/Chart.yaml"
-      - "Makefile"
+      - "examples/Makefile.example"
 
 jobs:
   validate-chart-sync:
