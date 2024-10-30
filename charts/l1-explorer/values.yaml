@@ -9,10 +9,7 @@ blockscout-stack:
       tag: 6.9.0-alpha.1
 
     env:
-      ETHEREUM_JSONRPC_HTTP_URL: http://l2-rpc:8545
-      ETHEREUM_JSONRPC_TRACE_URL: http://l2-rpc:8545
       ETHEREUM_JSONRPC_VARIANT: geth
-      ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
       BLOCK_TRANSFORMER: clique
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       ECTO_USE_SSL: false

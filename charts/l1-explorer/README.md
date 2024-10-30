@@ -26,10 +26,7 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.env.BLOCK_TRANSFORMER | string | `"clique"` |  |
 | blockscout-stack.blockscout.env.ECTO_USE_SSL | bool | `false` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_INSECURE | bool | `true` |  |
-| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_URL | string | `"http://l2-rpc:8545"` |  |
-| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_TRACE_URL | string | `"http://l2-rpc:8545"` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_VARIANT | string | `"geth"` |  |
-| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_WS_URL | string | `"ws://l2-rpc:8546"` |  |
 | blockscout-stack.blockscout.env.INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER | bool | `true` |  |
 | blockscout-stack.blockscout.envFrom[0].configMapRef.name | string | `"l1-explorer-env"` |  |
 | blockscout-stack.blockscout.image.pullPolicy | string | `"IfNotPresent"` |  |
