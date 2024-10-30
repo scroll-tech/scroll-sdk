@@ -96,7 +96,7 @@ install:
 		--values values/alert-manager.yaml
 
 	helm upgrade -i balance-checker oci://ghcr.io/scroll-tech/scroll-sdk/helm/balance-checker -n $(NAMESPACE) \
-		--version=0.0.4 \
+		--version=0.0.5 \
 		--values values/balance-checker-production.yaml \
 		--values values/balance-checker-config.yaml
 
