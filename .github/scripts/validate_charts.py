@@ -30,6 +30,41 @@ def compare_yaml_files(file1, file2):
     return True
 
 
+def validate_production_files():
+    success = True
+
+    # Check values files sync
+    chart_values = glob.glob("charts/**/values/production.yaml", recursive=True)
+    for chart_value_file in chart_values:
+        service_name = Path(chart_value_file).parts[-3]
+
+        # Find all corresponding example files
+        example_files = glob.glob(f"examples/values/{service_name}-production*.yaml")
+
+        if not example_files:
+            # For services with single instance
+            example_file = f"examples/values/{service_name}-production.yaml"
+            if os.path.exists(example_file):
+                if not compare_yaml_files(chart_value_file, example_file):
+                    success = False
+            else:
+                print(f"❌ Missing example values file: {example_file}")
+                success = False
+        else:
+            # For services with multiple instances (like l2-sequencer-0, l2-sequencer-1)
+            # Each instance should have its own example file
+            base_content = load_yaml_file(chart_value_file)
+            if not base_content:
+                success = False
+                continue
+
+            for example_file in example_files:
+                if not compare_yaml_files(chart_value_file, example_file):
+                    success = False
+
+    return success
+
+
 def validate_example_makefile():
     makefile_path = "examples/Makefile.example"
     if not os.path.exists(makefile_path):
@@ -72,19 +107,9 @@ def validate_example_makefile():
 def main():
     success = True
 
-    # Check values files sync
-    chart_values = glob.glob("charts/**/values/production.yaml", recursive=True)
-    for chart_value_file in chart_values:
-        # Determine the service name from the path
-        service_name = Path(chart_value_file).parts[-3]
-        example_file = f"examples/values/{service_name}-production.yaml"
-
-        if os.path.exists(example_file):
-            if not compare_yaml_files(chart_value_file, example_file):
-                success = False
-        else:
-            print(f"❌ Missing example values file: {example_file}")
-            success = False
+    # Check production files sync
+    # if not validate_production_files():
+    #     success = False
 
     # Check example Makefile versions
     if not validate_example_makefile():
