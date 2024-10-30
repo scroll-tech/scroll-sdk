@@ -47,7 +47,7 @@ blockscout-stack:
       hostname: "blockscout-backend.hsk.scroll.systems"
       tls:
         enabled: true
-        secretName: blockscout-tls  # Set here the hostname for the ingress. Example : blockscout-backend.scrollsdk
+        secretName: blockscout-tls  # Set here the name of the secret. Example : blockscout-backend.scrollsdk
 
   frontend:
     ingress:

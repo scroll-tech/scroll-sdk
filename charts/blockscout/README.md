@@ -40,15 +40,15 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.image.pullPolicy | string | `"IfNotPresent"` |  |
 | blockscout-stack.blockscout.image.repository | string | `"blockscout/blockscout-scroll"` |  |
 | blockscout-stack.blockscout.image.tag | string | `"6.9.0-alpha.1"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"https://blockscout.scrollsdk"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-max-age" | string | `"86400"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/enable-cors" | string | `"true"` |  |
+| blockscout-stack.blockscout.ingress.annotations | object | `{}` |  |
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"blockscout-backend.scrollsdk"` |  |
 | blockscout-stack.frontend.env.FAVICON_MASTER_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"` |  |
+| blockscout-stack.frontend.env.NEXT_PUBLIC_API_HOST | string | `"blockscout-backend.scrollsdk"` |  |
+| blockscout-stack.frontend.env.NEXT_PUBLIC_API_PROTOCOL | string | `"http"` |  |
+| blockscout-stack.frontend.env.NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL | string | `"ws"` |  |
+| blockscout-stack.frontend.env.NEXT_PUBLIC_APP_PROTOCOL | string | `"http"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_CHARTS | string | `"[\"daily_txs\"]"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_HERO_BANNER_CONFIG | string | `"{'background':['rgba(255, 238, 218, 1)'],'text_color':['rgba(25, 6, 2, 1)']}"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_STATS | string | `"[\"total_blocks\", \"average_block_time\", \"total_txs\", \"wallet_addresses\", \"gas_tracker\"]"` |  |
@@ -60,7 +60,7 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.frontend.image.tag | string | `"v1.35.2"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
-| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"https://blockscout.scrollsdk"` |  |
+| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"http://blockscout.scrollsdk"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-max-age" | string | `"86400"` |  |
 | blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/enable-cors" | string | `"true"` |  |
 | blockscout-stack.frontend.ingress.className | string | `"nginx"` |  |

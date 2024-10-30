@@ -40,12 +40,7 @@ blockscout-stack:
     ingress:
       enabled: true
       className: "nginx"
-      annotations:
-        nginx.ingress.kubernetes.io/enable-cors: "true"
-        nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
-        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      annotations: {}
       hostname: blockscout-backend.scrollsdk
 
   frontend:
@@ -62,12 +57,16 @@ blockscout-stack:
       FAVICON_MASTER_URL: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"
       NEXT_PUBLIC_HOMEPAGE_CHARTS: '["daily_txs"]'
       NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
+      NEXT_PUBLIC_API_PROTOCOL: http
+      NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: ws
+      NEXT_PUBLIC_API_HOST: "blockscout-backend.scrollsdk"
+      NEXT_PUBLIC_APP_PROTOCOL: http
 
     ingress:
       enabled: true
       annotations:
         nginx.ingress.kubernetes.io/enable-cors: "true"
-        nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://blockscout.scrollsdk"
         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
         nginx.ingress.kubernetes.io/cors-max-age: "86400"
