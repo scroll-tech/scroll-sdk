@@ -19,6 +19,15 @@ configMaps:
       SCROLL_L1_RPC: ""
       SCROLL_L2_RPC: "http://l2-rpc:8545"
 
+ingress:
+  main:
+    ingressClassName: "nginx"
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
+
 externalSecrets:
   bridge-history-api-secret-env:
     provider: aws
