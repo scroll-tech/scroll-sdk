@@ -4,9 +4,9 @@ blockscout-stack:
 
   blockscout:
     image:
-      repository: blockscout/blockscout-scroll
+      repository: blockscout/blockscout
       pullPolicy: IfNotPresent
-      tag: 6.9.0-alpha.1
+      tag: 6.8.0
 
     env:
       ETHEREUM_JSONRPC_VARIANT: geth

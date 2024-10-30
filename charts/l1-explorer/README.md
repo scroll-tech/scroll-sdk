@@ -30,8 +30,8 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.env.INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER | bool | `true` |  |
 | blockscout-stack.blockscout.envFrom[0].configMapRef.name | string | `"l1-explorer-env"` |  |
 | blockscout-stack.blockscout.image.pullPolicy | string | `"IfNotPresent"` |  |
-| blockscout-stack.blockscout.image.repository | string | `"blockscout/blockscout-scroll"` |  |
-| blockscout-stack.blockscout.image.tag | string | `"6.9.0-alpha.1"` |  |
+| blockscout-stack.blockscout.image.repository | string | `"blockscout/blockscout"` |  |
+| blockscout-stack.blockscout.image.tag | string | `"6.8.0"` |  |
 | blockscout-stack.blockscout.ingress.annotations | object | `{}` |  |
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
