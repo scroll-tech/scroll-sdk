@@ -9,7 +9,7 @@ ingress:
   main:
     ingressClassName: "nginx"
     hosts:
-      - host: ""
+      - host: "bad change"
         paths:
           - path: /
             pathType: Prefix
