@@ -7,7 +7,7 @@ L1_RPC_HOST := l1-devnet.scrollsdk
 
 bootstrap:
 		echo "Pulling helm chart..."
-		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.0.63
+		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.1.0
 		echo "Extracting helm chart..."
 		tar -xvf *.tgz
 		$(MAKE) config

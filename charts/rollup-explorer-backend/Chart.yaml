@@ -2,7 +2,7 @@
 apiVersion: v2
 description: rollup-explorer-backend helm charts
 name: rollup-explorer-backend
-version: 0.0.4
+version: 0.1.0
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:

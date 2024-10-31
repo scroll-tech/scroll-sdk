@@ -2,7 +2,7 @@
 apiVersion: v2
 description: bridge-history-api helm charts
 name: bridge-history-api
-version: 0.0.8
+version: 0.1.0
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:

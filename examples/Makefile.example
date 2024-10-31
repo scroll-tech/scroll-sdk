@@ -2,107 +2,107 @@ NAMESPACE ?= default
 
 install:
 	helm upgrade -i scroll-monitor oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-monitor -n $(NAMESPACE) \
-		--version=0.0.8 \
+		--version=0.1.0 \
 		--values values/scroll-monitor-production.yaml \
 		--values values/alert-manager.yaml
 
 	helm upgrade -i scroll-common oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-common -n $(NAMESPACE) \
-		--version=0.0.5 \
+		--version=0.1.0 \
 		--values values/genesis.yaml
 
 	helm upgrade -i l2-sequencer-0 oci://ghcr.io/scroll-tech/scroll-sdk/helm/l2-sequencer -n $(NAMESPACE) \
-		--version=0.0.15 \
+		--version=0.1.0 \
 		--values values/l2-sequencer-production-0.yaml
 
 	helm upgrade -i l2-sequencer-1 oci://ghcr.io/scroll-tech/scroll-sdk/helm/l2-sequencer -n $(NAMESPACE) \
-		--version=0.0.15 \
+		--version=0.1.0 \
 		--values values/l2-sequencer-production-1.yaml
 
 	helm upgrade -i coordinator-api oci://ghcr.io/scroll-tech/scroll-sdk/helm/coordinator-api -n $(NAMESPACE) \
-		--version=0.0.9 \
+		--version=0.1.0 \
 		--values values/coordinator-api-production.yaml \
 		--values values/coordinator-api-config.yaml
 
 	helm upgrade -i bridge-history-api oci://ghcr.io/scroll-tech/scroll-sdk/helm/bridge-history-api -n $(NAMESPACE) \
-		--version=0.0.8 \
+		--version=0.1.0 \
 		--values values/bridge-history-api-production.yaml \
 		--values values/bridge-history-api-config.yaml
 
 	helm upgrade -i bridge-history-fetcher oci://ghcr.io/scroll-tech/scroll-sdk/helm/bridge-history-fetcher -n $(NAMESPACE) \
-		--version=0.0.12 \
+		--version=0.1.0 \
 		--values values/bridge-history-fetcher-production.yaml \
 		--values values/bridge-history-fetcher-config.yaml
 
 	helm upgrade -i chain-monitor oci://ghcr.io/scroll-tech/scroll-sdk/helm/chain-monitor -n $(NAMESPACE) \
-		--version=0.0.11 \
+		--version=0.1.0 \
 		--values values/chain-monitor-production.yaml \
 		--values values/chain-monitor-config.yaml
 
 	helm upgrade -i coordinator-cron oci://ghcr.io/scroll-tech/scroll-sdk/helm/coordinator-cron -n $(NAMESPACE) \
-		--version=0.0.7 \
+		--version=0.1.0 \
 		--values values/coordinator-cron-production.yaml \
 		--values values/coordinator-cron-config.yaml
 
 	helm upgrade -i frontends oci://ghcr.io/scroll-tech/scroll-sdk/helm/frontends -n $(NAMESPACE) \
-		--version=0.0.10 \
+		--version=0.1.0 \
 		--values values/frontends-production.yaml \
 		--values values/frontends-config.yaml
 
 	helm upgrade -i gas-oracle oci://ghcr.io/scroll-tech/scroll-sdk/helm/gas-oracle -n $(NAMESPACE) \
-		--version=0.0.11 \
+		--version=0.1.0 \
 		--values values/gas-oracle-production.yaml \
 		--values values/gas-oracle-config.yaml
 
 	helm upgrade -i l2-bootnode-0 oci://ghcr.io/scroll-tech/scroll-sdk/helm/l2-bootnode -n $(NAMESPACE) \
-		--version=0.0.16 \
+		--version=0.1.0 \
 		--values values/l2-bootnode-production-0.yaml
 
 	helm upgrade -i l2-bootnode-1 oci://ghcr.io/scroll-tech/scroll-sdk/helm/l2-bootnode -n $(NAMESPACE) \
-		--version=0.0.16 \
+		--version=0.1.0 \
 		--values values/l2-bootnode-production-1.yaml
 
 	helm upgrade -i l2-rpc oci://ghcr.io/scroll-tech/scroll-sdk/helm/l2-rpc -n $(NAMESPACE) \
-		--version=0.0.16 \
+		--version=0.1.0 \
 		--values values/l2-rpc-production.yaml
 
 	helm upgrade -i rollup-explorer-backend oci://ghcr.io/scroll-tech/scroll-sdk/helm/rollup-explorer-backend -n $(NAMESPACE) \
-		--version=0.0.4 \
+		--version=0.1.0 \
 		--values values/rollup-explorer-backend-production.yaml \
 		--values values/rollup-explorer-backend-config.yaml
 
 	helm upgrade -i rollup-node oci://ghcr.io/scroll-tech/scroll-sdk/helm/rollup-node -n $(NAMESPACE) \
-		--version=0.0.15 \
+		--version=0.1.0 \
 		--values values/rollup-node-production.yaml \
 		--values values/rollup-node-config.yaml
 
 	helm upgrade -i admin-system-backend oci://ghcr.io/scroll-tech/scroll-sdk/helm/admin-system-backend -n $(NAMESPACE) \
-		--version=0.0.2 \
+		--version=0.1.0 \
 		--values values/admin-system-backend-production.yaml \
 		--values values/admin-system-backend-config.yaml
 
 	helm upgrade -i admin-system-cron oci://ghcr.io/scroll-tech/scroll-sdk/helm/admin-system-cron -n $(NAMESPACE) \
-		--version=0.0.2 \
+		--version=0.1.0 \
 		--values values/admin-system-cron-production.yaml \
 		--values values/admin-system-cron-config.yaml
 
 	helm upgrade -i admin-system-dashboard oci://ghcr.io/scroll-tech/scroll-sdk/helm/admin-system-dashboard -n $(NAMESPACE) \
-		--version=0.0.2 \
+		--version=0.1.0 \
 		--values values/admin-system-dashboard-production.yaml
 
 	helm upgrade -i contracts oci://ghcr.io/scroll-tech/scroll-sdk/helm/contracts -n $(NAMESPACE) \
-		--version=0.0.16 \
+		--version=0.1.0 \
 		--values values/contracts-production.yaml \
 		--values values/scroll-common-config-contracts.yaml \
 		--values values/scroll-common-config.yaml
 
 	helm upgrade -i balance-checker oci://ghcr.io/scroll-tech/scroll-sdk/helm/balance-checker -n $(NAMESPACE) \
-		--version=0.0.5 \
+		--version=0.1.0 \
 		--values values/balance-checker-production.yaml \
 		--values values/balance-checker-config.yaml
 
 install-l1-devnet:
 	helm upgrade -i l1-devnet oci://ghcr.io/scroll-tech/scroll-sdk/helm/l1-devnet -n $(NAMESPACE) \
-		--version=0.0.3 \
+		--version=0.1.0 \
 		--values values/l1-devnet-production.yaml
 
 delete:

@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy scroll sdk
 name: scroll-sdk
-version: 0.0.63
+version: 0.1.0
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
@@ -14,23 +14,23 @@ keywords:
 home: https://github.com/scroll-tech/scroll-sdk
 dependencies:
   - name: l1-devnet
-    version: 0.0.3
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-devnet.enabled
   - name: balance-checker
-    version: 0.0.5
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: balance-checker.enabled
   - name: blockscout
-    version: 0.0.4
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: blockscout.enabled
   - name: bridge-history-api
-    version: 0.0.8
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: bridge-history-api.enabled
   - name: bridge-history-fetcher
-    version: 0.0.12
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: bridge-history-fetcher.enabled
   - name: blockscout-sc-verifier
@@ -38,43 +38,43 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: blockscout-sc-verifier.enabled
   - name: chain-monitor
-    version: 0.0.11
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: chain-monitor.enabled
   - name: contracts
-    version: 0.0.16
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: contracts.enabled
   - name: coordinator-api
-    version: 0.0.9
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-api.enabled
   - name: coordinator-cron
-    version: 0.0.7
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-cron.enabled
   - name: frontends
-    version: 0.0.10
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: frontends.enabled
   - name: gas-oracle
-    version: 0.0.11
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: gas-oracle.enabled
   - name: l1-explorer
-    version: 0.0.3
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-explorer.enabled
   - name: l2-bootnode
-    version: 0.0.16
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-bootnode.enabled
   - name: l2-rpc
-    version: 0.0.16
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-rpc.enabled
   - name: l2-sequencer
-    version: 0.0.15
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-sequencer.enabled
   - name: postgresql
@@ -82,34 +82,34 @@ dependencies:
     version: 15.5.0
     condition: postgresql.enabled
   - name: rollup-explorer-backend
-    version: 0.0.4
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-explorer-backend.enabled
   - name: rollup-node
-    version: 0.0.15
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-node.enabled
   - name: rpc-gateway
-    version: 0.0.2
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rpc-gateway.enabled
   - name: scroll-common
-    version: 0.0.5
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: scroll-common.enabled
   - name: scroll-monitor
-    version: 0.0.8
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: scroll-monitor.enabled
   - name: admin-system-backend
-    version: 0.0.2
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: admin-system-backend.enabled
   - name: admin-system-cron
-    version: 0.0.2
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: admin-system-cron.enabled
   - name: admin-system-dashboard
-    version: 0.0.2
+    version: 0.1.0
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: admin-system-dashboard.enabled

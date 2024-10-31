@@ -2,7 +2,7 @@
 apiVersion: v2
 description: scroll helm charts to deploy common scripts and configuration
 name: scroll-common
-version: 0.0.5
+version: 0.1.0
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
