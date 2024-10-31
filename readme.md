@@ -19,7 +19,7 @@ This repo contains:
 - `devnet/`: A quick start, basic configuration for setting up a local devnet
 - `examples/`: Template files for use in your SDK project and helper scripts
   
-Additional SDK tooling is available in our [scroll-sdk-cli](https://www.github.com/scroll-tech/scroll-sdk-cli) repo. This can also be installed locally by running `npm i -g scroll-sdk-cli` with node >= 18. More examples of its usage can be found in the deployment guides [here](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/).
+Additional SDK tooling is available in our [scroll-sdk-cli](https://www.github.com/scroll-tech/scroll-sdk-cli) repo. This can also be installed locally by running `npm i -g @scroll-tech/scroll-sdk-cli` with node >= 18. More examples of its usage can be found in the deployment guides [here](https://scroll-sdk-init.docs.scroll.xyz/en/sdk/).
 
 ## Get Started
 
