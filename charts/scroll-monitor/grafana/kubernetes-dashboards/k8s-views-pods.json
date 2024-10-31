@@ -2572,9 +2572,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "monitoring",
-          "value": "monitoring"
+          "selected": true,
+          "text": "default",
+          "value": "default"
         },
         "datasource": {
           "type": "prometheus",

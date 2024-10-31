@@ -2,7 +2,7 @@
 apiVersion: v2
 description: chain-monitor helm charts
 name: chain-monitor
-version: 0.0.10
+version: 0.0.11
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:

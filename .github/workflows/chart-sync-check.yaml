@@ -1,0 +1,32 @@
+name: Chart Sync Validation
+
+on:
+  push:
+    paths:
+      - "charts/**/values/production.yaml"
+      - "examples/values/*-production.yaml"
+      - "charts/**/Chart.yaml"
+      - "examples/Makefile.example"
+  pull_request:
+    paths:
+      - "charts/**/values/production.yaml"
+      - "examples/values/*-production.yaml"
+      - "charts/**/Chart.yaml"
+      - "examples/Makefile.example"
+
+jobs:
+  validate-chart-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate Chart Files
+        run: python .github/scripts/validate_charts.py

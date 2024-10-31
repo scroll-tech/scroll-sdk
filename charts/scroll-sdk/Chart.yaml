@@ -38,7 +38,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: blockscout-sc-verifier.enabled
   - name: chain-monitor
-    version: 0.0.10
+    version: 0.0.11
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: chain-monitor.enabled
   - name: contracts
@@ -54,11 +54,11 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: coordinator-cron.enabled
   - name: frontends
-    version: 0.0.9
+    version: 0.0.10
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: frontends.enabled
   - name: gas-oracle
-    version: 0.0.10
+    version: 0.0.11
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: gas-oracle.enabled
   - name: l1-explorer
@@ -66,39 +66,27 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-explorer.enabled
   - name: l2-bootnode
-    version: 0.0.15
+    version: 0.0.16
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-bootnode.enabled
   - name: l2-rpc
-    version: 0.0.15
+    version: 0.0.16
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-rpc.enabled
-  - name: grafana
-    repository: "https://grafana.github.io/helm-charts"
-    version: 7.3.11
-    condition: grafana.enabled
   - name: l2-sequencer
-    version: 0.0.13
+    version: 0.0.14
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-sequencer.enabled
-  - name: loki-stack
-    repository: "https://grafana.github.io/helm-charts"
-    version: 2.10.2
-    condition: loki-stack.enabled
   - name: postgresql
     repository: "oci://registry-1.docker.io/bitnamicharts"
     version: 15.5.0
     condition: postgresql.enabled
-  - name: kube-prometheus-stack
-    repository: "https://prometheus-community.github.io/helm-charts"
-    version: 59.0.0
-    condition: kube-prometheus-stack.enabled
   - name: rollup-explorer-backend
     version: 0.0.4
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-explorer-backend.enabled
   - name: rollup-node
-    version: 0.0.12
+    version: 0.0.14
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rollup-node.enabled
   - name: rpc-gateway
@@ -106,9 +94,13 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: rpc-gateway.enabled
   - name: scroll-common
-    version: 0.0.4
+    version: 0.0.5
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: scroll-common.enabled
+  - name: scroll-monitor
+    version: 0.0.7
+    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
+    condition: scroll-monitor.enabled
   - name: admin-system-backend
     version: 0.0.2
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"

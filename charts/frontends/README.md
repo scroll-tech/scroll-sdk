@@ -1,6 +1,6 @@
 # frontends
 
-![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.10](https://img.shields.io/badge/Version-0.0.10-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 frontends helm charts
 
@@ -37,7 +37,7 @@ Kubernetes: `>=1.22.0-0`
 | global.nameOverride | string | `"frontends"` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"scrolltech/frontends"` |  |
-| image.tag | string | `"2.2.20"` |  |
+| image.tag | string | `"2.2.24"` |  |
 | ingress.main.annotations | object | `{}` |  |
 | ingress.main.enabled | bool | `true` |  |
 | ingress.main.hosts[0].host | string | `"frontends.scrollsdk"` |  |

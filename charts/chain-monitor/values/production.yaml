@@ -44,6 +44,7 @@ configMaps:
     data:
       SCROLL_L1_RPC: ""
       SCROLL_L2_RPC: ""
+      L1_SCROLL_CHAIN_PROXY_ADDR: ""
 
 externalSecrets:
   chain-monitor-secret-env:

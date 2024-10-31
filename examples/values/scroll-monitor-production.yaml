@@ -1,0 +1,26 @@
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - ""
+
+kube-prometheus-stack:
+  alertmanager:
+    config:
+      global:
+        resolve_timeout: 5m
+        slack_api_url: "" # your webhook url
+      receivers:
+      - name: "slack-alerts"
+        slack_configs:
+        - channel: "" # your channel name
+          send_resolved: true
+          text: "{{ .CommonAnnotations.description }}"
+          title: "{{ .CommonAnnotations.summary }}"
+      route:
+        group_by: ["alertname"]
+        receiver: "slack-alerts"
+        routes:
+        - matchers: []
+          receiver: "slack-alerts"

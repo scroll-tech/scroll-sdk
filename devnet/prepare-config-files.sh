@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Check if running on Linux (skip permission changes on macOS)
+if [[ "$OSTYPE" != "darwin"* ]]; then
+    # On Linux systems, set permissions
+    sudo chown -R $(whoami):$(whoami) scroll-sdk
+    sudo chmod -R u+rw scroll-sdk
+fi
+
 indent_file_and_add_first_line () {
   echo $1
   temp_file="tmp_file"
