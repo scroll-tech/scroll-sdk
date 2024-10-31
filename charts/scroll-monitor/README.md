@@ -1,6 +1,6 @@
 # scroll-monitor
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 helm chart to deploy grafana, prometheus and loki to monitor scroll-sdk
 
@@ -80,7 +80,7 @@ Kubernetes: `>=1.22.0-0`
 | kube-prometheus-stack.prometheus.prometheusSpec.serviceMonitorSelector.matchExpressions[0].operator | string | `"Exists"` |  |
 | loki.backend.replicas | int | `0` |  |
 | loki.deploymentMode | string | `"SingleBinary"` |  |
-| loki.enabled | bool | `true` |  |
+| loki.enabled | bool | `false` |  |
 | loki.fullnameOverride | string | `"loki"` |  |
 | loki.loki.commonConfig.replication_factor | int | `1` |  |
 | loki.loki.schemaConfig.configs[0].from | string | `"2024-01-01"` |  |

@@ -79,7 +79,7 @@ rollup-node:
   enabled: true
 
 l1-explorer:
-  enabled: true
+  enabled: false
   ingress:
     main:
       enabled: true

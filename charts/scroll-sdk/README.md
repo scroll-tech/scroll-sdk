@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.59](https://img.shields.io/badge/Version-0.0.59-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.61](https://img.shields.io/badge/Version-0.0.61-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -41,7 +41,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.0.15 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-common | 0.0.5 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-monitor | 0.0.6 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-monitor | 0.0.7 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 15.5.0 |
 
 ## Values
@@ -84,7 +84,7 @@ Kubernetes: `>=1.22.0-0`
 | l1-devnet.ingress.main.hosts[0].host | string | `"l1-devnet.scrollsdk"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| l1-explorer.enabled | bool | `true` |  |
+| l1-explorer.enabled | bool | `false` |  |
 | l1-explorer.ingress.main.enabled | bool | `true` |  |
 | l1-explorer.ingress.main.hosts[0].host | string | `"l1-explorer.scrollsdk"` |  |
 | l1-explorer.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
@@ -140,7 +140,7 @@ Kubernetes: `>=1.22.0-0`
 | scroll-monitor.grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
 | scroll-monitor.grafana.ingress.ingressClassName | string | `"nginx"` |  |
 | scroll-monitor.kube-prometheus-stack.enabled | bool | `true` |  |
-| scroll-monitor.loki.enabled | bool | `true` |  |
+| scroll-monitor.loki.enabled | bool | `false` |  |
 | scroll-monitor.promtail.enabled | bool | `true` |  |
 
 ----------------------------------------------
