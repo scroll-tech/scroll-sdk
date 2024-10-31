@@ -1,6 +1,11 @@
 NAMESPACE ?= default
 
 install:
+	helm upgrade -i scroll-monitor oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-monitor -n $(NAMESPACE) \
+		--version=0.0.4 \
+		--values values/scroll-monitor-production.yaml \
+		--values values/alert-manager.yaml
+
 	helm upgrade -i scroll-common oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-common -n $(NAMESPACE) \
 		--version=0.0.4 \
 		--values values/genesis.yaml
@@ -89,11 +94,6 @@ install:
 		--values values/contracts-production.yaml \
 		--values values/scroll-common-config-contracts.yaml \
 		--values values/scroll-common-config.yaml
-
-	helm upgrade -i scroll-monitor oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-monitor -n $(NAMESPACE) \
-		--version=0.0.4 \
-		--values values/scroll-monitor-production.yaml \
-		--values values/alert-manager.yaml
 
 	helm upgrade -i balance-checker oci://ghcr.io/scroll-tech/scroll-sdk/helm/balance-checker -n $(NAMESPACE) \
 		--version=0.0.4 \
