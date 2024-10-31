@@ -12,6 +12,9 @@ l1-devnet:
 
 blockscout:
   enabled: true
+  blockscout-stack:
+    frontend:
+      replicaCount: 1
 
 bridge-history-api:
   enabled: true
