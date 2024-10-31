@@ -1,37 +1,76 @@
-envFrom:
-  - secretRef:
-      name: blockscout-secret-env
+blockscout-stack:
+  blockscout:
 
-persistence:
-  env:
-    enabled: true
-    type: secret
-    mountPath: /config/
-    name: blockscout-secret-env
+    env:
+      ETHEREUM_JSONRPC_HTTP_URL: http://l2-rpc:8545
+      ETHEREUM_JSONRPC_TRACE_URL: http://l2-rpc:8545
+      ETHEREUM_JSONRPC_VARIANT: geth
+      ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
+      BLOCK_TRANSFORMER: clique
+      INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
+      CHAIN_TYPE: scroll
+      INDEXER_SCROLL_L1_CHAIN_CONTRACT: ""  # value of L1_SCROLL_CHAIN_PROXY_ADDR on config-contracts.toml
+      INDEXER_SCROLL_L1_BATCH_START_BLOCK: ""  # value of L1_CONTRACT_DEPLOYMENT_BLOCK on config.toml
+      INDEXER_SCROLL_L1_MESSENGER_CONTRACT: ""  # value of L1_SCROLL_MESSENGER_PROXY_ADDR on config-contracts.toml
+      INDEXER_SCROLL_L1_MESSENGER_START_BLOCK: ""  # value of L1_CONTRACT_DEPLOYMENT_BLOCK on config.toml
+      INDEXER_SCROLL_L2_MESSENGER_CONTRACT: ""  # value of L2_SCROLL_MESSENGER_PROXY_ADDR on config-contracts.toml
+      INDEXER_SCROLL_L2_GAS_ORACLE_CONTRACT: ""  # value of L1_GAS_PRICE_ORACLE_PROXY_ADDR on config-contracts.toml
+      INDEXER_SCROLL_L1_RPC: ""
+      INDEXER_SCROLL_L2_MESSENGER_START_BLOCK: 0
+      INDEXER_SCROLL_L1_ETH_GET_LOGS_RANGE_SIZE: 500
+      INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE: 500
+      SCROLL_L2_CURIE_UPGRADE_BLOCK: 0
+      ECTO_USE_SSL: true
+      ETHEREUM_JSONRPC_HTTP_INSECURE: false
 
-initContainers:
-  1-migrate-db:
-    image: blockscout/blockscout:6.6.0
-    command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:
       - secretRef:
           name: blockscout-secret-env
 
-configMaps:
-  env:
-    enabled: true
-    data:
-      PG_HOST: "postgresql-blockscout"
-      PG_PORT: "5432"
+    extraEnv:
+      - name: DATABASE_URL
+        valueFrom:
+          secretKeyRef:
+            name: blockscout-secret-env
+            key: DATABASE_URL
 
-ingress:
-  main:
-    ingressClassName: "nginx"
-    hosts:
-      - host: ""
-        paths:
-          - path: /
-            pathType: Prefix
+    ingress:
+      enabled: true
+      className: ""
+      annotations:  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: ""
+      tls:
+        enabled: true
+        secretName: blockscout-tls  # Set here the name of the secret. Example : blockscout-backend.scrollsdk
+
+  frontend:
+    env:
+      NEXT_PUBLIC_API_PROTOCOL: https
+      NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: wss
+      NEXT_PUBLIC_API_HOST: "" # Backend host, example  "blockscout-backend.scrollsdk"
+      NEXT_PUBLIC_APP_HOST: "" # Backend host, example  "blockscout-backend.scrollsdk"
+      NEXT_PUBLIC_APP_PROTOCOL: https
+
+    ingress:
+      enabled: true
+      className: ""  # Set here your ingress class name
+      annotations:  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: ""  # Set the hostname for the frontend. Example : blockscout.scrollsdk
+      tls:
+        enabled: true
+        secretName: blockscout-front-tls  # Set here the hostname for the ingress. Example : blockscout.scrollsdk
 
 externalSecrets:
   blockscout-secret-env:

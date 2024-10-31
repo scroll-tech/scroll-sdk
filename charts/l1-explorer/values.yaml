@@ -1,117 +1,63 @@
----
-global:
-  nameOverride: &app_name l1-explorer
+blockscout-stack:
+  nameOverride: &app_name "l1-explorer"
   fullnameOverride: *app_name
 
-controller:
-  replicas: 1
-  strategy: Recreate
-  type: deployment
+  blockscout:
+    image:
+      repository: blockscout/blockscout
+      pullPolicy: IfNotPresent
+      tag: 6.8.0
 
-image:
-  repository: blockscout/blockscout
-  pullPolicy: Always
-  tag: 6.6.0
+    env:
+      ETHEREUM_JSONRPC_VARIANT: geth
+      BLOCK_TRANSFORMER: clique
+      INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
+      ECTO_USE_SSL: false
+      ETHEREUM_JSONRPC_HTTP_INSECURE: true
 
-env:
-  - name: ECTO_USE_SSL
-    value: false
-  - name: ETHEREUM_JSONRPC_VARIANT
-    value: geth
-  - name: INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER
-    value: true
-  - name: PORT
-    value: 3000
-  - name: NETWORK
-    value: [""]
-  - name: COIN
-    value: ETH
-  - name: COIN_NAME
-    value: ETH
-  - name: LOGO
-    value: /images/logo.svg
-  - name: WEBAPP_URL
-    value: https://l1-explorer.scroll.tech
-  - name: BLOCKSCOUT_HOST
-    value: test-l1-explorer.scroll.io
-  - name: SUBNETWORK
-    value: "Scroll Sepolia Testnet"
-  - name: SUPPORTED_CHAINS
-    value: '[{ "title": "Scroll SDK (L1)", "url": "https://localhost:3000", "test_net?": true }, { "title": "Scroll SDK (L2) Testnet", "url": "http://blockscout:3000", "test_net?": true }]'
-  - name: DISABLE_EXCHANGE_RATES
-    value: true
-  - name: BLOCKSCOUT_VERSION
-    value: 5.2.1
-  - name: FOOTER_GITHUB_LINK
-    value: https://github.com/blockscout/blockscout
-  - name: ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT
-    value: 10s
-  - name: INDEXER_MEMORY_LIMIT
-    value: 10gb
-  - name: BLOCK_TRANSFORMER
-    value: clique
-  - name: MICROSERVICE_SC_VERIFIER_ENABLED
-    value: true
-
-envFrom:
-  - configMapRef:
-      name: l1-explorer-env
-
-command:
-  [
-    "/bin/sh",
-    "-c",
-    "/app/bin/blockscout start"
-  ]
-
-service:
-  main:
-    enabled: true
-    ports:
-      http:
-        enabled: true
-        port: 3000
-
-defaultProbes: &default_probes
-  enabled: true
-  custom: true
-  spec:
-    httpGet:
-      path: "/"
-      port: 3000
-
-probes:
-  liveness:
-    <<: *default_probes
-  readiness:
-    <<: *default_probes
-  startup:
-    <<: *default_probes
-
-persistence:
-  env:
-    enabled: true
-    type: configMap
-    mountPath: /config/
-    name: l1-explorer-env
-
-initContainers:
-  1-migrate-db:
-    image: blockscout/blockscout:6.6.0
-    command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:
       - configMapRef:
           name: l1-explorer-env
 
-ingress:
-  main:
-    enabled: true
-    primary: true
-    annotations: {}
-    labels: {}
-    ingressClassName: "nginx"
-    hosts:
-      - host: l1-explorer.scrollsdk
-        paths:
-          - path: /
-            pathType: Prefix
+    ingress:
+      enabled: true
+      className: "nginx"
+      annotations:
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://l1-explorer.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: l1-explorer-backend.scrollsdk
+
+  frontend:
+    image:
+      tag: v1.35.2
+
+    env:
+      NEXT_PUBLIC_NETWORK_LOGO: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll.svg"
+      NEXT_PUBLIC_NETWORK_LOGO_DARK: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll-dark.svg"
+      NEXT_PUBLIC_NETWORK_ICON: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-icons/scroll.svg"
+      NEXT_PUBLIC_NETWORK_ICON_DARK: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-icons/scroll-dark.svg"
+      NEXT_PUBLIC_HOMEPAGE_HERO_BANNER_CONFIG: "{'background':['rgba(255, 238, 218, 1)'],'text_color':['rgba(25, 6, 2, 1)']}"
+      NEXT_PUBLIC_OG_IMAGE_URL: 'https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/og-images/scroll-sepolia.png'
+      FAVICON_MASTER_URL: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"
+      NEXT_PUBLIC_HOMEPAGE_CHARTS: '["daily_txs"]'
+      NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
+      NEXT_PUBLIC_API_PROTOCOL: http
+      NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: ws
+      NEXT_PUBLIC_API_HOST: "l1-explorer-backend.scrollsdk"
+      NEXT_PUBLIC_APP_PROTOCOL: http
+      NEXT_PUBLIC_AD_BANNER_PROVIDER: none
+      NEXT_PUBLIC_AD_TEXT_PROVIDER: none
+
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://l1-explorer.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      className: "nginx"
+      hostname: l1-explorer.scrollsdk

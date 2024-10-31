@@ -1,138 +1,81 @@
----
-global:
-  nameOverride: &app_name blockscout
-  fullnameOverride: *app_name
+blockscout-stack:
+  nameOverride: "blockscout"
+  fullnameOverride: "blockscout"
 
-controller:
-  replicas: 1
-  strategy: Recreate
-  type: deployment
+  imagePullSecrets:
+    - name: docker-secret
 
-image:
-  repository: blockscout/blockscout
-  pullPolicy: Always
-  tag: 6.6.0
+  blockscout:
+    image:
+      repository: blockscout/blockscout-scroll
+      pullPolicy: IfNotPresent
+      tag: 6.9.0-alpha.1
 
-env:
-  - name: ECTO_USE_SSL
-    value: false
-  - name: ETHEREUM_JSONRPC_HTTP_URL
-    value: http://l2-sequencer:8545
-  - name: ETHEREUM_JSONRPC_TRACE_URL
-    value: http://l2-sequencer:8545
-  - name: ETHEREUM_JSONRPC_VARIANT
-    value: geth
-  - name: ETHEREUM_JSONRPC_WS_URL
-    value: ws://l2-sequencer:8546
-  - name: INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER
-    value: true
-  - name: PORT
-    value: 3000
-  - name: NETWORK
-    value: [""]
-  - name: COIN
-    value: ETH
-  - name: COIN_NAME
-    value: ETH
-  - name: LOGO
-    value: /images/logo.svg
-  - name: WEBAPP_URL
-    value: https://blockscout.scroll.tech
-  - name: BLOCKSCOUT_HOST
-    value: test-blockscout.scroll.io
-  - name: JSON_RPC
-    value: http://l2-sequencer:8545
-  - name: SUBNETWORK
-    value: "Scroll Sepolia Testnet"
-  - name: SUPPORTED_CHAINS
-    value: '[{ "title": "Etherscan (Sepolia)", "url": "https://sepolia.etherscan.io", "test_net?": true }, { "title": "Scroll Sepolia Testnet", "url": "http://test-blockscout.scroll.io", "test_net?": true }]'
-  - name: DISABLE_EXCHANGE_RATES
-    value: true
-  - name: BLOCKSCOUT_VERSION
-    value: 5.2.1
-  - name: FOOTER_GITHUB_LINK
-    value: https://github.com/scroll-tech/blockscout
-  - name: RELEASE_LINK
-    value: https://github.com/scroll-tech
-  - name: RELEASE_NODE
-    value: l2_blockscout
-  - name: ETHEREUM_JSONRPC_DEBUG_TRACE_TRANSACTION_TIMEOUT
-    value: 10s
-  - name: INDEXER_MEMORY_LIMIT
-    value: 10gb
-  - name: BLOCK_TRANSFORMER
-    value: clique
-  - name: MICROSERVICE_SC_VERIFIER_ENABLED
-    value: true
-  - name: MICROSERVICE_SC_VERIFIER_URL
-    value: http://blockscout-sc-verifier:8080
-  - name: CHAIN_SPEC_PATH
-    value: /app/genesis/genesis.json
+    env:
+      ETHEREUM_JSONRPC_HTTP_URL: http://l2-rpc:8545
+      ETHEREUM_JSONRPC_TRACE_URL: http://l2-rpc:8545
+      ETHEREUM_JSONRPC_VARIANT: geth
+      ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
+      BLOCK_TRANSFORMER: clique
+      INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
+      CHAIN_TYPE: scroll
+      INDEXER_SCROLL_L2_MESSENGER_START_BLOCK: 0
+      INDEXER_SCROLL_L1_ETH_GET_LOGS_RANGE_SIZE: 500
+      INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE: 500
+      SCROLL_L2_CURIE_UPGRADE_BLOCK: 0
+      ECTO_USE_SSL: false
+      ETHEREUM_JSONRPC_HTTP_INSECURE: true
+      # Not sure what these values are for
+      #      SCROLL_L1_SCALAR_INIT:
+      #      SCROLL_L1_OVERHEAD_INIT:
+      #      SCROLL_L1_COMMIT_SCALAR_INIT:
+      #      SCROLL_L1_BLOB_SCALAR_INIT:
+      #      SCROLL_L1_BASE_FEE_INIT:
+      #      SCROLL_L1_BLOB_BASE_FEE_INIT:
 
-envFrom:
-  - configMapRef:
-      name: blockscout-env
-
-command: [
-  "/bin/sh",
-  "-c",
-  "/app/bin/blockscout start"
-]
-
-service:
-  main:
-    enabled: true
-    ports:
-      http:
-        enabled: true
-        port: 3000
-
-defaultProbes: &default_probes
-  enabled: true
-  custom: true
-  spec:
-    httpGet:
-      path: "/"
-      port: 3000
-
-probes:
-  liveness:
-    <<: *default_probes
-  readiness:
-    <<: *default_probes
-  startup:
-    <<: *default_probes
-
-
-persistence:
-  genesis:
-    enabled: true
-    type: configMap
-    mountPath: /app/genesis/
-    name: genesis-config
-  env:
-    enabled: true
-    type: configMap
-    mountPath: /config/
-    name: blockscout-env
-
-initContainers:
-  1-migrate-db:
-    image: blockscout/blockscout:6.6.0
-    command: ["/bin/sh", "-c", "/app/bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\""]
     envFrom:
       - configMapRef:
           name: blockscout-env
 
-ingress:
-  main:
-    enabled: true
-    primary: true
-    annotations: {}
-    labels: {}
-    ingressClassName: "nginx"
-    hosts:
-      - host: blockscout.scrollsdk
-        paths:
-          - path: /
-            pathType: Prefix
+    ingress:
+      enabled: true
+      className: "nginx"
+      annotations:
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://blockscout.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: blockscout-backend.scrollsdk
+
+  frontend:
+    image:
+      tag: v1.35.2
+
+    env:
+      NEXT_PUBLIC_NETWORK_LOGO: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll.svg"
+      NEXT_PUBLIC_NETWORK_LOGO_DARK: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll-dark.svg"
+      NEXT_PUBLIC_NETWORK_ICON: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-icons/scroll.svg"
+      NEXT_PUBLIC_NETWORK_ICON_DARK: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-icons/scroll-dark.svg"
+      NEXT_PUBLIC_HOMEPAGE_HERO_BANNER_CONFIG: "{'background':['rgba(255, 238, 218, 1)'],'text_color':['rgba(25, 6, 2, 1)']}"
+      NEXT_PUBLIC_OG_IMAGE_URL: 'https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/og-images/scroll-sepolia.png'
+      FAVICON_MASTER_URL: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"
+      NEXT_PUBLIC_HOMEPAGE_CHARTS: '["daily_txs"]'
+      NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
+      NEXT_PUBLIC_API_PROTOCOL: http
+      NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: ws
+      NEXT_PUBLIC_API_HOST: "blockscout-backend.scrollsdk"
+      NEXT_PUBLIC_APP_PROTOCOL: http
+      NEXT_PUBLIC_AD_BANNER_PROVIDER: none
+      NEXT_PUBLIC_AD_TEXT_PROVIDER: none
+
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        nginx.ingress.kubernetes.io/cors-allow-origin: "http://blockscout.scrollsdk"
+        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      className: "nginx"
+      hostname: blockscout.scrollsdk

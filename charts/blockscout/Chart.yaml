@@ -1,17 +1,17 @@
 ---
 apiVersion: v2
-description: blockscout helm charts
+description: blockscout scroll helm charts
 name: blockscout
-version: 0.0.3
+version: 0.0.4
 appVersion: v0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
   - name: scroll-tech
     email: sebastien@scroll.io
 dependencies:
-  - name: common
-    repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
-    version: 1.5.1
   - name: external-secrets-lib
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     version: 0.0.3
+  - name: blockscout-stack
+    repository: https://blockscout.github.io/helm-charts
+    version: 1.6.8

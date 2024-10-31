@@ -1,3 +1,6 @@
+> [!WARNING]
+> These playbooks are for deploying Scroll provers for mainnet or sepolia and will require modifications for deploying Scroll SDK.
+
 # prover deploy documentation
 
 ## Prequisities

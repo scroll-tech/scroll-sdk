@@ -53,7 +53,7 @@ grafana:
       - "grafana.scrollsdk"
 
 loki:
-  enabled: true
+  enabled: false
   fullnameOverride: loki
   deploymentMode: SingleBinary
   persistence:
