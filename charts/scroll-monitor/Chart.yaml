@@ -11,7 +11,7 @@ maintainers:
 dependencies:
   - name: grafana
     repository: "https://grafana.github.io/helm-charts"
-    version: 8.5.0
+    version: 8.5.11
     condition: grafana.enabled
   - name: loki
     repository: "https://grafana.github.io/helm-charts"
