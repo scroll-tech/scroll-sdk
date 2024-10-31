@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.0.61](https://img.shields.io/badge/Version-0.0.61-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.0.62](https://img.shields.io/badge/Version-0.0.62-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -139,6 +139,7 @@ Kubernetes: `>=1.22.0-0`
 | scroll-monitor.grafana.ingress.enabled | bool | `true` |  |
 | scroll-monitor.grafana.ingress.hosts[0] | string | `"grafana.scrollsdk"` |  |
 | scroll-monitor.grafana.ingress.ingressClassName | string | `"nginx"` |  |
+| scroll-monitor.kube-prometheus-stack.alertmanager.enabled | bool | `false` |  |
 | scroll-monitor.kube-prometheus-stack.enabled | bool | `true` |  |
 | scroll-monitor.loki.enabled | bool | `false` |  |
 | scroll-monitor.promtail.enabled | bool | `true` |  |

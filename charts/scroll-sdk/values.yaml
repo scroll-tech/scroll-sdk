@@ -141,6 +141,8 @@ scroll-monitor:
     enabled: true
   kube-prometheus-stack:
     enabled: true
+    alertmanager:
+      enabled: false
 
 admin-system-backend:
   enabled: true
