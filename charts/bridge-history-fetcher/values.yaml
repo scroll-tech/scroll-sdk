@@ -93,7 +93,7 @@ initContainers:
       - configMapRef:
           name: bridge-history-fetcher-env
   2-migrate-db:
-    image: scrolltech/bridgehistoryapi-db-cli:v4.4.71
+    image: scrolltech/bridgehistoryapi-db-cli:v4.4.72
     command: ["/bin/sh", "-c", "db_cli --config /config/migrate-db.json migrate"]
     volumeMounts:
       - name: migrate-db
