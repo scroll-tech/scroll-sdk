@@ -1,6 +1,6 @@
 # l1-explorer
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l1-explorer helm charts
 
@@ -16,7 +16,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://blockscout.github.io/helm-charts | blockscout-stack | 1.6.8 |
+| https://blockscout.github.io/helm-charts | blockscout-stack | 1.7.1 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.3 |
 
 ## Values
@@ -41,11 +41,13 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"l1-explorer-backend.scrollsdk"` |  |
 | blockscout-stack.frontend.env.FAVICON_MASTER_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"` |  |
+| blockscout-stack.frontend.env.INDEXER_DISABLE_BLOCK_REWARD_FETCHER | bool | `true` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_AD_BANNER_PROVIDER | string | `"none"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_AD_TEXT_PROVIDER | string | `"none"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_API_HOST | string | `"l1-explorer-backend.scrollsdk"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_API_PROTOCOL | string | `"http"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL | string | `"ws"` |  |
+| blockscout-stack.frontend.env.NEXT_PUBLIC_APP_HOST | string | `"l1-explorer.scrollsdk"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_APP_PROTOCOL | string | `"http"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_CHARTS | string | `"[\"daily_txs\"]"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_HOMEPAGE_HERO_BANNER_CONFIG | string | `"{'background':['rgba(255, 238, 218, 1)'],'text_color':['rgba(25, 6, 2, 1)']}"` |  |

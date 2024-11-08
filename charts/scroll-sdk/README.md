@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -85,7 +85,7 @@ Kubernetes: `>=1.22.0-0`
 | l1-devnet.ingress.main.hosts[0].host | string | `"l1-devnet.scrollsdk"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| l1-explorer.enabled | bool | `false` |  |
+| l1-explorer.enabled | bool | `true` |  |
 | l1-explorer.ingress.main.enabled | bool | `true` |  |
 | l1-explorer.ingress.main.hosts[0].host | string | `"l1-explorer.scrollsdk"` |  |
 | l1-explorer.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |

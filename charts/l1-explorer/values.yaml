@@ -42,11 +42,13 @@ blockscout-stack:
       NEXT_PUBLIC_HOMEPAGE_HERO_BANNER_CONFIG: "{'background':['rgba(255, 238, 218, 1)'],'text_color':['rgba(25, 6, 2, 1)']}"
       NEXT_PUBLIC_OG_IMAGE_URL: 'https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/og-images/scroll-sepolia.png'
       FAVICON_MASTER_URL: "https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"
+      INDEXER_DISABLE_BLOCK_REWARD_FETCHER: true
       NEXT_PUBLIC_HOMEPAGE_CHARTS: '["daily_txs"]'
       NEXT_PUBLIC_HOMEPAGE_STATS: '["total_blocks", "average_block_time", "total_txs", "wallet_addresses", "gas_tracker"]'
       NEXT_PUBLIC_API_PROTOCOL: http
       NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: ws
       NEXT_PUBLIC_API_HOST: "l1-explorer-backend.scrollsdk"
+      NEXT_PUBLIC_APP_HOST: "l1-explorer.scrollsdk"
       NEXT_PUBLIC_APP_PROTOCOL: http
       NEXT_PUBLIC_AD_BANNER_PROVIDER: none
       NEXT_PUBLIC_AD_TEXT_PROVIDER: none
