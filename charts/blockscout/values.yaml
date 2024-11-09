@@ -25,6 +25,7 @@ blockscout-stack:
       SCROLL_L2_CURIE_UPGRADE_BLOCK: 0
       ECTO_USE_SSL: false
       ETHEREUM_JSONRPC_HTTP_INSECURE: true
+      CHAIN_SPEC_PATH: "/app/genesis/genesis.json"
       # Not sure what these values are for
       #      SCROLL_L1_SCALAR_INIT:
       #      SCROLL_L1_OVERHEAD_INIT:
@@ -47,6 +48,13 @@ blockscout-stack:
         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
         nginx.ingress.kubernetes.io/cors-max-age: "86400"
       hostname: blockscout.scrollsdk
+
+    persistence:
+      genesis:
+        enabled: true
+        type: configMap
+        mountPath: /app/genesis/
+        name: genesis-config
 
   frontend:
     image:

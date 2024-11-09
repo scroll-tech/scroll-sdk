@@ -83,6 +83,9 @@ rollup-node:
 
 l1-explorer:
   enabled: false
+  blockscout-stack:
+    frontend:
+      replicaCount: 1
   ingress:
     main:
       enabled: true
