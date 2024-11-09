@@ -16,7 +16,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://blockscout.github.io/helm-charts | blockscout-stack | 1.6.8 |
+| https://blockscout.github.io/helm-charts | blockscout-stack | 1.8.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.3 |
 
 ## Values
@@ -24,6 +24,7 @@ Kubernetes: `>=1.22.0-0`
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | blockscout-stack.blockscout.env.BLOCK_TRANSFORMER | string | `"clique"` |  |
+| blockscout-stack.blockscout.env.CHAIN_SPEC_PATH | string | `"/app/genesis/genesis.json"` |  |
 | blockscout-stack.blockscout.env.CHAIN_TYPE | string | `"scroll"` |  |
 | blockscout-stack.blockscout.env.ECTO_USE_SSL | bool | `false` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_INSECURE | bool | `true` |  |
@@ -48,6 +49,10 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"blockscout.scrollsdk"` |  |
+| blockscout-stack.blockscout.persistence.genesis.enabled | bool | `true` |  |
+| blockscout-stack.blockscout.persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
+| blockscout-stack.blockscout.persistence.genesis.name | string | `"genesis-config"` |  |
+| blockscout-stack.blockscout.persistence.genesis.type | string | `"configMap"` |  |
 | blockscout-stack.frontend.env.FAVICON_MASTER_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_AD_BANNER_PROVIDER | string | `"none"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_AD_TEXT_PROVIDER | string | `"none"` |  |

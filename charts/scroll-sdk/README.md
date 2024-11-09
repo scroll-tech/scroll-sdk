@@ -85,6 +85,7 @@ Kubernetes: `>=1.22.0-0`
 | l1-devnet.ingress.main.hosts[0].host | string | `"l1-devnet.scrollsdk"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].path | string | `"/"` |  |
 | l1-devnet.ingress.main.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| l1-explorer.blockscout-stack.frontend.replicaCount | int | `1` |  |
 | l1-explorer.enabled | bool | `false` |  |
 | l1-explorer.ingress.main.enabled | bool | `true` |  |
 | l1-explorer.ingress.main.hosts[0].host | string | `"l1-explorer.scrollsdk"` |  |
