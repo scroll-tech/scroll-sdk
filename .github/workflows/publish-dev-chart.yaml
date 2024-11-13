@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - 'charts/**'
+  pull_request:
+    paths:
+      - 'charts/**'
 
 env:
   HELM_REGISTRY: ghcr.io/scroll-tech/scroll-sdk/helm/dev
