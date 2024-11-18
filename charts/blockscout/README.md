@@ -49,10 +49,11 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"blockscout.scrollsdk"` |  |
-| blockscout-stack.blockscout.persistence.genesis.enabled | bool | `true` |  |
-| blockscout-stack.blockscout.persistence.genesis.mountPath | string | `"/app/genesis/"` |  |
-| blockscout-stack.blockscout.persistence.genesis.name | string | `"genesis-config"` |  |
-| blockscout-stack.blockscout.persistence.genesis.type | string | `"configMap"` |  |
+| blockscout-stack.blockscout.volumeMounts[0].mountPath | string | `"/app/genesis"` |  |
+| blockscout-stack.blockscout.volumeMounts[0].name | string | `"genesis-config"` |  |
+| blockscout-stack.blockscout.volumeMounts[0].readOnly | bool | `true` |  |
+| blockscout-stack.blockscout.volumes[0].configMap.name | string | `"genesis-config"` |  |
+| blockscout-stack.blockscout.volumes[0].name | string | `"genesis-config"` |  |
 | blockscout-stack.frontend.env.FAVICON_MASTER_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/favicons/scroll_180x180.png"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_AD_BANNER_PROVIDER | string | `"none"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_AD_TEXT_PROVIDER | string | `"none"` |  |

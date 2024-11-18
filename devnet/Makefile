@@ -7,20 +7,23 @@ L1_RPC_HOST := l1-devnet.scrollsdk
 
 bootstrap:
 		echo "Pulling helm chart..."
-		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/dev/scroll-sdk --version 0.1.1
+		helm pull oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-sdk --version 0.1.1
 		echo "Extracting helm chart..."
 		tar -xvf *.tgz
 		$(MAKE) config
 
 config:
 		echo "Creating configuration files..."
-		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-a976769a2b07ceea7dcd10d0a7a20ad41e010528
+		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-8ff2948aa2b9cbd24a7644b060097765a6faee10
 		echo "Creating env files..."
 		./create-env-files.sh scroll-sdk
 		./prepare-config-files.sh
 
 install:
 		helm upgrade -i scroll-sdk scroll-sdk -n $(NAMESPACE) \
+			--set l2-rpc.image.tag=$(L2_IMAGE_TAG) \
+			--set l2-sequencer.image.tag=$(L2_IMAGE_TAG) \
+			--set l2-bootnode.image.tag=$(L2_IMAGE_TAG) \
 			--set l1-devnet.ingress.main.hosts[0].host=$(L1_RPC_HOST) \
 			--set l1-devnet.ingress.main.hosts[0].paths[0].path=/ \
 			--set l1-devnet.ingress.main.hosts[0].paths[0].pathType=Prefix \
@@ -51,4 +54,4 @@ upgrade:
 
 verify:
 		echo "Verifing contracts..."
-		cd scroll-sdk && time docker run --rm -it --network="host" -v .:/contracts/volume scrolltech/scroll-stack-contracts:verify-a976769a2b07ceea7dcd10d0a7a20ad41e010528
+		cd scroll-sdk && time docker run --rm -it --network="host" -v .:/contracts/volume scrolltech/scroll-stack-contracts:verify-8ff2948aa2b9cbd24a7644b060097765a6faee10
