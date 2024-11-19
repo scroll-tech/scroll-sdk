@@ -10,7 +10,6 @@ blockscout-stack:
 
     env:
       ETHEREUM_JSONRPC_VARIANT: geth
-      BLOCK_TRANSFORMER: clique
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       ECTO_USE_SSL: false
       ETHEREUM_JSONRPC_HTTP_INSECURE: true
