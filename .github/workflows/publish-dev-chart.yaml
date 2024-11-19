@@ -34,7 +34,7 @@ jobs:
 
       - name: Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password-stdin
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.HELM_GITHUB_PASSWORD }}
+           echo ${{ secrets.HELM_GITHUB_PASSWORD }} | helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password-stdin
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
@@ -135,7 +135,7 @@ jobs:
 
       - name: Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password-stdin
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
@@ -175,7 +175,7 @@ jobs:
 
       - name: Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.HELM_GITHUB_PASSWORD }}
+          echo ${{ secrets.HELM_GITHUB_PASSWORD }} | helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password-stdin
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
