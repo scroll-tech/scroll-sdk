@@ -1,5 +1,9 @@
 name: Lint, test and publish dev charts
 
+permissions:
+  contents: read
+  packages: write
+
 on:
   push:
     paths:
