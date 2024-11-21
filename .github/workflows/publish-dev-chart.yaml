@@ -36,9 +36,6 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.0
 
-      - name: Configure registry permissions
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
       - name: Helm registry login
         run: |
           helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
@@ -81,7 +78,7 @@ jobs:
 
       - name: Helm registry login
         run: |
-          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.HELM_GITHUB_PASSWORD }}
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
         env:
           HELM_GITHUB_PASSWORD: "${{ secrets.HELM_GITHUB_PASSWORD }}"
 
