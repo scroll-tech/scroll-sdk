@@ -4,6 +4,7 @@ ARCH_OTHER := $(shell if [ "$$(uname -m)" != "arm64" ] && [ "$$(uname -m)" != "a
 NAMESPACE ?= default
 L2_IMAGE_TAG := $(ARCH_OTHER)v5.7.25$(ARCH_ARM64)
 L1_RPC_HOST := l1-devnet.scrollsdk
+SC_VERIFIER_TAG := $(if $(ARCH_ARM64),v1.7.0-arm,v1.7.0)
 
 bootstrap:
 		echo "Pulling helm chart..."
@@ -24,6 +25,7 @@ install:
 			--set l2-rpc.image.tag=$(L2_IMAGE_TAG) \
 			--set l2-sequencer.image.tag=$(L2_IMAGE_TAG) \
 			--set l2-bootnode.image.tag=$(L2_IMAGE_TAG) \
+			--set blockscout-sc-verifier.image.tag=$(SC_VERIFIER_TAG) \
 			--set l1-devnet.ingress.main.hosts[0].host=$(L1_RPC_HOST) \
 			--set l1-devnet.ingress.main.hosts[0].paths[0].path=/ \
 			--set l1-devnet.ingress.main.hosts[0].paths[0].pathType=Prefix \
