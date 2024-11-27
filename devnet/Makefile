@@ -15,7 +15,7 @@ bootstrap:
 
 config:
 		echo "Creating configuration files..."
-		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-8ff2948aa2b9cbd24a7644b060097765a6faee10
+		cd scroll-sdk && time docker run --rm -it -v .:/contracts/volume scrolltech/scroll-stack-contracts:gen-configs-64934888f4cd002e77414a8e62812f70c00c5937
 		echo "Creating env files..."
 		./create-env-files.sh scroll-sdk
 		./prepare-config-files.sh
@@ -56,4 +56,4 @@ upgrade:
 
 verify:
 		echo "Verifing contracts..."
-		cd scroll-sdk && time docker run --rm -it --network="host" -v .:/contracts/volume scrolltech/scroll-stack-contracts:verify-8ff2948aa2b9cbd24a7644b060097765a6faee10
+		cd scroll-sdk && time docker run --rm -it --network="host" -v .:/contracts/volume scrolltech/scroll-stack-contracts:verify-64934888f4cd002e77414a8e62812f70c00c5937

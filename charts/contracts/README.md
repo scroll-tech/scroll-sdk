@@ -25,7 +25,7 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"contracts-deployment-env"` |  |
 | global.isStandalone | bool | `false` |  |
 | image.repository | string | `"scrolltech/scroll-stack-contracts"` |  |
-| image.tag | string | `"deploy-8ff2948aa2b9cbd24a7644b060097765a6faee10"` |  |
+| image.tag | string | `"deploy-64934888f4cd002e77414a8e62812f70c00c5937"` |  |
 | scrollConfig | string | `"{}\n"` |  |
 | scrollConfigContracts | string | `"{}\n"` |  |
 
