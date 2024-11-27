@@ -65,7 +65,7 @@ install:
 		--values values/l2-rpc-production.yaml
 
 	helm upgrade -i rollup-explorer-backend oci://ghcr.io/scroll-tech/scroll-sdk/helm/rollup-explorer-backend -n $(NAMESPACE) \
-		--version=0.1.0 \
+		--version=0.1.1 \
 		--values values/rollup-explorer-backend-production.yaml \
 		--values values/rollup-explorer-backend-config.yaml
 

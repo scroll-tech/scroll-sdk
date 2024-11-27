@@ -10,6 +10,10 @@ blockscout-stack:
       repository: blockscout/blockscout-scroll
       pullPolicy: IfNotPresent
       tag: 6.9.0-alpha.1
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "512Mi"
 
     env:
       ETHEREUM_JSONRPC_HTTP_URL: http://l2-rpc:8545

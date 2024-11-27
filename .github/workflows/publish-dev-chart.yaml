@@ -198,3 +198,157 @@ jobs:
             export CHART_VERSION=$(grep 'version:' charts/$chart/Chart.yaml | head -n1 | awk '{ print $2 }')
             helm push $chart-${CHART_VERSION}.tgz oci://${HELM_REGISTRY}
           done
+
+  kubeconform:
+    name: kubeconform-check
+    runs-on: ubuntu-latest
+    needs:
+    - publish-ghcr-scroll-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: ${{ github.event.repository.default_branch }}
+          list-files: shell
+          filters: |
+            addedOrModified:
+              - added|modified: 'charts/scroll-sdk/**'
+
+      - name: Helm registry login
+        run: |
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Replace helm registry by helm/dev
+        run: |
+          find charts/ -type f -exec sed -i 's|oci://ghcr.io/scroll-tech/scroll-sdk/helm|oci://ghcr.io/scroll-tech/scroll-sdk/helm/dev|g' {} +
+
+      - name: Install Kubeconform
+        run: |
+          set -e
+          wget https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz
+          tar xf kubeconform-linux-amd64.tar.gz
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: Add Helm repositories
+        run: |
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add blockscout https://blockscout.github.io/helm-charts 
+          helm repo update
+
+      - name: Validate rendered templates
+        run: |
+          set -e
+          failed_charts=()
+          for chart in charts/*; do
+            if [ -d "$chart" ]; then
+              echo "Processing chart $chart"
+              if [[ $(basename $chart) == "common" ]] || [[ $(basename $chart) == "external-secrets-lib" ]]; then
+                echo "Skipping library chart: $chart"
+                continue
+              fi
+
+              if ! helm dependency update $chart; then
+                failed_charts+=("$chart - dependency update failed")
+                continue
+              fi
+
+              if ! helm dependency build $chart; then
+                failed_charts+=("$chart - dependency build failed")
+                continue
+              fi
+
+              if ! helm template $(basename $chart) $chart | kubeconform \
+                -summary \
+                -output json \
+                -schema-location default \
+                -schema-location https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/jsonnet/prometheus-operator/servicemonitors-crd.json \
+                -schema-location https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/jsonnet/prometheus-operator/alertmanagers-crd.json \
+                -schema-location https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/jsonnet/prometheus-operator/prometheusrules-crd.json \
+                -schema-location https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/jsonnet/prometheus-operator/prometheuses-crd.json \
+                -schema-location https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/jsonnet/prometheus-operator/podmonitors-crd.json \
+                -strict \
+                -; then
+                failed_charts+=("$chart - validation failed")
+              fi
+            fi
+          done
+          
+          if [ ${#failed_charts[@]} -ne 0 ]; then
+            echo "faild charts are:"
+            printf '%s\n' "${failed_charts[@]}"
+            exit 1
+          fi
+
+  run-k8s-test:
+    name: check-services-up-and-running
+    runs-on: ubuntu-latest
+    needs: 
+      - publish-ghcr-scroll-sdk
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          check-latest: true
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.6.0
+
+      - name: Replace helm registry by helm/dev
+        run: |
+          find devnet/ -type f -exec sed -i 's|oci://ghcr.io/scroll-tech/scroll-sdk/helm|oci://ghcr.io/scroll-tech/scroll-sdk/helm/dev|g' {} +
+
+      - name: Create Kind Cluster
+        uses: helm/kind-action@v1.8.0
+        with:
+          cluster_name: chart-testing
+
+      - name: Helm registry login
+        run: |
+          helm registry login ghcr.io/scroll-tech/helm/scroll-sdk --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Devnet Bootstrap
+        run: cd devnet && make bootstrap
+
+      - name: Install Charts using Makefile
+        run: |
+          cd devnet
+          make install
+
+      - name: Ensure all services are up and running
+        run: |
+          START_TIME=$(date +%s)
+          TIMEOUT=600
+
+          while true; do
+            ELAPSED_TIME=$(( $(date +%s) - START_TIME ))
+
+            if [ "$ELAPSED_TIME" -ge "$TIMEOUT" ]; then
+              echo "Timeout reached: Exiting after $TIMEOUT seconds"
+              exit 1
+            fi
+            kubectl get pods
+            kubectl describe nodes
+
+            if kubectl wait --for=condition=Ready pod --all --field-selector=status.phase!=Succeeded,status.phase!=Failed --timeout=5s; then
+              echo "All pods are ready."
+              break
+            else
+              echo "Waiting for pods to be ready..."
+              sleep 10
+            fi
+          done
