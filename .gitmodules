@@ -1,3 +1,6 @@
 [submodule "scroll-contracts"]
 	path = scroll-contracts
 	url = https://github.com/scroll-tech/scroll-contracts.git
+[submodule "scroll-sdk-cli"]
+	path = scroll-sdk-cli
+	url = https://github.com/scroll-tech/scroll-sdk-cli.git
