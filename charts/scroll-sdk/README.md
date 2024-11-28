@@ -1,6 +1,6 @@
 # scroll-sdk
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 scroll helm charts to deploy scroll sdk
 
@@ -22,7 +22,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-cron | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | admin-system-dashboard | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | balance-checker | 0.1.0 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.1.0 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout | 0.1.1 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | blockscout-sc-verifier | 0.0.2 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-api | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | bridge-history-fetcher | 0.1.0 |
@@ -37,7 +37,7 @@ Kubernetes: `>=1.22.0-0`
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-bootnode | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-rpc | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | l2-sequencer | 0.1.0 |
-| oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.1.0 |
+| oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-explorer-backend | 0.1.1 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rollup-node | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | rpc-gateway | 0.1.0 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | scroll-common | 0.1.0 |
