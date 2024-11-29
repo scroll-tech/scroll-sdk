@@ -27,15 +27,14 @@ envFrom:
   - configMapRef:
       name: coordinator-api-env
 
-command: [
-  "/bin/sh",
-  "-c",
-  "coordinator_api --config /coordinator/conf/coordinator-config.json \
+command:
+  - "bash"
+  - "-c"
+  - "coordinator_api --config /coordinator/conf/coordinator-config.json \
     --genesis /app/genesis/genesis.json \
     --http --http.addr '0.0.0.0' --http.port ${HTTP_PORT} \
     --metrics --metrics.addr '0.0.0.0' --metrics.port ${METRICS_PORT} \
     --log.debug"
-]
 
 resources:
   requests:

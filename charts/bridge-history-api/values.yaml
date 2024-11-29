@@ -13,11 +13,9 @@ image:
   tag: v4.4.71
 
 command:
-  [
-    "/bin/sh",
-    "-c",
-    "bridgehistoryapi-api --config /app/conf/bridge-history-api-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug",
-  ]
+  - "bash"
+  - "-c"
+  - "bridgehistoryapi-api --config /app/conf/bridge-history-api-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"
 
 env:
   - name: METRICS_PORT

@@ -29,13 +29,12 @@ envFrom:
   - configMapRef:
       name: admin-system-cron-env
 
-command: [
-  "/bin/sh",
-  "-c",
-  "scroll-admin-cron --config /app/config/admin-system-backend-config.json \
-  --http.port ${HTTP_PORT} \
-  --metrics --metrics.port ${METRICS_PORT}",
-]
+command: 
+  - "bash"
+  - "-c"
+  - "scroll-admin-cron --config /app/config/admin-system-backend-config.json \
+    --http.port ${HTTP_PORT} \
+    --metrics --metrics.port ${METRICS_PORT}"
 
 resources:
   requests:

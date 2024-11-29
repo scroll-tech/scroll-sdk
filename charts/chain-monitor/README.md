@@ -1,6 +1,6 @@
 # chain-monitor
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 chain-monitor helm charts
 
@@ -23,7 +23,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| command[0] | string | `"/bin/sh"` |  |
+| command[0] | string | `"sh"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"chain-monitor --config /app/config/chain-monitor-config.json --http --http.port ${CHAIN_MONITOR_SERVER_PORT} --metrics --metrics.addr 0.0.0.0 --metrics.port ${CHAIN_MONITOR_METRICS_PORT} --verbosity 3"` |  |
 | defaultProbes.enabled | bool | `false` |  |

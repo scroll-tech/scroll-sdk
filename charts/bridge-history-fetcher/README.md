@@ -1,6 +1,6 @@
 # bridge-history-fetcher
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 bridge-history-fetcher helm charts
 
@@ -23,7 +23,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| command[0] | string | `"/bin/sh"` |  |
+| command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"bridgehistoryapi-fetcher --config /app/conf/bridge-history-fetcher-config.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"` |  |
 | configMaps.migrate-db.data."migrate-db.json" | string | `"{\n  \"l1\": {},\n  \"l2\": {},\n  \"db\": {\n    \"driver_name\": \"postgres\",\n    \"maxOpenNum\": 50,\n    \"maxIdleNume\": 5,\n    \"dsn\": \"\"\n  }\n}\n"` |  |

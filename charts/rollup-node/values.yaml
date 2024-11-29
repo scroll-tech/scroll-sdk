@@ -21,15 +21,14 @@ envFrom:
   - configMapRef:
       name: rollup-node-env
 
-command: [
-  "/bin/sh",
-  "-c",
-  "rollup_relayer --config /app/conf/rollup-config.json \
+command: 
+  - "sh"
+  - "-c"
+  - "rollup_relayer --config /app/conf/rollup-config.json \
     --genesis /app/genesis/genesis.json \
     --import-genesis \
     --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} \
-    --log.debug --verbosity 3",
-]
+    --log.debug --verbosity 3"
 
 resources:
   requests:

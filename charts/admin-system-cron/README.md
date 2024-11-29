@@ -1,6 +1,6 @@
 # admin-system-cron
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 admin-system-cron helm charts
 
@@ -23,7 +23,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| command[0] | string | `"/bin/sh"` |  |
+| command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"scroll-admin-cron --config /app/config/admin-system-backend-config.json --http.port ${HTTP_PORT} --metrics --metrics.port ${METRICS_PORT}"` |  |
 | controller.replicas | int | `1` |  |

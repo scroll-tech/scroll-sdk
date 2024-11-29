@@ -24,13 +24,12 @@ envFrom:
   - configMapRef:
       name: coordinator-cron-env
 
-command: [
-  "/bin/sh",
-  "-c",
-  "coordinator_cron --config /app/conf/coordinator-cron-config.json \
+command:
+  - "bash"
+  - "-c"
+  - "coordinator_cron --config /app/conf/coordinator-cron-config.json \
     --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} \
-    --log.debug",
-]
+    --log.debug"
 
 initContainers:
   1-check-postgres-connection:

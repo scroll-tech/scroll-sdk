@@ -1,6 +1,6 @@
 # l1-devnet
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l1-devnet helm charts
 
@@ -23,7 +23,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| command[0] | string | `"/bin/bash"` |  |
+| command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"mkdir -p /data && echo \"{number: 0x0}\" > /data/genesis.json && anvil --host 0.0.0.0 --port 8545 --chain-id ${CHAIN_ID} --state /data/state.json --state-interval 60 --slots-in-an-epoch 3"` |  |
 | controller.replicas | int | `1` |  |

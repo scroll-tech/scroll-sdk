@@ -9,11 +9,9 @@ image:
   tag: v4.4.71
 
 command:
-  [
-    "/bin/sh",
-    "-c",
-    "gas_oracle --config /app/conf/rollup-config.json --genesis /app/genesis/genesis.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"
-  ]
+  - "bash"
+  - "-c"
+  - "gas_oracle --config /app/conf/rollup-config.json --genesis /app/genesis/genesis.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"
 
 podLabels:
   app: *app_name

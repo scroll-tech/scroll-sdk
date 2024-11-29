@@ -1,6 +1,6 @@
 # admin-system-backend
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 admin-system-backend helm charts
 
@@ -23,7 +23,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| command[0] | string | `"/bin/sh"` |  |
+| command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"scroll-admin-system --config /app/config/admin-system-backend-config.json --genesis /app/genesis/genesis.json --http.port ${HTTP_PORT} --metrics --metrics.port ${METRICS_PORT}"` |  |
 | configMaps.add-user.data."add-user.sh" | string | `"#!/bin/bash\necho \"Adding users...\"\npsql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c \"INSERT INTO users (username, role) VALUES ('admin', 1);\"\npsql $SCROLL_ADMIN_AUTH_DB_CONFIG_DSN -c \"INSERT INTO users (username, role) VALUES ('normal', 3);\"\necho \"Users added.\"\n"` |  |

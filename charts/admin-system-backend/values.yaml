@@ -29,14 +29,13 @@ envFrom:
   - configMapRef:
       name: admin-system-backend-env
 
-command: [
-  "/bin/sh",
-  "-c",
-  "scroll-admin-system --config /app/config/admin-system-backend-config.json \
-  --genesis /app/genesis/genesis.json \
-  --http.port ${HTTP_PORT} \
-  --metrics --metrics.port ${METRICS_PORT}",
-]
+command:
+  - "bash"
+  - "-c"
+  - "scroll-admin-system --config /app/config/admin-system-backend-config.json \
+    --genesis /app/genesis/genesis.json \
+    --http.port ${HTTP_PORT} \
+    --metrics --metrics.port ${METRICS_PORT}"
 
 resources:
   requests:

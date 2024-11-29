@@ -1,6 +1,6 @@
 # gas-oracle
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 gas-oracle helm charts
 
@@ -23,7 +23,7 @@ Kubernetes: `>=1.22.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| command[0] | string | `"/bin/sh"` |  |
+| command[0] | string | `"bash"` |  |
 | command[1] | string | `"-c"` |  |
 | command[2] | string | `"gas_oracle --config /app/conf/rollup-config.json --genesis /app/genesis/genesis.json --metrics --metrics.addr 0.0.0.0 --metrics.port ${METRICS_PORT} --log.debug"` |  |
 | configMaps.migrate-db.data."migrate-db.json" | string | `"{\n    \"driver_name\": \"postgres\",\n    \"dsn\": \"\"\n}\n"` |  |

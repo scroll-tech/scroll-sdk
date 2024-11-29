@@ -19,13 +19,11 @@ envFrom:
       name: chain-monitor-env
 
 command:
-  [
-    "/bin/sh",
-    "-c",
-    "chain-monitor --config /app/config/chain-monitor-config.json --http --http.port ${CHAIN_MONITOR_SERVER_PORT} \
+  - "sh"
+  - "-c"
+  - "chain-monitor --config /app/config/chain-monitor-config.json --http --http.port ${CHAIN_MONITOR_SERVER_PORT} \
     --metrics --metrics.addr 0.0.0.0 --metrics.port ${CHAIN_MONITOR_METRICS_PORT} \
-     --verbosity 3"
-  ]
+    --verbosity 3"
 
 resources:
   requests:

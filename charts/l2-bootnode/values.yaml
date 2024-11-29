@@ -46,10 +46,9 @@ envFrom:
       name: l2-bootnode-env
 
 command:
-  [
-    "bash",
-    "-c",
-    "geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
+  - "bash"
+  - "-c"
+  - "geth --datadir \"/l2geth/data\" init /l2geth/genesis/genesis.json && \
     echo ${L2GETH_NODEKEY} > /l2geth/data/geth/nodekey && \
     echo \"[Node.P2P] StaticNodes = $L2GETH_PEER_LIST\" > \"/l2geth/config.toml\" && \
     geth --datadir \"/l2geth/data\" \
@@ -70,7 +69,6 @@ command:
     --gpo.ignoreprice \"$L2GETH_MIN_GAS_PRICE\" \
     --metrics --metrics.expensive \
     $L2GETH_EXTRA_PARAMS"
-  ]
 
 initContainers:
   wait-for-l1:
