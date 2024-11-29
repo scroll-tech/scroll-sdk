@@ -21,7 +21,7 @@ envFrom:
   - configMapRef:
       name: rollup-node-env
 
-command: 
+command:
   - "sh"
   - "-c"
   - "rollup_relayer --config /app/conf/rollup-config.json \
