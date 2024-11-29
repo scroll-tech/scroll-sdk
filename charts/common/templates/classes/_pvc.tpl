@@ -42,4 +42,8 @@ spec:
   {{- if $values.volumeName }}
   volumeName: {{ $values.volumeName | quote }}
   {{- end }}
+  {{- if $values.dataSource }}
+  dataSource:
+    {{- $values.dataSource | toYaml | nindent 4 }}
+  {{- end }}
 {{- end -}}
