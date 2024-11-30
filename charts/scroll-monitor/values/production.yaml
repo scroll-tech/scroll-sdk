@@ -24,3 +24,8 @@ kube-prometheus-stack:
         routes:
         - matchers: []
           receiver: "slack-alerts"
+loki:
+  chunksCache:
+    allocatedMemory: 128
+  resultsCache:
+    allocatedMemory: 128

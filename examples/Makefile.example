@@ -2,7 +2,7 @@ NAMESPACE ?= default
 
 install:
 	helm upgrade -i scroll-monitor oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-monitor -n $(NAMESPACE) \
-		--version=0.1.0 \
+		--version=0.1.1 \
 		--values values/scroll-monitor-production.yaml
 
 	helm upgrade -i scroll-common oci://ghcr.io/scroll-tech/scroll-sdk/helm/scroll-common -n $(NAMESPACE) \

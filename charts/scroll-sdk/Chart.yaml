@@ -98,7 +98,7 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: scroll-common.enabled
   - name: scroll-monitor
-    version: 0.1.0
+    version: 0.1.1
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: scroll-monitor.enabled
   - name: admin-system-backend
