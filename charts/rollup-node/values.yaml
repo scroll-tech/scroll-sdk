@@ -10,7 +10,7 @@ controller:
 
 image:
   repository: scrolltech/rollup-relayer
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v4.4.71
 
 env:

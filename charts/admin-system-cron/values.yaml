@@ -10,7 +10,7 @@ controller:
 
 image:
   repository: scrolltech/scroll-admin-cron
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v0.1.0
 
 env:

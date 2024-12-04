@@ -1,6 +1,6 @@
 # rpc-gateway
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 rpc-gateway helm charts
 
@@ -48,7 +48,7 @@ Kubernetes: `>=1.22.0-0`
 | env[9].value | string | `"false"` |  |
 | global.fullnameOverride | string | `"rpc-gateway"` |  |
 | global.nameOverride | string | `"rpc-gateway"` |  |
-| image.pullPolicy | string | `"Always"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"scrolltech/rpc-gateway"` |  |
 | image.tag | string | `"v0.0.2"` |  |
 | initContainers.wait-for-l2-rpc.args[0] | string | `"http"` |  |

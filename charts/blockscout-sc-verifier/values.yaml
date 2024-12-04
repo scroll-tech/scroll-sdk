@@ -10,7 +10,7 @@ controller:
 
 image:
   repository: ghcr.io/blockscout/smart-contract-verifier
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v1.7.0
 
 env:

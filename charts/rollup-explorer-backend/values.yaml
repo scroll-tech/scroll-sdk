@@ -9,7 +9,7 @@ controller:
 
 image:
   repository: scrolltech/rollup-explorer-backend
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: "v0.0.11"
 
 resources:

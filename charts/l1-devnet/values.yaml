@@ -10,7 +10,7 @@ controller:
 
 image:
   repository: scrolltech/l1-devnet
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v0.0.4
 
 command:

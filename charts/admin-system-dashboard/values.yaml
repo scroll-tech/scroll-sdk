@@ -10,7 +10,7 @@ controller:
 
 image:
   repository: scrolltech/admin-dashboard
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v0.0.19
 
 env:

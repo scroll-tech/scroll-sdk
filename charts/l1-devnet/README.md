@@ -1,6 +1,6 @@
 # l1-devnet
 
-![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 l1-devnet helm charts
 
@@ -34,7 +34,7 @@ Kubernetes: `>=1.22.0-0`
 | envFrom[0].configMapRef.name | string | `"l1-devnet-env"` |  |
 | global.fullnameOverride | string | `"l1-devnet"` |  |
 | global.nameOverride | string | `"l1-devnet"` |  |
-| image.pullPolicy | string | `"Always"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"scrolltech/l1-devnet"` |  |
 | image.tag | string | `"v0.0.4"` |  |
 | ingress.main.annotations | object | `{}` |  |

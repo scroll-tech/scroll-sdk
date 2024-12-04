@@ -1,6 +1,6 @@
 # rollup-explorer-backend
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: v0.1.0](https://img.shields.io/badge/AppVersion-v0.1.0-informational?style=flat-square)
 
 rollup-explorer-backend helm charts
 
@@ -42,7 +42,7 @@ Kubernetes: `>=1.22.0-0`
 | env[4].value | string | `"debug"` |  |
 | global.fullnameOverride | string | `"rollup-explorer-backend"` |  |
 | global.nameOverride | string | `"rollup-explorer-backend"` |  |
-| image.pullPolicy | string | `"Always"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"scrolltech/rollup-explorer-backend"` |  |
 | image.tag | string | `"v0.0.11"` |  |
 | ingress.main.annotations | object | `{}` |  |

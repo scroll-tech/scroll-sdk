@@ -5,7 +5,7 @@ global:
 
 image:
   repository: scrolltech/gas-oracle
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v4.4.71
 
 command:

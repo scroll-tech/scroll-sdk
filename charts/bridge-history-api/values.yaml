@@ -9,7 +9,7 @@ controller:
 
 image:
   repository: scrolltech/bridgehistoryapi-api
-  pullPolicy: Always
+  pullPolicy: IfNotPresent 
   tag: v4.4.71
 
 command:
