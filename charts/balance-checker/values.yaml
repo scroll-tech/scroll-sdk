@@ -5,7 +5,7 @@ global:
 
 image:
   repository: scrolltech/balance-checker
-  pullPolicy: IfNotPresent 
+  pullPolicy: IfNotPresent
   tag: 0.0.2
 
 env:

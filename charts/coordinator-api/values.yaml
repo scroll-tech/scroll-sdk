@@ -10,7 +10,7 @@ global:
 
 image:
   repository: scrolltech/coordinator-api
-  pullPolicy: IfNotPresent 
+  pullPolicy: IfNotPresent
   tag: v4.4.59
 
 env:

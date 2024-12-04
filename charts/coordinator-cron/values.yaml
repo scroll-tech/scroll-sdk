@@ -5,7 +5,7 @@ global:
 
 image:
   repository: scrolltech/coordinator-cron
-  pullPolicy: IfNotPresent 
+  pullPolicy: IfNotPresent
   tag: v4.4.58
 
 env:

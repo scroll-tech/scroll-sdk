@@ -10,7 +10,7 @@ controller:
 
 image:
   repository: scrolltech/l2geth
-  pullPolicy: IfNotPresent 
+  pullPolicy: IfNotPresent
   tag: scroll-v5.7.25
 
 env:

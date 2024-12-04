@@ -9,7 +9,7 @@ controller:
 
 image:
   repository: scrolltech/frontends
-  pullPolicy: IfNotPresent 
+  pullPolicy: IfNotPresent
   tag: 2.2.24
 
 command:
