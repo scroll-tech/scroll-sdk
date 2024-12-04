@@ -78,15 +78,15 @@ dependencies:
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l1-explorer.enabled
   - name: l2-bootnode
-    version: 0.1.3
+    version: 0.1.2
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-bootnode.enabled
   - name: l2-rpc
-    version: 0.1.3
+    version: 0.1.2
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-rpc.enabled
   - name: l2-sequencer
-    version: 0.1.3
+    version: 0.1.2
     repository: "oci://ghcr.io/scroll-tech/scroll-sdk/helm"
     condition: l2-sequencer.enabled
   - name: postgresql
