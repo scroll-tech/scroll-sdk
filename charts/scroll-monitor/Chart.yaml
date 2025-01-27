@@ -23,5 +23,5 @@ dependencies:
     condition: kube-prometheus-stack.enabled
   - name: promtail
     repository: "https://grafana.github.io/helm-charts"
-    version: 6.16.5
+    version: 6.16.6
     condition: promtail.enabled
