@@ -1,18 +1,24 @@
 blockscout-stack:
   blockscout:
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
     env:
       ETHEREUM_JSONRPC_HTTP_URL: "https://eth-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf"
       ETHEREUM_JSONRPC_TRACE_URL: "https://eth-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf"
       ETHEREUM_JSONRPC_VARIANT: geth
       ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
-      INDEXER_SCROLL_L1_RPC: "http://l2-kevin-chang-1.devnet.scroll.tech:8545"
+
       BLOCK_TRANSFORMER: clique
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       CHAIN_TYPE: scroll
-      INDEXER_SCROLL_L1_CHAIN_CONTRACT: 0xa13BAF47339d63B743e7Da8741db5456DAc1E556
-      INDEXER_SCROLL_L1_BATCH_START_BLOCK: 18306934
+      INDEXER_SCROLL_L1_RPC: "https://scroll-mainnet.g.alchemy.com/v2/RZKMcETAP_v-2jgUemxLz2gL2Zl9YJEf"
       INDEXER_SCROLL_L1_MESSENGER_CONTRACT: 0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367
       INDEXER_SCROLL_L1_MESSENGER_START_BLOCK: 18306934
+      INDEXER_SCROLL_L1_CHAIN_CONTRACT: 0xa13BAF47339d63B743e7Da8741db5456DAc1E556
+      INDEXER_SCROLL_L1_BATCH_START_BLOCK: 18306934
+      INDEXER_SCROLL_L1_BATCH_BLOCKSCOUT_BLOBS_API_URL: ""
       INDEXER_SCROLL_L2_MESSENGER_CONTRACT: 0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC
       INDEXER_SCROLL_L2_MESSENGER_START_BLOCK: 0
       INDEXER_SCROLL_L2_GAS_ORACLE_CONTRACT: 0x5300000000000000000000000000000000000002
@@ -21,7 +27,26 @@ blockscout-stack:
       SCROLL_L2_CURIE_UPGRADE_BLOCK: 7096836
       ECTO_USE_SSL: false
       ETHEREUM_JSONRPC_HTTP_INSECURE: false
-      DATABASE_URL: "postgresql://postgres:admin@blockscout-postgresql:5432/blockscout?sslmode=disable"
+      DATABASE_URL: "postgresql://postgres:Dcmc7zn3TWnjaKz577IOAljTaoct7t3W@rds-test-blockscout-devnet.cybrrfa1furu.us-west-2.rds.amazonaws.com:5432/blockscout-seb?sslmode=enable"
+
+    # INDEXER_SCROLL_L1_RPC=
+    # INDEXER_SCROLL_L1_MESSENGER_CONTRACT=
+    # INDEXER_SCROLL_L1_MESSENGER_START_BLOCK=
+    # INDEXER_SCROLL_L1_CHAIN_CONTRACT=
+    # INDEXER_SCROLL_L1_BATCH_START_BLOCK=
+    # INDEXER_SCROLL_L1_BATCH_BLOCKSCOUT_BLOBS_API_URL=
+    # INDEXER_SCROLL_L2_MESSENGER_CONTRACT=
+    # INDEXER_SCROLL_L2_MESSENGER_START_BLOCK=
+    # INDEXER_SCROLL_L2_GAS_ORACLE_CONTRACT=
+    # INDEXER_SCROLL_L1_ETH_GET_LOGS_RANGE_SIZE=
+    # INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE=
+    # SCROLL_L2_CURIE_UPGRADE_BLOCK=
+    # SCROLL_L1_SCALAR_INIT=
+    # SCROLL_L1_OVERHEAD_INIT=
+    # SCROLL_L1_COMMIT_SCALAR_INIT=
+    # SCROLL_L1_BLOB_SCALAR_INIT=
+    # SCROLL_L1_BASE_FEE_INIT=
+    # SCROLL_L1_BLOB_BASE_FEE_INIT=
 
 #    envFrom:
 #      - secretRef:
@@ -29,23 +54,23 @@ blockscout-stack:
 
     ingress:
       enabled: true
-      className: ""
+      className: "nginx"
       annotations:  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
          cert-manager.io/cluster-issuer: letsencrypt-prod
          nginx.ingress.kubernetes.io/enable-cors: "true"
-#         nginx.ingress.kubernetes.io/cors-allow-origin: "blockscout.devnet.scroll.tech"
-#         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-#         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-#         nginx.ingress.kubernetes.io/cors-max-age: "86400"
-      hostname: "blockscout-backend.devnet.scroll.tech"
+         nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.devnet.aws.scroll.io"
+         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+         nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: "blockscout-backend.devnet.aws.scroll.io"
       tls:
         enabled: true
         secretName: blockscout-tls  # Set here the name of the secret. Example : blockscout.scrollsdk
 
   frontend:
     env:
-      NEXT_PUBLIC_API_HOST: "blockscout.devnet.aws.scroll.tech"
-      NEXT_PUBLIC_APP_HOST: "blockscout.devnet.aws.scroll.tech"
+      NEXT_PUBLIC_API_HOST: "blockscout-backend.devnet.aws.scroll.io" # Backend URL
+      NEXT_PUBLIC_APP_HOST: "blockscout.devnet.aws.scroll.io"
       NEXT_PUBLIC_API_PROTOCOL: https
       NEXT_PUBLIC_APP_PROTOCOL: https
       NEXT_PUBLIC_API_WEBSOCKET_PROTOCOL: wss
@@ -56,11 +81,11 @@ blockscout-stack:
       annotations:  # Add annotations here. Might be necessary to allow CORS from updated-gas-oracle. Example below
          cert-manager.io/cluster-issuer: letsencrypt-prod
          nginx.ingress.kubernetes.io/enable-cors: "true"
-#         nginx.ingress.kubernetes.io/cors-allow-origin: "blockscout.devnet.scroll.tech"
-#         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-#         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-#         nginx.ingress.kubernetes.io/cors-max-age: "86400"
-      hostname: "blockscout.devnet.aws.scroll.tech"
+         nginx.ingress.kubernetes.io/cors-allow-origin: "https://blockscout.devnet.aws.scroll.io"
+         nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+         nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+         nginx.ingress.kubernetes.io/cors-max-age: "86400"
+      hostname: "blockscout.devnet.aws.scroll.io"
       tls:
         enabled: true
         secretName: blockscout-front-tls  # Set here the hostname for the ingress. Example : blockscout.scrollsdk

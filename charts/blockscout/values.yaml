@@ -92,7 +92,7 @@ blockscout-stack:
       hostname: blockscout.scrollsdk
 
 postgresql:
-  enabled: true
+  enabled: false
   volumePermissions:
     enabled: true
   auth:

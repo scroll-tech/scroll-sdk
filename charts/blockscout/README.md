@@ -76,7 +76,7 @@ Kubernetes: `>=1.22.0-0`
 | postgresql.auth.password | string | `"qwerty12345"` |  |
 | postgresql.auth.postgresPassword | string | `"admin"` |  |
 | postgresql.auth.username | string | `"blockscout"` |  |
-| postgresql.enabled | bool | `true` |  |
+| postgresql.enabled | bool | `false` |  |
 | postgresql.primary.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key | string | `"NodePool"` |  |
 | postgresql.primary.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].operator | string | `"In"` |  |
 | postgresql.primary.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0] | string | `"default"` |  |
