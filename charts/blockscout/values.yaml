@@ -2,8 +2,8 @@ blockscout-stack:
   nameOverride: "blockscout"
   fullnameOverride: "blockscout"
 
-  imagePullSecrets:
-    - name: docker-secret
+#  imagePullSecrets:
+#    - name: docker-secret
 
   blockscout:
     image:
@@ -12,8 +12,8 @@ blockscout-stack:
       tag: 6.9.0-alpha.1
 
     env:
-      ETHEREUM_JSONRPC_HTTP_URL: http://l2-rpc:8545
-      ETHEREUM_JSONRPC_TRACE_URL: http://l2-rpc:8545
+      ETHEREUM_JSONRPC_HTTP_URL: scroll-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf
+      ETHEREUM_JSONRPC_TRACE_URL: scroll-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf
       ETHEREUM_JSONRPC_VARIANT: geth
       ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
       BLOCK_TRANSFORMER: clique
@@ -34,19 +34,19 @@ blockscout-stack:
       #      SCROLL_L1_BASE_FEE_INIT:
       #      SCROLL_L1_BLOB_BASE_FEE_INIT:
 
-    envFrom:
-      - configMapRef:
-          name: blockscout-env
+#    envFrom:
+#      - configMapRef:
+#          name: blockscout-env
 
     ingress:
       enabled: true
       className: "nginx"
       annotations:
-        nginx.ingress.kubernetes.io/enable-cors: "true"
-        nginx.ingress.kubernetes.io/cors-allow-origin: "http://blockscout.scrollsdk"
-        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+#        nginx.ingress.kubernetes.io/enable-cors: "true"
+#        nginx.ingress.kubernetes.io/cors-allow-origin: "blockscout.scrollsdk"
+#        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+#        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+#        nginx.ingress.kubernetes.io/cors-max-age: "86400"
       hostname: blockscout.scrollsdk
 
     volumes:
@@ -83,10 +83,59 @@ blockscout-stack:
     ingress:
       enabled: true
       annotations:
-        nginx.ingress.kubernetes.io/enable-cors: "true"
-        nginx.ingress.kubernetes.io/cors-allow-origin: "http://blockscout.scrollsdk"
-        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
-        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
-        nginx.ingress.kubernetes.io/cors-max-age: "86400"
+#        nginx.ingress.kubernetes.io/enable-cors: "true"
+#        nginx.ingress.kubernetes.io/cors-allow-origin: "blockscout.scrollsdk"
+#        nginx.ingress.kubernetes.io/cors-allow-headers: "updated-gas-oracle, Content-Type, Authorization"
+#        nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, OPTIONS"
+#        nginx.ingress.kubernetes.io/cors-max-age: "86400"
       className: "nginx"
       hostname: blockscout.scrollsdk
+
+postgresql:
+  enabled: true
+  volumePermissions:
+    enabled: true
+  auth:
+    username: blockscout
+    password: qwerty12345
+    database: blockscout
+    postgresPassword: admin
+  tls:
+    enabled: false
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete
+      whenScaled: Delete
+    livenessProbe:
+      enabled: false
+    readinessProbe:
+      enabled: false
+    startupProbe:
+      enabled: false
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: NodePool
+                  operator: In
+                  values:
+                    - default
+    resources:
+      requests:
+        cpu: 2
+        memory: 4Gi
+      limits:
+        cpu: 3
+        memory: 8Gi
+    configuration: |
+      max_connections = 800
+    extendedConfiguration: |
+      max_connections = 800
+    pgHbaConfiguration: |
+      local all all trust
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128 trust
+      hostssl all all 0.0.0.0/0 md5
+      host all   all 0.0.0.0/0 md5
