@@ -5,15 +5,15 @@ blockscout-stack:
     readinessProbe:
       enabled: false
     env:
-      ETHEREUM_JSONRPC_HTTP_URL: "https://eth-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf"
-      ETHEREUM_JSONRPC_TRACE_URL: "https://eth-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf"
+      ETHEREUM_JSONRPC_HTTP_URL: "https://scroll-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R" # RPC Layer 2
+      ETHEREUM_JSONRPC_TRACE_URL: "https://scroll-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R" # RPC Layer 2
       ETHEREUM_JSONRPC_VARIANT: geth
       ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
 
       BLOCK_TRANSFORMER: clique
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       CHAIN_TYPE: scroll
-      INDEXER_SCROLL_L1_RPC: "https://scroll-mainnet.g.alchemy.com/v2/RZKMcETAP_v-2jgUemxLz2gL2Zl9YJEf"
+      INDEXER_SCROLL_L1_RPC: "https://eth-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R" # RPC Layer 1
       INDEXER_SCROLL_L1_MESSENGER_CONTRACT: 0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367
       INDEXER_SCROLL_L1_MESSENGER_START_BLOCK: 18306934
       INDEXER_SCROLL_L1_CHAIN_CONTRACT: 0xa13BAF47339d63B743e7Da8741db5456DAc1E556
