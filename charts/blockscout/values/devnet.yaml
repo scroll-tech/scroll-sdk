@@ -1,4 +1,10 @@
 blockscout-stack:
+
+  # Added for testing, not sure if this is needed
+  config:
+    network:
+      id: 534352
+
   blockscout:
     livenessProbe:
       enabled: false
@@ -8,9 +14,10 @@ blockscout-stack:
       ETHEREUM_JSONRPC_HTTP_URL: "https://scroll-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R" # RPC Layer 2
       ETHEREUM_JSONRPC_TRACE_URL: "https://scroll-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R" # RPC Layer 2
       ETHEREUM_JSONRPC_VARIANT: geth
-      ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
+      ETHEREUM_JSONRPC_WS_URL: "wss://scroll-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R"
 
       BLOCK_TRANSFORMER: clique
+
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       CHAIN_TYPE: scroll
       INDEXER_SCROLL_L1_RPC: "https://eth-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R" # RPC Layer 1
