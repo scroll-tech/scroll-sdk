@@ -9,13 +9,13 @@ blockscout-stack:
     image:
       repository: blockscout/blockscout-scroll
       pullPolicy: IfNotPresent
-      tag: 6.9.0-alpha.1
+      tag: latest
 
     env:
       ETHEREUM_JSONRPC_HTTP_URL: scroll-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf
       ETHEREUM_JSONRPC_TRACE_URL: scroll-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf
       ETHEREUM_JSONRPC_VARIANT: geth
-      ETHEREUM_JSONRPC_WS_URL: ws://l2-rpc:8546
+      ETHEREUM_JSONRPC_WS_URL: wss://scroll-mainnet.g.alchemy.com/v2/HW2VCwz7wdNygi43EcQ7R
       BLOCK_TRANSFORMER: clique
       INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER: true
       CHAIN_TYPE: scroll
