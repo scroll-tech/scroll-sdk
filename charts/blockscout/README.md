@@ -16,7 +16,8 @@ Kubernetes: `>=1.22.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://blockscout.github.io/helm-charts | blockscout-stack | 1.8.0 |
+| https://blockscout.github.io/helm-charts | blockscout-stack | 4.4.0 |
+| oci://ghcr.io/kubelauncher/charts | postgresql | 0.2.9 |
 | oci://ghcr.io/scroll-tech/scroll-sdk/helm | external-secrets-lib | 0.0.3 |
 
 ## Values
@@ -28,8 +29,8 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.env.CHAIN_TYPE | string | `"scroll"` |  |
 | blockscout-stack.blockscout.env.ECTO_USE_SSL | bool | `false` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_INSECURE | bool | `true` |  |
-| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_URL | string | `"http://l2-rpc:8545"` |  |
-| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_TRACE_URL | string | `"http://l2-rpc:8545"` |  |
+| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_HTTP_URL | string | `"scroll-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf"` |  |
+| blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_TRACE_URL | string | `"scroll-mainnet.g.alchemy.com/v2/uFWDEQJgyTiUYSbbIQlbf"` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_VARIANT | string | `"geth"` |  |
 | blockscout-stack.blockscout.env.ETHEREUM_JSONRPC_WS_URL | string | `"ws://l2-rpc:8546"` |  |
 | blockscout-stack.blockscout.env.INDEXER_DISABLE_PENDING_TRANSACTIONS_FETCHER | bool | `true` |  |
@@ -37,15 +38,10 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.blockscout.env.INDEXER_SCROLL_L2_ETH_GET_LOGS_RANGE_SIZE | int | `500` |  |
 | blockscout-stack.blockscout.env.INDEXER_SCROLL_L2_MESSENGER_START_BLOCK | int | `0` |  |
 | blockscout-stack.blockscout.env.SCROLL_L2_CURIE_UPGRADE_BLOCK | int | `0` |  |
-| blockscout-stack.blockscout.envFrom[0].configMapRef.name | string | `"blockscout-env"` |  |
 | blockscout-stack.blockscout.image.pullPolicy | string | `"IfNotPresent"` |  |
 | blockscout-stack.blockscout.image.repository | string | `"blockscout/blockscout-scroll"` |  |
 | blockscout-stack.blockscout.image.tag | string | `"6.9.0-alpha.1"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"http://blockscout.scrollsdk"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/cors-max-age" | string | `"86400"` |  |
-| blockscout-stack.blockscout.ingress.annotations."nginx.ingress.kubernetes.io/enable-cors" | string | `"true"` |  |
+| blockscout-stack.blockscout.ingress.annotations | string | `nil` |  |
 | blockscout-stack.blockscout.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.blockscout.ingress.enabled | bool | `true` |  |
 | blockscout-stack.blockscout.ingress.hostname | string | `"blockscout.scrollsdk"` |  |
@@ -70,17 +66,35 @@ Kubernetes: `>=1.22.0-0`
 | blockscout-stack.frontend.env.NEXT_PUBLIC_NETWORK_LOGO_DARK | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/network-logos/scroll-dark.svg"` |  |
 | blockscout-stack.frontend.env.NEXT_PUBLIC_OG_IMAGE_URL | string | `"https://raw.githubusercontent.com/blockscout/frontend-configs/main/configs/og-images/scroll-sepolia.png"` |  |
 | blockscout-stack.frontend.image.tag | string | `"v1.35.2"` |  |
-| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-headers" | string | `"updated-gas-oracle, Content-Type, Authorization"` |  |
-| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-methods" | string | `"GET, POST, OPTIONS"` |  |
-| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-allow-origin" | string | `"http://blockscout.scrollsdk"` |  |
-| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/cors-max-age" | string | `"86400"` |  |
-| blockscout-stack.frontend.ingress.annotations."nginx.ingress.kubernetes.io/enable-cors" | string | `"true"` |  |
+| blockscout-stack.frontend.ingress.annotations | string | `nil` |  |
 | blockscout-stack.frontend.ingress.className | string | `"nginx"` |  |
 | blockscout-stack.frontend.ingress.enabled | bool | `true` |  |
 | blockscout-stack.frontend.ingress.hostname | string | `"blockscout.scrollsdk"` |  |
 | blockscout-stack.fullnameOverride | string | `"blockscout"` |  |
-| blockscout-stack.imagePullSecrets[0].name | string | `"docker-secret"` |  |
 | blockscout-stack.nameOverride | string | `"blockscout"` |  |
+| postgresql.auth.database | string | `"blockscout"` |  |
+| postgresql.auth.password | string | `"qwerty12345"` |  |
+| postgresql.auth.postgresPassword | string | `"admin"` |  |
+| postgresql.auth.username | string | `"blockscout"` |  |
+| postgresql.enabled | bool | `false` |  |
+| postgresql.primary.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key | string | `"NodePool"` |  |
+| postgresql.primary.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].operator | string | `"In"` |  |
+| postgresql.primary.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0] | string | `"default"` |  |
+| postgresql.primary.configuration | string | `"max_connections = 800\n"` |  |
+| postgresql.primary.extendedConfiguration | string | `"max_connections = 800\n"` |  |
+| postgresql.primary.livenessProbe.enabled | bool | `false` |  |
+| postgresql.primary.persistentVolumeClaimRetentionPolicy.enabled | bool | `true` |  |
+| postgresql.primary.persistentVolumeClaimRetentionPolicy.whenDeleted | string | `"Delete"` |  |
+| postgresql.primary.persistentVolumeClaimRetentionPolicy.whenScaled | string | `"Delete"` |  |
+| postgresql.primary.pgHbaConfiguration | string | `"local all all trust\nhost all all 127.0.0.1/32 trust\nhost all all ::1/128 trust\nhostssl all all 0.0.0.0/0 md5\nhost all   all 0.0.0.0/0 md5\n"` |  |
+| postgresql.primary.readinessProbe.enabled | bool | `false` |  |
+| postgresql.primary.resources.limits.cpu | int | `3` |  |
+| postgresql.primary.resources.limits.memory | string | `"8Gi"` |  |
+| postgresql.primary.resources.requests.cpu | int | `2` |  |
+| postgresql.primary.resources.requests.memory | string | `"4Gi"` |  |
+| postgresql.primary.startupProbe.enabled | bool | `false` |  |
+| postgresql.tls.enabled | bool | `false` |  |
+| postgresql.volumePermissions.enabled | bool | `true` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
